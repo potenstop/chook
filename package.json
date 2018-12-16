@@ -10,7 +10,9 @@
     "app",
     "index.d.ts"
   ],
-  "scripts": {},
+  "scripts": {
+    "test": "mocha --compilers ts:ts-node/register test/lib/gen/ModeGen.test.ts"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -19,11 +21,20 @@
     "reflect-metadata": "^0.1.12",
     "typeorm": "^0.2.9"
   },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "devDependencies": {
-    "mysql": "^2.16.0",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/should": "^13.0.0",
+    "chai": "^4.2.0",
     "koa": "^2.6.2",
     "koa-router": "^7.4.0",
+    "mocha": "^5.2.0",
+    "mysql": "^2.16.0",
     "nodemon": "^1.18.8",
+    "should": "^13.2.3",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   }
