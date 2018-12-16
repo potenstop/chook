@@ -1,0 +1,30 @@
+{
+  "name": "chook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "lib",
+    "app",
+    "index.d.ts"
+  ],
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/koa": "^2.0.47",
+    "@types/koa-router": "^7.0.35",
+    "reflect-metadata": "^0.1.12",
+    "typeorm": "^0.2.9"
+  },
+  "devDependencies": {
+    "mysql": "^2.16.0",
+    "koa": "^2.6.2",
+    "koa-router": "^7.4.0",
+    "nodemon": "^1.18.8",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
+}
