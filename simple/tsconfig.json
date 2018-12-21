@@ -4,14 +4,14 @@
     "target": "es2017",        //目标代码类型
     "noImplicitAny": false, //在表达式和声明上有隐含的'any'类型时报错。
     "sourceMap": false,     //用于debug
-    "rootDir":"./server",      //仅用来控制输出的目录结构--outDir。
+    "rootDir":"./src",      //仅用来控制输出的目录结构--outDir。
     "outDir":"./build",     //重定向输出目录。
     "watch":true,           //在监视模式下运行编译器。会监视输出文件，在它们改变时重新编译。
     "emitDecoratorMetadata": true,  // typeorm
     "experimentalDecorators": true  // typeorm
   },
   "include":[
-    "server/**/*"
+    "./src/**/*"
   ],
   "exclude":[
     "node_modules",

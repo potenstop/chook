@@ -7,11 +7,10 @@
   "files": [
     "index.js",
     "lib",
-    "app",
     "index.d.ts"
   ],
   "scripts": {
-    "test": "mocha --compilers ts:ts-node/register test/lib/gen/ModeGen.test.ts"
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +18,9 @@
     "@types/koa": "^2.0.47",
     "@types/koa-router": "^7.0.35",
     "reflect-metadata": "^0.1.12",
-    "typeorm": "^0.2.9"
+    "typeorm": "^0.2.9",
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.5.1"
   },
   "engines": {
     "node": ">= 8.0.0"
@@ -36,6 +37,7 @@
     "nodemon": "^1.18.8",
     "should": "^13.2.3",
     "ts-node": "^7.0.1",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "tslint": "^5.11.0"
   }
 }
