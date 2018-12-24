@@ -8,6 +8,9 @@
       "options": [300]
     },
     "unified-signatures": false,
-    "no-namespace":false
+    "no-namespace":false,
+    "experimentalDecorators": true,
+    "only-arrow-functions": false
+
   }
 }
