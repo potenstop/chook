@@ -10,7 +10,9 @@
     "unified-signatures": false,
     "no-namespace":false,
     "experimentalDecorators": true,
-    "only-arrow-functions": false
+    "only-arrow-functions": false,
+    "max-classes-per-file": 10,
+    "no-new-func": false
 
   }
 }

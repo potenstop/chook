@@ -11,6 +11,6 @@ import { ChookApplication } from "../../index";
 
 class SimpleApp {
     private static main(): void {
-        ChookApplication.run(SimpleApp, ["1"]);
+        ChookApplication.run(SimpleApp, process.env);
     }
 }

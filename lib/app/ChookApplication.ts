@@ -7,34 +7,30 @@
  * @author yanshaowen
  * @date 2018/12/21 14:32
  */
-import ApplicationLog from "../log/ApplicationLog";
-import {IApplication} from "./IApplication";
-import {KoaApplication} from "./KoaApplication";
+import {CommonConstant} from "../constants/CommonConstant";
 import ProcessEnv = NodeJS.ProcessEnv;
+import {Beans} from "../core/Beans";
+import { DefaultGlobalConfigBean, IGlobalConfigBean } from "../core/GlobalConfigBean";
+import {IApplication} from "./IApplication";
 
 export class ChookApplication {
-    public static run(startClass: object, processEnv: ProcessEnv): void {
+    public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {
         const chookApplication = new ChookApplication();
         chookApplication.startClass = startClass;
         chookApplication.processEnv = processEnv;
         chookApplication.run();
     }
-    private application: IApplication;
     private startClass: object;
     private processEnv: ProcessEnv;
-
-    /**
-     * 方法描述 分析配置
-     * @author yanshaowen
-     * @date 2018/12/22 16:35
-     */
-    private analysisConfig(): void {
-        //let startClass1 = new startClass();
-    }
-    private run(): void {
-
-        const koaApplication = new KoaApplication();
-        koaApplication.start();
+    private async run(): Promise<void> {
+        const globalConfig = Beans.getBean(CommonConstant.GLOBAL_CONFIG) as IGlobalConfigBean;
+        if (globalConfig) {
+            // 加载中间件
+            globalConfig.middleware.forEach((o: (() => void)) => {
+                globalConfig.application.use(o);
+            });
+            await globalConfig.application.start(3001);
+        }
     }
 
 }

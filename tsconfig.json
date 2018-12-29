@@ -11,7 +11,7 @@
     "experimentalDecorators": true  // typeorm
   },
   "include":[
-    "lib/**/*"
+    "lib/**/*", "test/**/*"
   ],
   "exclude":[
     "node_modules",

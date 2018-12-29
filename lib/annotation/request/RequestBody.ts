@@ -1,12 +1,16 @@
 /**
  *
- * 功能描述:
+ * 功能描述: 从body中取出的对象
  *
  * @className RequestBody
  * @projectName chook
  * @author yanshaowen
- * @date 2018/12/22 14:35
+ * @date 2018/12/26 14:23
  */
-class RequestBody {
+// @RequestParam 方法无参构造器
+export function RequestBody(target: object, propertyKey: string, paramIndex: number): void {
+    exec(target, propertyKey, paramIndex);
+}
+function exec(target: object, propertyKey: string, paramIndex: number) {
 
 }
