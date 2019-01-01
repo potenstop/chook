@@ -8,7 +8,13 @@
  * @date 2018/12/26 14:13
  */
 import "reflect-metadata";
+import {Controllers} from "../../core/Controllers";
+import ApplicationLog from "../../log/ApplicationLog";
+import {JSHelperUtil} from "../../util/JSHelperUtil";
 import {ValidOptions} from "../validation/ValidOptions";
+import {ControllerArgument} from "../../model/ControllerArgument";
+import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
+import {MetaConstant} from "../../constants/MetaConstant";
 const requestParamMetadataKey = Symbol("RequestParam");
 // @RequestParam 无参数
 export function RequestParam(target: object, propertyKey: string, paramIndex: number): void;
@@ -33,6 +39,23 @@ export function RequestParam(target: object | string | ValidOptions<string>, pro
 }
 function exec(target: object, propertyKey: string, paramIndex: number, options: ValidOptions<string>) {
     // 获取对应的index的参数名和类型
-    console.log(target.constructor.prototype[propertyKey]);
+    const paramsTypes = Reflect.getMetadata("design:paramtypes", target.constructor.prototype, propertyKey);
+    const argsNameList = JSHelperUtil.getArgsNameList(target.constructor.prototype[propertyKey]);
+    const currentType = paramsTypes[paramIndex];
+    const currentArgsName = argsNameList[paramIndex];
+    if (JSHelperUtil.isBaseType(currentType) || JSHelperUtil.isBaseObject(currentType)) {
+        // Controllers.addInParams(target.constructor as (new () => object) , propertyKey, paramIndex, currentArgsName, options.value || currentArgsName, currentType);
+        const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, target.constructor, propertyKey) || new Array<ControllerArgument>();
+        const controllerArgument = new ControllerArgument();
+        controllerArgument.index = paramIndex;
+        controllerArgument.inName = currentArgsName;
+        controllerArgument.outName = options.value || currentArgsName;
+        controllerArgument.type = currentType;
+        controllerArgument.source = ControllerArgumentSourceEnum.PARAMS;
+        controllerArguments.push(controllerArgument);
+        Reflect.defineMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controllerArguments, target.constructor, propertyKey);
 
+    } else {
+        ApplicationLog.debug(`functionName=${propertyKey}, argsName=${currentArgsName} type is error, Should be number| string| bool| objectBean`);
+    }
 }

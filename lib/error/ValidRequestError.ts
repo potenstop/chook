@@ -13,6 +13,6 @@ export class ValidRequestError<T> extends Error {
     public argsValue: T;
 
     public getValidMessage(): string {
-        return `${this.argsName}=${JSON.stringify(this.argsValue)} ${this.validRule}`;
+        return `${this.argsName}=${JSON.stringify(this.argsValue)} valid=${this.validRule}&errorMessage=${this.message}`;
     }
 }

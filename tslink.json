@@ -12,7 +12,8 @@
     "experimentalDecorators": true,
     "only-arrow-functions": false,
     "max-classes-per-file": 10,
-    "no-new-func": false
+    "no-new-func": false,
+    "no-empty": false
 
   }
 }

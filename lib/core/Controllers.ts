@@ -7,7 +7,10 @@
  * @author yanshaowen
  * @date 2018/12/25 12:29
  */
+import {ControllerArgumentSourceEnum} from "../enums/ControllerArgumentSourceEnum";
 import {RequestMethod} from "../enums/RequestMethod";
+import {ControllerArgument} from "../model/ControllerArgument";
+import {JSHelperUtil} from "../util/JSHelperUtil";
 
 export class Controllers {
     /**
@@ -49,23 +52,52 @@ export class Controllers {
     }
 
     /**
-     * 方法功能描述: 设置对应的参数参数检查为开启
+     * 方法功能描述: 设置params中的入参名称及返回值
      * @author yanshaowen
      * @date 2018/12/27 13:03
-     * @param
+     * @param clazz             对应controller的类
+     * @param functionName      方法名称
+     * @param paramIndex        参数的位置
+     * @param paramInName       参数对内的名称
+     * @param paramOutName      参数对外的名称
+     * @param paramType         参数类型
      * @return
      */
-    public static setValidOpenByParam(clazz: (new () => object), functionName: string, paramIndex: number, isOpen: boolean): void {
+    public static addInParams(clazz: (new () => object), functionName: string, paramIndex: number, paramInName: string, paramOutName: string, paramType: (new () => object)): void {
+        Controllers.controllers.forEach((controller: Controller) => {
+            if (clazz === controller.clazz && functionName === controller.functionName) {
+                if (JSHelperUtil.isNullOrUndefined(controller.controllerArguments)) {
+                    controller.controllerArguments = new Array<ControllerArgument>();
+                }
+                const controllerArgument = new ControllerArgument();
+                controllerArgument.index = paramIndex;
+                controllerArgument.inName = paramInName;
+                controllerArgument.outName = paramOutName;
+                controllerArgument.type = paramType;
+                controllerArgument.source = ControllerArgumentSourceEnum.PARAMS;
+                controller.controllerArguments.push(controllerArgument);
+            }
+        });
+    }
+    /**
+     * 方法功能描述: 设置params中的入参名称及返回值
+     * @author yanshaowen
+     * @date 2018/12/27 13:03
+     * @param clazz
+     * @param functionName
+     * @param paramIndex
+     * @return
+     */
+    public static addInBody(clazz: (new () => object), functionName: string, paramIndex: number ): void {
 
     }
-
 
     public static getAll(): Controller[] {
         return Controllers.controllers;
     }
-
     private static controllers: Controller[] = [];
 }
+
 export class Controller {
     // controller class
     public clazz: (new () => object);
@@ -75,4 +107,6 @@ export class Controller {
     public path: string;
     // 没有指定则所有方法
     public method: RequestMethod;
+    // 方法参数列表
+    public controllerArguments: ControllerArgument[];
 }

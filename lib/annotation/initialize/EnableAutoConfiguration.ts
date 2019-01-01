@@ -12,11 +12,16 @@ import * as  KoaRouter from "koa-router";
 import "reflect-metadata";
 import {KoaApplication} from "../../app/KoaApplication";
 import {CommonConstant} from "../../constants/CommonConstant";
+import {HttpStatusConstant} from "../../constants/HttpStatusConstant";
+import {MetaConstant} from "../../constants/MetaConstant";
 import {Beans} from "../../core/Beans";
 import {Controller, Controllers} from "../../core/Controllers";
 import {DefaultGlobalConfigBean} from "../../core/GlobalConfigBean";
+import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
+import {ValidError} from "../../error/ValidError";
 import {ValidRequestError} from "../../error/ValidRequestError";
-import {HttpStatusConstant} from "../../constants/HttpStatusConstant";
+import {ControllerArgument} from "../../model/ControllerArgument";
+import {JSHelperUtil} from "../../util/JSHelperUtil";
 import {StringUtil} from "../../util/StringUtil";
 
 // @EnableAutoConfiguration 无参数类装饰器
@@ -64,13 +69,34 @@ function exec(target: (new () => object), options: Options) {
                koaRouter[routerMethod](controller.path, async (ctx) => {
                     try {
                          const o = Reflect.construct(controller.clazz, []);
-                         // 获取function的请求参数
-                         const paramsTypes = Reflect.getMetadata("design:paramtypes", controller.clazz.prototype, controller.functionName);
-
-                         ctx.body = await Reflect.apply(controller.clazz.prototype[controller.functionName], o, []);
+                         const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controller.clazz, controller.functionName) || new Array<ControllerArgument>();
+                         const args = [];
+                         for (const controllerArgument of controllerArguments) {
+                              if (controllerArgument.source === ControllerArgumentSourceEnum.PARAMS) {
+                                   let v = null;
+                                   if (controllerArgument.outName in ctx.query) {
+                                        v = ctx.query[controllerArgument.outName];
+                                   }
+                                   // 类型转换 null 或者undefined 不转换 如果失败则直接抛出错误
+                                   if (!JSHelperUtil.isNullOrUndefined(v)) {
+                                        if (JSHelperUtil.isBaseType(controllerArgument.type)) {
+                                             // number类型则判断NaN
+                                             if (controllerArgument.type === Number && isNaN(controllerArgument.type(v))) {
+                                                  const validTypeError = new ValidError<string>("type transform error");
+                                                  validTypeError.argsName = controllerArgument.inName;
+                                                  validTypeError.argsValue = v;
+                                                  validTypeError.validRule = "typeCheck";
+                                                  throw validTypeError;
+                                             }
+                                        }
+                                   }
+                                   args[controllerArgument.index] = v;
+                              }
+                         }
+                         ctx.body = await Reflect.apply(controller.clazz.prototype[controller.functionName], o, args);
                          ctx.state = HttpStatusConstant.OK;
                     } catch (e) {
-                         if (e instanceof ValidRequestError) {
+                         if (e instanceof ValidError) {
                               ctx.body = {message: e.getValidMessage()};
                               ctx.state = HttpStatusConstant.PARAMS_ERROR;
                          } else {

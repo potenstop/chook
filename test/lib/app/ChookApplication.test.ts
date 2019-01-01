@@ -16,9 +16,11 @@ import {RequestMapping} from "../../../lib/annotation/mapping/RequestMapping";
 import {RequestParam} from "../../../lib/annotation/request/RequestParam";
 import {Max} from "../../../lib/annotation/validation/Max";
 import {Min} from "../../../lib/annotation/validation/Min";
-import {Required} from "../../../lib/annotation/validation/Required";
+import {NotBank} from "../../../lib/annotation/validation/NotBank";
+import {NotNull} from "../../../lib/annotation/validation/NotNull";
 import {Valid} from "../../../lib/annotation/validation/Valid";
 import {ChookApplication} from "../../../lib/app/ChookApplication";
+import ApplicationLog from "../../../lib/log/ApplicationLog";
 class LogBean {
     public appName: string;
     public serviceLine: string;
@@ -28,8 +30,10 @@ class LogBean {
 class MyController {
     @RequestMapping("/user")
     @Valid
-    public getBonuses(@RequestParam @Required({value: true}) @Min(1) @Max(3) id: number, name: string) {
-        // console.log(id);
+    public getBonuses(@RequestParam @NotNull @Min(1) @Max(3) id: number,
+                      @RequestParam("abc") name: string,
+                      @RequestParam @NotBank kk: string) {
+        ApplicationLog.info(id + kk);
         return {};
     }
 }
@@ -59,8 +63,9 @@ class TestApp {
 describe("test ChookApplication", () => {
     it("test", () => {
         TestApp.main();
-        // let greeter = new Greeter("11");
-        // greeter.greet("11");
+        const a = {
+            id: "111",
+        };
 
     });
 });

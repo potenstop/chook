@@ -31,7 +31,7 @@ export function RequestMapping(target: string | Options | (new () => object) | o
         exec(target, undefined, options);
     } else if (typeof target === "object" && typeof propertyKey === "string") {
         // 无参数方法装饰器
-        const constructor: any = target.constructor;
+        const constructor = target.constructor as (new () => object);
         exec(constructor, propertyKey, options);
     } else {
         // 有参数装饰器
@@ -46,7 +46,7 @@ export function RequestMapping(target: string | Options | (new () => object) | o
                 exec(target1, undefined, options);
             } else {
                 // 方法
-                const constructor: any = target1.constructor;
+                const constructor = target1.constructor as (new () => object);
                 exec(constructor, propertyKey1, options);
             }
         };
