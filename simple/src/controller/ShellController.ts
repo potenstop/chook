@@ -7,15 +7,17 @@
  * @author yanshaowen
  * @date 2018/12/21 22:00
  */
-import Autowired from "../../../lib/annotation/Autowired";
-import { RestController } from "../../../lib/annotation/controller/RestController";
-import Api from "../../../lib/annotation/swagger/Api";
-import ApplicationLog from "../../../lib/log/ApplicationLog";
-@RestController()
+import { annotation, ApplicationLog, enums } from "../../../src/chook";
+const { RestController, RequestMapping, RequestParam, NotNull, Valid} = annotation;
+const { RequestMethod } = enums;
+
+@RestController
+@RequestMapping("/my")
 class ShellController {
-    @Autowired(1)
-    private shellService: ShellService;
-    public getTest(): void {
-        ApplicationLog.info(JSON.stringify(this.shellService));
+    @RequestMapping({path: "/bonuses", method: RequestMethod.GET})
+    @Valid
+    public getBonuses(@RequestParam("number_id") @NotNull numberId: string): object {
+        ApplicationLog.info("numberId = " + numberId);
+        return {a: 1};
     }
 }
