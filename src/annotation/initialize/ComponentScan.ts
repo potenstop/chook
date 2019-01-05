@@ -8,8 +8,8 @@
  * @date 2018/12/24 10:39
  */
 import * as path from "path";
-import {StringUtil} from "../../util/StringUtil";
 import {FileUtil} from "../../util/FileUtil";
+import {StringUtil} from "../../util/StringUtil";
 // @ComponentScan("@controller") 加载controller
 // @ComponentScan("@service") 加载service
 export function ComponentScan(value: string): CallableFunction;

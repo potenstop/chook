@@ -60,9 +60,7 @@ class Options {
     // 方法 所有方法
     public method: RequestMethod;
 }
-interface Column {
-    path?: string;
-}
+
 function exec(target: (new () => object), propertyKey: string, options: Options) {
     if (StringUtil.isNotBank(propertyKey)) {
         Controllers.addController(target, propertyKey, options.path, options.method);

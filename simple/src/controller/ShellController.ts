@@ -14,7 +14,7 @@ const { RequestMethod } = enums;
 @RestController
 @RequestMapping("/my")
 class ShellController {
-    @RequestMapping({path: "/bonuses", method: RequestMethod.GET})
+    @RequestMapping({path: "/bonuses", method: RequestMethod.POST})
     @Valid
     public getBonuses(@RequestParam("number_id") @NotNull numberId: string): object {
         ApplicationLog.info("numberId = " + numberId);

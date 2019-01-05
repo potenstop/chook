@@ -7,6 +7,7 @@
  * @author yanshaowen
  * @date 2018/12/25 12:29
  */
+import {ContentTypeEnum} from "../enums/ContentTypeEnum";
 import {ControllerArgumentSourceEnum} from "../enums/ControllerArgumentSourceEnum";
 import {RequestMethod} from "../enums/RequestMethod";
 import {ControllerArgument} from "../model/ControllerArgument";
@@ -80,6 +81,35 @@ export class Controllers {
         });
     }
     /**
+     * 方法功能描述: 设置header头
+     * @author yanshaowen
+     * @date 2019/1/4 15:08
+     * @param clazz                 对应controller的类
+     * @param functionName          方法名称
+     * @param requestContentType    请求的content-type
+     * @param responseContentType   响应的content-type
+     * @return
+     */
+    public static setHeader(clazz: (new () => object), functionName: string, requestContentType: ContentTypeEnum, responseContentType: ContentTypeEnum) {
+        Controllers.controllers.forEach((controller: Controller) => {
+            if (functionName) {
+                // 方法级设置
+                if (clazz === controller.clazz && functionName === controller.functionName) {
+                    controller.requestContentType = requestContentType;
+                    controller.responseContentType = responseContentType;
+                }
+            } else {
+                // controller级设置 如果已经设置过了 就不覆盖
+                if (JSHelperUtil.isNullOrUndefined(controller.requestContentType)) {
+                    controller.requestContentType = requestContentType;
+                }
+                if (JSHelperUtil.isNullOrUndefined(controller.responseContentType)) {
+                    controller.responseContentType = responseContentType;
+                }
+            }
+        });
+    }
+    /**
      * 方法功能描述: 设置params中的入参名称及返回值
      * @author yanshaowen
      * @date 2018/12/27 13:03
@@ -109,4 +139,8 @@ export class Controller {
     public method: RequestMethod;
     // 方法参数列表
     public controllerArguments: ControllerArgument[];
+    // 设置请求的content-type
+    public requestContentType: ContentTypeEnum;
+    // 设置响应的content-type
+    public responseContentType: ContentTypeEnum;
 }
