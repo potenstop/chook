@@ -19,10 +19,11 @@ import {Controller, Controllers} from "../../core/Controllers";
 import {DefaultGlobalConfigBean} from "../../core/GlobalConfigBean";
 import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
 import {ValidError} from "../../error/ValidError";
-import {ValidRequestError} from "../../error/ValidRequestError";
 import {ControllerArgument} from "../../model/ControllerArgument";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
 import {StringUtil} from "../../util/StringUtil";
+import {RequestHeaderError} from "../../error/RequestHeaderError";
+import {RequestMethod} from "../../enums/RequestMethod";
 
 // @EnableAutoConfiguration 无参数类装饰器
 export function EnableAutoConfiguration(target: (new () => object)): void;
@@ -68,6 +69,10 @@ function exec(target: (new () => object), options: Options) {
                }
                koaRouter[routerMethod](controller.path, async (ctx) => {
                     try {
+                         // 检验请求头content-type
+                         if (!JSHelperUtil.isNullOrUndefined(controller.requestContentType) && ctx.method !== RequestMethod.GET && !ctx.is(controller.requestContentType)) {
+                              throw new RequestHeaderError(`content-type=${ctx.header["content-type"]},allow content-type is ${controller.requestContentType}`);
+                         }
                          const o = Reflect.construct(controller.clazz, []);
                          const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controller.clazz, controller.functionName) || new Array<ControllerArgument>();
                          const args = [];
@@ -94,14 +99,17 @@ function exec(target: (new () => object), options: Options) {
                               }
                          }
                          ctx.body = await Reflect.apply(controller.clazz.prototype[controller.functionName], o, args);
-                         ctx.state = HttpStatusConstant.OK;
+                         ctx.status  = HttpStatusConstant.OK;
                     } catch (e) {
                          if (e instanceof ValidError) {
                               ctx.body = {message: e.getValidMessage()};
-                              ctx.state = HttpStatusConstant.PARAMS_ERROR;
+                              ctx.status  = ValidError.STATUS;
+                         } else if (e instanceof RequestHeaderError) {
+                              ctx.body = {message: e.message};
+                              ctx.status  = RequestHeaderError.STATUS;
                          } else {
                               ctx.body = {message: "unknown error"};
-                              ctx.state = 500;
+                              ctx.status  = HttpStatusConstant.SERVER_ERROR;
                          }
                     }
                });

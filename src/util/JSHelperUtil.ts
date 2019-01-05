@@ -81,6 +81,16 @@ export class JSHelperUtil {
         return (type === null || type === undefined);
     }
     /**
+     * 方法描述 判断是否为null或者undefined
+     * @author yanshaowen
+     * @date 2018/12/30 11:05
+     * @param type   需要判断的类型对象
+     * @return
+     */
+    public static isNotNull(type: any) {
+        return !JSHelperUtil.isNullOrUndefined(type);
+    }
+    /**
      * 方法描述 判断object是否为基础类型
      * @author yanshaowen
      * @date 2018/12/30 11:05

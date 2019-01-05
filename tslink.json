@@ -13,7 +13,8 @@
     "only-arrow-functions": false,
     "max-classes-per-file": 10,
     "no-new-func": false,
-    "no-empty": false
+    "no-empty": false,
+    "ordered-imports": false
 
   }
 }

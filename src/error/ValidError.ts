@@ -7,11 +7,14 @@
  * @author yanshaowen
  * @date 2019/1/1 21:18
  */
+import {HttpStatusConstant} from "../constants/HttpStatusConstant";
+
 export class ValidError<T> extends Error {
     public argsName: string;
     public argsValue: T;
     public stack: string;
     public validRule: string;
+    public static STATUS = HttpStatusConstant.PARAMS_ERROR;
 
     public getValidMessage(): string {
         let value;
