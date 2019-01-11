@@ -10,8 +10,7 @@
 import {CommonConstant} from "../constants/CommonConstant";
 import ProcessEnv = NodeJS.ProcessEnv;
 import {Beans} from "../core/Beans";
-import { DefaultGlobalConfigBean, IGlobalConfigBean } from "../core/GlobalConfigBean";
-import {IApplication} from "./IApplication";
+import { IGlobalConfigBean } from "../core/GlobalConfigBean";
 
 export class ChookApplication {
     public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {

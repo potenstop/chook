@@ -4,8 +4,7 @@ import "reflect-metadata";
 import {JsonProperty} from "../../../src/annotation/bean/JsonProperty";
 import {Property} from "../../../src/annotation/bean/Property";
 import {JsonProtocol} from "../../../src/protocol/JsonProtocol";
-import {GenericsProperty} from "../../../src/annotation/bean/GenericsProperty";
-import {ApplicationLog} from "../../../src/log/ApplicationLog";
+
 class UserInfo {
     @JsonProperty("nick_name")
     public nickName: string;
@@ -28,7 +27,7 @@ class MyBean {
     @JsonProperty("user_info")
     public userInfo: UserInfo;
     @JsonProperty("order_ids")
-    @Property(Order)
+    @Property
     public orders: Order[];
     @JsonProperty("aaaaaaaaaaa")
     @Property
@@ -58,13 +57,19 @@ myBean.numbers = [];
 myBean.numbers.push(1);
 myBean.numbers.push(2);
 
+const myBeanMap = new Map<string, new () => object>();
+myBeanMap.set("MyBean.numbers", Array);
+myBeanMap.set("MyBean.numbers.Array", Number);
+myBeanMap.set("MyBean.orders", Array);
+myBeanMap.set("MyBean.orders.Array", Order);
+myBeanMap.set("MyBean.bonus", Bonus);
+myBeanMap.set("MyBean.bonus.Bonus.id", Number);
 class Standard<T> {
     @Property
     public code: number;
     @Property
     public message: string;
     @Property
-    @GenericsProperty(0)
     public data: T;
 }
 class User<T> {
@@ -77,13 +82,16 @@ class UserName {
     @Property
     public name: string;
 }
-const standard = new Standard<User<UserName>>();
+const standard = new Standard<Array<User<UserName>>>();
 const user = new User<UserName>();
 const userName = new UserName();
 userName.name = "11";
 user.userName = userName;
 user.userId = 1;
-standard.data = user;
+const array = new Array<User<UserName>>();
+array.push(user);
+array.push(user);
+standard.data = array;
 standard.code = 1;
 standard.message = "11";
 
@@ -96,24 +104,28 @@ standard1.message = "222";*/
 
 describe("测试 JsonProtocol.test", () => {
     it("toJson()", async () => {
-        const json = JsonProtocol.toJson(myBean) as any;
+        const json = JsonProtocol.toJson(myBean, myBeanMap, "MyBean") as any;
         expect(json.input_name).to.equal(myBean.inputName);
     });
     it("toJSONString()", async () => {
-        const json = JsonProtocol.toJSONString(myBean);
+        const json = JsonProtocol.toJSONString(myBean, myBeanMap, "MyBean");
         expect(json.length > 10).to.equals(true);
     });
     it("jsonToBean()", async () => {
-        const json = JsonProtocol.toJson(myBean);
-        const myBean1 = JsonProtocol.jsonToBean(json, MyBean);
-        const myBean2 = JsonProtocol.toJSONString(myBean1);
+        const json = JsonProtocol.toJson(myBean, myBeanMap, "MyBean");
+        const myBean1 = JsonProtocol.jsonToBean(json, MyBean, myBeanMap, "MyBean");
+        const myBean2 = JsonProtocol.toJSONString(myBean1, myBeanMap, "MyBean");
         expect(myBean1.inputName).to.equals(myBean.inputName);
     });
 
     it("response", () => {
         // type a = User[];
-        const json = JsonProtocol.toJson(standard, [User]);
-        const standard1 = JsonProtocol.jsonToBean(json, Standard, [User]);
+        const map = new Map<string, new () => object>();
+        map.set("Standard.data", Array);
+        map.set("Standard.data.Array", User);
+        map.set("Standard.data.Array.User.userName", UserName);
+        const json = JsonProtocol.toJson(standard, map, "Standard");
+        const standard1 = JsonProtocol.jsonToBean(json, Standard, map, "Standard");
         // let standard2 = standard1 as Standard<User<number>>;
         // const json1 = JsonProtocol.toJson(standard1, [Array]);
         // console.info(json, standard1);

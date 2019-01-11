@@ -86,3 +86,8 @@ import {RequestMethod as _RequestMethod} from "./enums/RequestMethod";
 export namespace enums {
     export const RequestMethod = _RequestMethod;
 }
+
+import {HttpContent as _HttpContent} from "./context/HttpContent";
+export namespace context {
+    export const HttpContent = _HttpContent;
+}

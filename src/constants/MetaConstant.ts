@@ -18,5 +18,5 @@ export class MetaConstant {
     public static DESIGN_TYPE = "design:type";
     public static KEYS = Symbol("chook.keys");
     public static CONTROLLER_ARGUMENTS = Symbol("chook.controller.arguments");
-    public static BEAN_GENERICS = Symbol("chook.bean.generics");
+    public static BEAN_RETURN_GENERICS = Symbol("chook.bean.return.generics");
 }

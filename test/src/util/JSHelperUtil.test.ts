@@ -32,12 +32,10 @@ describe("测试 JSHelperUtil.test", () => {
         const A = function() {};
 
         A.id = undefined;
-        Reflect.defineMetadata("design:type" ,Number, A, "id");
+        Reflect.defineMetadata("design:type" , Number, A, "id");
         const a = new A();
         a.id = "III";
         const b = new A();
         b.id = 2
-        console.log(Reflect.getOwnMetadata("design:type", A, "id"));
-        console.log(a.id, b.id, Object.keys(a))
     });
 });

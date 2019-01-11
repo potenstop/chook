@@ -23,7 +23,10 @@ import {ApplicationLog} from "../../../src/log/ApplicationLog";
 import {RestController} from "../../../src/annotation/controller/RestController";
 import {JsonProperty} from "../../../src/annotation/bean/JsonProperty";
 import {Property} from "../../../src/annotation/bean/Property";
-import {GenericsProperty} from "../../../src/annotation/bean/GenericsProperty";
+import {ReturnGenericsProperty} from "../../../src/annotation/bean/ReturnGenericsProperty";
+import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
+import {HookLog} from "../../../src/core/Hook";
+
 class LogBean {
     public appName: string;
     public serviceLine: string;
@@ -35,7 +38,6 @@ class Standard<T> {
     @Property
     public message: string;
     @Property
-    @GenericsProperty(0)
     public data: T;
 }
 class User {
@@ -44,20 +46,45 @@ class User {
     @Property
     public userName: string;
 }
+
+class UserRequest {
+    @NotNull
+    @Max(10)
+    @Min(1)
+    @JsonProperty("user_id")
+    public userId: number;
+    @NotBank
+    @Min(1)
+    @JsonProperty("user_name")
+    public userName: string;
+    @JsonProperty("user_head")
+    @NotBank
+    @Max(10)
+    public userHead: string;
+}
+
 @RestController
 @RequestMapping("/my")
 class MyController {
     @RequestMapping("/user")
     @Valid
+    @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses(@RequestParam @NotNull @Min(1) @Max(3) id: number,
                       @RequestParam("nickname") name: string,
-                      @RequestParam @NotBank head: string): Standard<User> {
-        ApplicationLog.info(id + name + head);
-        const standard = new Standard<User>();
+                      @RequestParam @NotBank head: string,
+                      @RequestHeader("host") host: string,
+                      @RequestParam userRequest: UserRequest): Standard<User[]> {
+        ApplicationLog.info(userRequest.userHead + name);
+        const head1 = HookLog.getHead();
+        const hookLink = HookLog.findByAsyncId(24);
+
+        const standard = new Standard<User[]>();
         const user = new User();
         user.userId = 1;
         user.userName = "app";
-        standard.data = user;
+        standard.data = [user, user];
+        standard.code = 0;
+        standard.message = "suc";
         return standard;
     }
 }
@@ -67,7 +94,7 @@ class TestApp {
         ChookApplication.run(TestApp, process.env);
     }
     @Bean
-    public logInit(): LogBean {
+    public logStatic(): LogBean {
         const logBean = new LogBean();
         logBean.appName = "test";
         logBean.serviceLine = "testLine";
@@ -75,16 +102,17 @@ class TestApp {
     }
 
     @Bean
-    public configInit(): LogBean {
+    public logDynamic(): LogBean {
         const logBean = new LogBean();
         logBean.appName = "test";
         logBean.serviceLine = "testLine";
         return logBean;
     }
 }
-
+// import "../../../src/core/Hook";
 describe("test ChookApplication", () => {
     it("main", () => {
         TestApp.main();
+        ApplicationLog.info("----------------");
     });
 });

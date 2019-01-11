@@ -14,7 +14,9 @@
     "max-classes-per-file": 10,
     "no-new-func": false,
     "no-empty": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "member-ordering": false,
+    "no-bitwise": false
 
   }
 }

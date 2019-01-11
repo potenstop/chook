@@ -15,5 +15,8 @@ export class Beans {
     public static getBean(name: string): object {
         return Beans.beans.get(name);
     }
+    public static getBeans() {
+        return Beans.beans;
+    }
     private static beans: Map<string, object> = new Map<string, object>();
 }

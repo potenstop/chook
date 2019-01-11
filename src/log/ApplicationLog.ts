@@ -13,6 +13,7 @@ import LogMeta from "../model/LogMeta";
 import {StackAnalysisUtil} from "../util/StackAnalysisUtil";
 const { combine, timestamp, printf, splat } = format;
 import * as DailyRotateFile from "winston-daily-rotate-file";
+import {HttpContent} from "../context/HttpContent";
 
 const consoleLogger = createLogger({
     format: combine(
@@ -41,6 +42,14 @@ const consoleLogger = createLogger({
             }
             logMessage.push(`- ${nfo.message}`);
             logMessage.push(errorStack);
+            // ext static
+            const extStaticFields = ApplicationLog.getExtStaticFields();
+            if (extStaticFields.size > 0) {
+                logMessage.push(`-`);
+                extStaticFields.forEach((value, key) => {
+                    logMessage.push(`${key}=${value}&`);
+                });
+            }
             return logMessage.join(" ");
         }),
     ),
@@ -55,7 +64,7 @@ const fileLogger = createLogger({
         }),
         splat(),
         printf((nfo) => {
-            const applicationLogJson = new ApplicationLogJson();
+            const applicationLogJson = {} as any;
             applicationLogJson.timestamp = nfo.timestamp;
             applicationLogJson.level = nfo.level;
             applicationLogJson.message = nfo.message;
@@ -68,7 +77,15 @@ const fileLogger = createLogger({
                 applicationLogJson.file = stackType.file;
                 if (nfo.meta.error) { applicationLogJson.errorStack = nfo.meta.error.stack; }
             }
-            return JSON.stringify(applicationLogJson);
+            // ext static
+            const extStaticFields = ApplicationLog.getExtStaticFields();
+            if (extStaticFields.size > 0) {
+                extStaticFields.forEach((value, key) => {
+                    applicationLogJson[key] = value;
+                });
+            }
+            applicationLogJson["request-id"] = HttpContent.getHeader("request-id");
+            return JSON.stringify(applicationLogJson, null);
         }),
     ),
     transports: [
@@ -97,6 +114,14 @@ export class ApplicationLog  {
     public static error(msg: string, error?: Error): void {
         ApplicationLog.log("error", msg, error);
     }
+    // 设置静态字段
+    public static setExtStaticField(key: string, value: string) {
+        ApplicationLog.extStaticFields.set(key, value);
+    }
+    public static getExtStaticFields(): Map<string, string> {
+        return ApplicationLog.extStaticFields;
+    }
+    private static extStaticFields = new Map<string, string>();
     private static log(level: string, msg: string, e: Error): void;
     private static log(level: string, msg: string): void;
     private static log(level: string, msg: string, e?: Error): void {
@@ -108,5 +133,4 @@ export class ApplicationLog  {
         consoleLogger.log(level, msg, logMeta);
         fileLogger.log(level, msg, logMeta);
     }
-
 }

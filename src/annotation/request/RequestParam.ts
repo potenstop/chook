@@ -9,13 +9,11 @@
  */
 import "reflect-metadata";
 import {MetaConstant} from "../../constants/MetaConstant";
-import {Controllers} from "../../core/Controllers";
 import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
 import {ApplicationLog} from "../../log/ApplicationLog";
 import {ControllerArgument} from "../../model/ControllerArgument";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
 import {ValidOptions} from "../validation/ValidOptions";
-const requestParamMetadataKey = Symbol("RequestParam");
 // @RequestParam 无参数
 export function RequestParam(target: object, propertyKey: string, paramIndex: number): void;
 // @RequestParam("id")  只带字段的名称
@@ -43,8 +41,7 @@ function exec(target: object, propertyKey: string, paramIndex: number, options: 
     const argsNameList = JSHelperUtil.getArgsNameList(target.constructor.prototype[propertyKey]);
     const currentType = paramsTypes[paramIndex];
     const currentArgsName = argsNameList[paramIndex];
-    if (JSHelperUtil.isBaseType(currentType) || JSHelperUtil.isBaseObject(currentType)) {
-        // Controllers.addInParams(target.constructor as (new () => object) , propertyKey, paramIndex, currentArgsName, options.value || currentArgsName, currentType);
+    if (JSHelperUtil.isBaseType(currentType) || JSHelperUtil.isClassObject(currentType)) {
         const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, target.constructor, propertyKey) || new Array<ControllerArgument>();
         const controllerArgument = new ControllerArgument();
         controllerArgument.index = paramIndex;
@@ -54,7 +51,6 @@ function exec(target: object, propertyKey: string, paramIndex: number, options: 
         controllerArgument.source = ControllerArgumentSourceEnum.PARAMS;
         controllerArguments.push(controllerArgument);
         Reflect.defineMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controllerArguments, target.constructor, propertyKey);
-
     } else {
         ApplicationLog.debug(`functionName=${propertyKey}, argsName=${currentArgsName} type is error, Should be number| string| bool| objectBean`);
     }
