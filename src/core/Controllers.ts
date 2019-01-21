@@ -43,11 +43,13 @@ export class Controllers {
      */
     public static setPrefix(clazz: (new () => object), path: string, method: RequestMethod): void {
         Controllers.controllers.forEach((controller: Controller) => {
-           if (clazz === controller.clazz) {
+           if (clazz.prototype.constructor === controller.clazz) {
                if (!(controller.path === "/" && path === "/")) {
                    // 增加前缀
                    controller.path = path + controller.path;
                }
+               // 替换对象
+               controller.clazz = clazz;
            }
         });
     }

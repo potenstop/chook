@@ -26,6 +26,8 @@ import {Property} from "../../../src/annotation/bean/Property";
 import {ReturnGenericsProperty} from "../../../src/annotation/bean/ReturnGenericsProperty";
 import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
 import {HookLog} from "../../../src/core/Hook";
+import {Service} from "../../../src/annotation/component/Service";
+import {Autowired} from "../../../src/annotation/component/Autowired";
 
 class LogBean {
     public appName: string;
@@ -62,11 +64,18 @@ class UserRequest {
     @Max(10)
     public userHead: string;
 }
-
-@RestController
+@Service
+class MyService {
+    public test(): string {
+        return "===";
+    }
+}
 @RequestMapping("/my")
+@RestController
 class MyController {
-    @RequestMapping("/user")
+    @Autowired
+    private myService: MyService;
+    @RequestMapping("/bonuses")
     @Valid
     @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses(@RequestParam @NotNull @Min(1) @Max(3) id: number,
@@ -74,7 +83,7 @@ class MyController {
                       @RequestParam @NotBank head: string,
                       @RequestHeader("host") host: string,
                       @RequestParam userRequest: UserRequest): Standard<User[]> {
-        ApplicationLog.info(userRequest.userHead + name);
+        ApplicationLog.info(userRequest.userHead + name + this.myService.test());
         const head1 = HookLog.getHead();
         const hookLink = HookLog.findByAsyncId(24);
 

@@ -19,4 +19,5 @@ export class MetaConstant {
     public static KEYS = Symbol("chook.keys");
     public static CONTROLLER_ARGUMENTS = Symbol("chook.controller.arguments");
     public static BEAN_RETURN_GENERICS = Symbol("chook.bean.return.generics");
+    public static AUTOWIRED = Symbol("chook.autowired");
 }

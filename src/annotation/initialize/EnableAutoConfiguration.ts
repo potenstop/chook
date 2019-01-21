@@ -82,7 +82,7 @@ function exec(target: (new () => object), options: Options) {
                               throw new RequestHeaderError(`content-type=${ctx.header["content-type"]},allow content-type is ${controller.requestContentType}`);
                          }
                          const o = Reflect.construct(controller.clazz, []);
-                         const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controller.clazz, controller.functionName) || new Array<ControllerArgument>();
+                         const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controller.clazz.prototype.constructor, controller.functionName) || new Array<ControllerArgument>();
                          const args = [];
                          for (const controllerArgument of controllerArguments) {
                               let v = null;

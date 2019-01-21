@@ -2,23 +2,26 @@
  *
  * 功能描述:
  *
- * @className ${Name}
+ * @className ShellController
  * @projectName chook
  * @author yanshaowen
  * @date 2018/12/21 22:00
  */
 import { annotation, ApplicationLog, enums, context } from "../../../src/chook";
-const { RestController, RequestMapping, RequestParam, NotNull, Valid} = annotation;
+import {ShellService} from "../service/ShellService";
+const { RestController, RequestMapping, RequestParam, NotNull, Valid, Autowired} = annotation;
 const { RequestMethod } = enums;
 const { HttpContent } = context;
 
-@RestController
 @RequestMapping("/my")
+@RestController
 class ShellController {
+    @Autowired
+    private shellService: ShellService;
     @RequestMapping({path: "/bonuses", method: RequestMethod.GET})
     @Valid
     public async getBonuses(@RequestParam("number_id") @NotNull numberId: string): Promise<object> {
-        ApplicationLog.info("numberId = " + numberId);
+        ApplicationLog.info("numberId = " + numberId + HttpContent.getHeader("host"));
         return new Promise<object>((resolve) => {
             setTimeout(() => {
                 ApplicationLog.info("numberId = " + numberId);

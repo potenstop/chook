@@ -16,7 +16,6 @@ export class HttpContent {
 
     public static getHeader(key: string): string {
         const headers = HttpContent.getHeaders();
-
         if (headers) {
             return headers.get(key) || "";
         }

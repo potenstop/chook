@@ -22,7 +22,7 @@ import {Property as _Property} from "./annotation/bean/Property";
 import {Controller as _Controller} from "./annotation/controller/Controller";
 import {RestController as _RestController} from "./annotation/controller/RestController";
 import {Bean as _Bean} from "./annotation/initialize/Bean";
-import {ComponentScan as _ComponentScan} from "./annotation/initialize/ComponentScan";
+import {ComponentScan as _ComponentScan} from "./annotation/component/ComponentScan";
 import {EnableAutoConfiguration as _EnableAutoConfiguration} from "./annotation/initialize/EnableAutoConfiguration";
 import {RequestMapping as _RequestMapping} from "./annotation/mapping/RequestMapping";
 import {RequestBody as _RequestBody} from "./annotation/request/RequestBody";
@@ -36,6 +36,8 @@ import {NotBank as _NotBank} from "./annotation/validation/NotBank";
 import {NotNull as _NotNull} from "./annotation/validation/NotNull";
 import {Valid as _Valid} from "./annotation/validation/Valid";
 import {ValidOptions as _ValidOptions} from "./annotation/validation/ValidOptions";
+import {Autowired as _Autowired} from "./annotation/component/Autowired";
+import {Service as _Service} from "./annotation/component/Service";
 
 export namespace annotation {
     export const JsonProperty = _JsonProperty;
@@ -56,6 +58,8 @@ export namespace annotation {
     export const NotBank = _NotBank;
     export const Valid = _Valid;
     export const ValidOptions = _ValidOptions;
+    export const Autowired = _Autowired;
+    export const Service = _Service;
 }
 
 import {Api as _Api} from "./annotation/swagger/Api";

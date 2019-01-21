@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import Autowired from "../../../src/annotation/Autowired";
+import Autowired from "../../../src/annotation/component/Autowired";
 import {ApplicationLog} from "../../../src/log/ApplicationLog";
 class BeanTest {
     public name: string;
