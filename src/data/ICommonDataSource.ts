@@ -12,5 +12,5 @@ export interface ICommonDataSource {
     setLogWriter(printWrite: () => {}): void;
     getLoginTimeout(): number;
     setLoginTimeout(seconds: number): void;
-
+    build(): any;
 }

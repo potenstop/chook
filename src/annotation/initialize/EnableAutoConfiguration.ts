@@ -155,7 +155,8 @@ function exec(target: (new () => object), options: Options) {
                               ctx.body = {message: e.message};
                               ctx.status  = RequestHeaderError.STATUS;
                          } else {
-                              ctx.body = {message: "unknown error"};
+                              console.log(e)
+                              ctx.body = {message: "unknown error, message=" + e.message };
                               ctx.status  = HttpStatusConstant.SERVER_ERROR;
                          }
                     }

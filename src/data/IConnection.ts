@@ -10,6 +10,7 @@
 import {ISavepoint} from "./ISavepoint";
 
 export interface IConnection {
+    kind: "IConnection";
     readonly options: any;
     /**
      * 方法功能描述: 开始连接
@@ -17,7 +18,7 @@ export interface IConnection {
      * @date 2019/1/21 11:54
      * @return Promise<IConnection>
      */
-    connect(): Promise<IConnection>;
+    connect(): Promise<void>;
     commit(): void;
     rollback(savePoint: ISavepoint): void;
     close(): Promise<void>;

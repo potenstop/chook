@@ -38,6 +38,9 @@ import {Valid as _Valid} from "./annotation/validation/Valid";
 import {ValidOptions as _ValidOptions} from "./annotation/validation/ValidOptions";
 import {Autowired as _Autowired} from "./annotation/component/Autowired";
 import {Service as _Service} from "./annotation/component/Service";
+import {Configuration as _Configuration} from "./annotation/component/Configuration";
+import {Resource as _Resource} from "./annotation/initialize/Resource";
+import {MapperScan as _MapperScan} from "./annotation/component/MapperScan";
 
 export namespace annotation {
     export const JsonProperty = _JsonProperty;
@@ -60,6 +63,9 @@ export namespace annotation {
     export const ValidOptions = _ValidOptions;
     export const Autowired = _Autowired;
     export const Service = _Service;
+    export const Configuration = _Configuration;
+    export const Resource = _Resource;
+    export const MapperScan = _MapperScan;
 }
 
 import {Api as _Api} from "./annotation/swagger/Api";
@@ -94,4 +100,21 @@ export namespace enums {
 import {HttpContent as _HttpContent} from "./context/HttpContent";
 export namespace context {
     export const HttpContent = _HttpContent;
+}
+
+import {IConnection as _IConnection} from "./data/IConnection";
+import {IDataSource as _IDataSource} from "./data/IDataSource";
+import {IConnectionPoolDataSource as _IConnectionPoolDataSource} from "./data/IConnectionPoolDataSource";
+import {IPooledConnection as _IPooledConnection} from "./data/IPooledConnection";
+import {ISavepoint as _ISavepoint} from "./data/ISavepoint";
+import {TypeConnection as _TypeConnection} from "./data/typeorm/TypeConnection";
+import {TypeDataBeansRepository as _TypeDataBeansRepository} from "./data/typeorm/TypeDataBeansRepository";
+export namespace data {
+    export type IConnection = _IConnection;
+    export type IDataSource = _IDataSource;
+    export type IConnectionPoolDataSource = _IConnectionPoolDataSource;
+    export type IPooledConnection = _IPooledConnection;
+    export type ISavepoint = _ISavepoint;
+    export type TypeConnection = _TypeConnection;
+    export const TypeDataBeansRepository = _TypeDataBeansRepository;
 }

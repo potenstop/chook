@@ -16,7 +16,8 @@
     "no-empty": false,
     "ordered-imports": false,
     "member-ordering": false,
-    "no-bitwise": false
+    "no-bitwise": false,
+    "ban-types":false
 
   }
 }

@@ -27,7 +27,7 @@ const consoleLogger = createLogger({
             let errorStack = "";
             const base = `[${nfo.timestamp}] [${nfo.level}] `;
             if (nfo.meta instanceof LogMeta && nfo.meta !== null) {
-                const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[1];
+                const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[2];
                 classInfo = `[${stackType.className} ${stackType.methodName}]`;
                 codeInfo = `[${stackType.line} ${stackType.row} ${stackType.file}]`;
                 if (nfo.meta.error) { errorStack = nfo.meta.error.stack; }
@@ -69,7 +69,7 @@ const fileLogger = createLogger({
             applicationLogJson.level = nfo.level;
             applicationLogJson.message = nfo.message;
             if (nfo.meta instanceof LogMeta && nfo.meta !== null) {
-                const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[1];
+                const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[2];
                 applicationLogJson.className = stackType.className;
                 applicationLogJson.methodName = stackType.methodName;
                 applicationLogJson.line = stackType.line;

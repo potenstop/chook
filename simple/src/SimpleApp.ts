@@ -14,6 +14,8 @@ const {EnableAutoConfiguration, ComponentScan} = annotation;
 @EnableAutoConfiguration
 @ComponentScan("@service")
 @ComponentScan("@controller")
+@ComponentScan("@config")
+@ComponentScan("@model")
 class SimpleApp {
     public static main(): void {
         app.ChookApplication.run(SimpleApp, process.env);

@@ -14,7 +14,7 @@ import * as fs from "fs";
 import {HttpContent} from "../context/HttpContent";
 
 // let indent = 0;
-createHook({
+/*createHook({
     init(asyncId: number, type: string, triggerAsyncId: number, resource: AsyncResource) {
         const hookLink = new HookLink();
         hookLink.createTime = new Date();
@@ -26,14 +26,14 @@ createHook({
         // fs.writeSync(1, `${type}(${asyncId}):` + ` trigger: ${triggerAsyncId} execution: ${eid}\n`);
     },
     before(asyncId) {
-        /*const indentStr = " ".repeat(indent);
+        /!*const indentStr = " ".repeat(indent);
         fs.writeSync(1, `${indentStr}before:  ${asyncId}\n`);
-        indent += 2;*/
+        indent += 2;*!/
     },
     after(asyncId) {
-        /*indent -= 2;
+        /!*indent -= 2;
         const indentStr = " ".repeat(indent);
-        fs.writeSync(1, `${indentStr}after:   ${asyncId}\n`);*/
+        fs.writeSync(1, `${indentStr}after:   ${asyncId}\n`);*!/
     },
     destroy(asyncId) {
         HookLog.destroy(asyncId);
@@ -41,7 +41,7 @@ createHook({
     promiseResolve(asyncId) {
         // fs.writeSync(1, `promiseResolve ${asyncId}\n`);
     },
-}).enable();
+}).enable();*/
 export class HookLog {
     private static hookLinkHead: HookLink;
     public static add(triggerAsyncId: number, hookLink: HookLink): boolean {

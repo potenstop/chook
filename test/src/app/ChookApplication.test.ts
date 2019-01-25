@@ -28,6 +28,9 @@ import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
 import {HookLog} from "../../../src/core/Hook";
 import {Service} from "../../../src/annotation/component/Service";
 import {Autowired} from "../../../src/annotation/component/Autowired";
+import {annotation} from "../../../src/chook";
+import Resource = annotation.Resource;
+import {TypeConnection} from "../../../src/data/typeorm/TypeConnection";
 
 class LogBean {
     public appName: string;
@@ -75,6 +78,9 @@ class MyService {
 class MyController {
     @Autowired
     private myService: MyService;
+    @Resource("logStatic")
+    private logStatic: LogBean;
+
     @RequestMapping("/bonuses")
     @Valid
     @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
@@ -119,9 +125,29 @@ class TestApp {
     }
 }
 // import "../../../src/core/Hook";
+import {createPool} from "generic-pool";
 describe("test ChookApplication", () => {
     it("main", () => {
         TestApp.main();
         ApplicationLog.info("----------------");
+    });
+    it("test pool", async () => {
+        const connectionPool = createPool({
+            create() {
+                return TypeConnection.build({ type: "mysql",
+                    name: "mysql-master",
+                    url: "mysql://common_util_root:123456@127.0.0.1:3306/common_util",
+                    entities: [ "src/model/dto/common-util/*.ts" ] }, true);
+            },
+            destroy() {
+
+            }}, {
+            max: 10,
+            min: 2,
+            idleTimeoutMillis: 10000,
+            acquireTimeoutMillis: 5000,});
+        await connectionPool.acquire();
+        await connectionPool.acquire();
+        await connectionPool.acquire();
     });
 });

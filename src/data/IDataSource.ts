@@ -10,7 +10,8 @@
 import {ICommonDataSource} from "./ICommonDataSource";
 import {IConnection} from "./IConnection";
 
-export interface IDataSource extends ICommonDataSource{
-    getConnection(): IConnection;
-    getConnection(username: string, password): IConnection;
+export interface IDataSource extends ICommonDataSource {
+    kind: "IDataSource";
+    getConnection(): Promise<IConnection>;
+    getConnection(username: string, password: string): Promise<IConnection>;
 }

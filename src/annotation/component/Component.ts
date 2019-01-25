@@ -1,6 +1,7 @@
 import {MetaConstant} from "../../constants/MetaConstant";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
 import "reflect-metadata";
+import {Beans} from "../../core/Beans";
 /**
  *
  * 功能描述: 标识为组件 Autowired会生效
@@ -21,6 +22,11 @@ export function Component<T extends {new(...args: any[]): {}}>(target: T): any {
                 if (JSHelperUtil.isNotNull(typeName) && JSHelperUtil.isClassObject(typeName)) {
                     o[key] = Reflect.construct(typeName, []);
                 }
+            });
+            // 注入resource
+            const resourceKeys: Map<string, string> = Reflect.getOwnMetadata(MetaConstant.RESOURCE, constructor.prototype) || new Map<string, string>();
+            resourceKeys.forEach((value, key) => {
+                o[key] = Beans.getBean(value);
             });
             return o;
         },

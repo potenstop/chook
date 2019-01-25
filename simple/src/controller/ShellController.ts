@@ -20,14 +20,9 @@ class ShellController {
     private shellService: ShellService;
     @RequestMapping({path: "/bonuses", method: RequestMethod.GET})
     @Valid
-    public async getBonuses(@RequestParam("number_id") @NotNull numberId: string): Promise<object> {
+    public async getBonuses(@RequestParam("number_id") @NotNull numberId: string): Promise<string> {
         ApplicationLog.info("numberId = " + numberId + HttpContent.getHeader("host"));
-        return new Promise<object>((resolve) => {
-            setTimeout(() => {
-                ApplicationLog.info("numberId = " + numberId);
-                resolve({});
-
-            }, 2000);
-        });
+        await this.shellService.test();
+        return "111";
     }
 }

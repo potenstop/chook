@@ -36,4 +36,25 @@ export class FileUtil {
         finder(startPath);
         return result;
     }
+
+    /**
+     * 方法功能描述: 查找包括自己的所有父级路径
+     * @author yanshaowen
+     * @date 2019/1/22 20:32
+     * @param source    原始路径
+     * @return          路径列表
+     */
+    public static findParents(source: string) {
+        const arr: string[] = [];
+        function func(current) {
+            arr.push(current);
+            current = path.join(current);
+            const parent = path.resolve(current, "..");
+            if (parent !== current) {
+                func(parent);
+            }
+        }
+        func(source);
+        return arr;
+    }
 }

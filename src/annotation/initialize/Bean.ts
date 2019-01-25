@@ -9,6 +9,7 @@
  */
 import {Beans} from "../../core/Beans";
 import {StringUtil} from "../../util/StringUtil";
+import {MetaConstant} from "../../constants/MetaConstant";
 
 export function Bean(target: object, propertyKey: string): void ;
 export function Bean(target: string): CallableFunction;
@@ -48,6 +49,10 @@ function exec(target: object, propertyKey: string, options: Options) {
     if (StringUtil.isNotBank(options.name)) {
         propertyKey = options.name;
     }
+    // 设置bean的key
+    const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.BEANS, target) || new Set<string>();
+    keys.add(propertyKey);
+    Reflect.defineMetadata(MetaConstant.BEANS, keys, target);
     Beans.setBean(propertyKey, beanObject);
 
 }

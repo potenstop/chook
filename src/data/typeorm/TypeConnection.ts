@@ -8,27 +8,35 @@
  * @date 2019/1/18 12:50
  */
 import {IConnection} from "../IConnection";
-import {createConnection, Connection as _Connection, EntityManager} from "typeorm";
+import {createConnection, Connection as _Connection, EntityManager, ConnectionOptions} from "typeorm";
 import {ISavepoint} from "../ISavepoint";
 import {CommonSavepoint} from "../CommonSavepoint";
 import {IsolationLevel} from "typeorm/driver/types/IsolationLevel";
-import {setServers} from "dns";
-import {transports} from "winston";
+import {GenerateUtil} from "../../util/GenerateUtil";
+import {ApplicationLog} from "../../log/ApplicationLog";
+
+let isFirst = true;
 
 export class TypeConnection implements IConnection {
-    public readonly options: any;
+    public kind: "IConnection" = "IConnection";
+    public readonly options: ConnectionOptions;
     private connection: _Connection;
     private readonlyConnection: boolean;
     private transactions: Map<string, EntityManager> = new Map<string, EntityManager>();
-    constructor(options: any) {
+    constructor(options: ConnectionOptions) {
         this.readonlyConnection = false;
+        if (isFirst) {(options as any).name = "default"; isFirst = false; } else {(options as any).name = GenerateUtil.uuid(8, 20); }
         this.options = options;
     }
-    public connect(): Promise<IConnection> {
-        return createConnection(this.options).then((con: _Connection ) => {
-            this.connection = con;
-            return this;
-        });
+    public async connect(): Promise<void> {
+        try {
+            this.connection = await createConnection(this.options);
+            ApplicationLog.info(JSON.stringify(this.options));
+        } catch (e) {
+            ApplicationLog.info(JSON.stringify(this.options));
+            ApplicationLog.error("connect error", e);
+            this.connection = null;
+        }
     }
     public isClosed(): boolean {
         if (!this.connection) { return true; }
@@ -39,7 +47,9 @@ export class TypeConnection implements IConnection {
             return this.connection.close();
         }
     }
-
+    public getSourceConnection() {
+        return this.connection;
+    }
     public commit(): void {
 
     }
@@ -76,4 +86,12 @@ export class TypeConnection implements IConnection {
         this.transactions.set(savepoint.getSavepointName(), queryRunner.manager);
         return savepoint;
     }
+    public static async build(options: ConnectionOptions, isReadOnly: boolean): Promise<TypeConnection> {
+        const typeConnection = new TypeConnection(options);
+        typeConnection.setReadOnly(isReadOnly);
+        console.log("=============")
+        await typeConnection.connect();
+        return typeConnection;
+    }
+
 }
