@@ -19,8 +19,8 @@ export interface IConnection {
      * @return Promise<IConnection>
      */
     connect(): Promise<void>;
-    commit(): void;
-    rollback(savePoint: ISavepoint): void;
+    commit(savePoint: ISavepoint): Promise<void>;
+    rollback(savePoint: ISavepoint): Promise<void>;
     close(): Promise<void>;
     isClosed(): boolean;
     setReadOnly(readOnly: boolean): void;

@@ -8,7 +8,7 @@
  * @date 2019/1/18 12:50
  */
 import {IConnection} from "../IConnection";
-import {createConnection, Connection as _Connection, EntityManager, ConnectionOptions} from "typeorm";
+import {createConnection, Connection as _Connection, EntityManager, ConnectionOptions, QueryRunner} from "typeorm";
 import {ISavepoint} from "../ISavepoint";
 import {CommonSavepoint} from "../CommonSavepoint";
 import {IsolationLevel} from "typeorm/driver/types/IsolationLevel";
@@ -22,7 +22,7 @@ export class TypeConnection implements IConnection {
     public readonly options: ConnectionOptions;
     private connection: _Connection;
     private readonlyConnection: boolean;
-    private transactions: Map<string, EntityManager> = new Map<string, EntityManager>();
+    private transactions: Map<string, QueryRunner> = new Map<string, QueryRunner>();
     constructor(options: ConnectionOptions) {
         this.readonlyConnection = false;
         if (isFirst) {(options as any).name = "default"; isFirst = false; } else {(options as any).name = GenerateUtil.uuid(8, 20); }
@@ -31,9 +31,7 @@ export class TypeConnection implements IConnection {
     public async connect(): Promise<void> {
         try {
             this.connection = await createConnection(this.options);
-            ApplicationLog.info(JSON.stringify(this.options));
         } catch (e) {
-            ApplicationLog.info(JSON.stringify(this.options));
             ApplicationLog.error("connect error", e);
             this.connection = null;
         }
@@ -50,11 +48,29 @@ export class TypeConnection implements IConnection {
     public getSourceConnection() {
         return this.connection;
     }
-    public commit(): void {
-
+    public async commit(savePoint: ISavepoint): Promise<void> {
+        if (!this.connection) {
+            throw new Error("connection is error");
+        }
+        const queryRunner = this.transactions.get(savePoint.getSavepointName());
+        if (queryRunner) {
+            try {
+                await queryRunner.commitTransaction();
+                this.transactions.delete(savePoint.getSavepointName());
+            } catch (e) {
+                throw e;
+            }
+        }
     }
-    public rollback(savePoint: ISavepoint): void {
-
+    public async rollback(savePoint: ISavepoint): Promise<void> {
+        if (!this.connection) {
+            throw new Error("connection is error");
+        }
+        const queryRunner = this.transactions.get(savePoint.getSavepointName());
+        if (queryRunner) {
+            this.transactions.delete(savePoint.getSavepointName());
+            await queryRunner.rollbackTransaction();
+        }
     }
     public isConnected(): boolean {
         if (!this.connection) { return false; }
@@ -83,13 +99,12 @@ export class TypeConnection implements IConnection {
         const queryRunner = this.connection.createQueryRunner("master");
         await queryRunner.startTransaction(level);
         const savepoint = this.setSavepoint();
-        this.transactions.set(savepoint.getSavepointName(), queryRunner.manager);
+        this.transactions.set(savepoint.getSavepointName(), queryRunner);
         return savepoint;
     }
     public static async build(options: ConnectionOptions, isReadOnly: boolean): Promise<TypeConnection> {
         const typeConnection = new TypeConnection(options);
         typeConnection.setReadOnly(isReadOnly);
-        console.log("=============")
         await typeConnection.connect();
         return typeConnection;
     }

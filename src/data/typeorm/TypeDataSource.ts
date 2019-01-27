@@ -11,8 +11,8 @@ import {IDataSource} from "../IDataSource";
 import {IConnection} from "../IConnection";
 import {createPool, Options, Pool} from "generic-pool";
 import {TypeConnection} from "./TypeConnection";
-import {ConnectionOptions} from "typeorm";
 import {ApplicationLog} from "../../log/ApplicationLog";
+import {DatabaseLog} from "../../log/DatabaseLog";
 export class TypeDataSource implements IDataSource {
     public kind: "IDataSource" = "IDataSource";
     protected logWriter: () => {};
@@ -25,6 +25,7 @@ export class TypeDataSource implements IDataSource {
     private readonlyConnection: boolean;
     protected username: string;
     protected password: string;
+    protected entities: string[];
 
     constructor() {
         this.type = "mysql";
@@ -33,8 +34,8 @@ export class TypeDataSource implements IDataSource {
         this.poolOption = {
             max: 10,
             min: 1,
-            idleTimeoutMillis: 10000,
-            acquireTimeoutMillis: 5000,
+            idleTimeoutMillis: 100000,
+            acquireTimeoutMillis: 50000,
         };
     }
 
@@ -90,11 +91,14 @@ export class TypeDataSource implements IDataSource {
     public setReadOnly(readOnly: boolean): void {
         this.readonlyConnection = readOnly;
     }
+    public setEntities(entities: string[]) {
+        this.entities = entities;
+    }
+    public getEntities() {
+        return this.entities;
+    }
     public build() {
-        const op = {
-            entities: [
-            "src/model/dto/common-util/*.ts",
-        ]} as any;
+        const op = {} as any;
         if (this.url) {
             const url = new URL(this.url);
             op.type = url.protocol.substring(0, url.protocol.length - 1);
@@ -104,40 +108,33 @@ export class TypeDataSource implements IDataSource {
             op.username = this.username;
             op.password = this.password;
             op.name = this.name;
+            op.entities = this.entities;
+            op.logger = new DatabaseLog();
             url.searchParams.forEach((value, key) => {
-                op.key = value;
+                op[key] = value;
             });
         }
-        ApplicationLog.info(JSON.stringify(op));
         const readOnly = this.isReadOnly();
         this.connectionPool = createPool({
             create() {
-                const opCopy = JSON.parse(JSON.stringify(op));
-                const readOnlyCopy = readOnly;
-                return TypeConnection.build(opCopy, readOnlyCopy);
+                return TypeConnection.build(op, readOnly);
             },
             destroy(client) {
-                client.disconnect();
+                client.getSourceConnection().close();
             }}, this.poolOption);
-            this.connectionPool.acquire().then(c => {
-                console.error("pool acquire error", c);
-                this.connectionPool.release(c);
-            }).catch((e) => {
-                ApplicationLog.error("pool acquire error", e);
-            });
     }
 
     public getConnection(): Promise<IConnection>;
     public getConnection(username: string, password: string): Promise<IConnection>;
     public async  getConnection(username?: string, password?: string): Promise<IConnection> {
         try {
-
-            const con = await this.connectionPool.acquire();
-            return con;
+            return await this.connectionPool.acquire();
         } catch (e) {
             ApplicationLog.error("pool acquire error", e);
             throw e;
         }
     }
-
+    public releaseConnection(con: IConnection): Promise<void> {
+        return this.connectionPool.release(con);
+    }
 }

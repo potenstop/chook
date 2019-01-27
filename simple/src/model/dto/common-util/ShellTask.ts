@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 @Entity("shell_task")
-export default class ShellTask {
+export class ShellTask {
     @PrimaryGeneratedColumn({name: "shell_task_id"})
     public shellTaskId: number;
 

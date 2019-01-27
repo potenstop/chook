@@ -20,4 +20,8 @@ export class MetaConstant {
     public static AUTOWIRED = Symbol("chook.autowired");
     public static RESOURCE = Symbol("chook.resource");
     public static BEANS = Symbol("chook.beans");
+    public static TRANSACTION = Symbol("chook.dao.transaction");
+    public static PRIMARY = Symbol("chook.dao.primary");
+    public static TRIGGER = Symbol("chook.trigger");
+    public static TRANSACTION_OBJECT = Symbol("chook.dao.transaction.object");
 }

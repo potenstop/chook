@@ -22,7 +22,7 @@ class SimpleApp {
         ApplicationLog.info("start suc");
     }
 }
-ApplicationLog.info("starting");
+ApplicationLog.debug("starting");
 SimpleApp.main();
 
 /*

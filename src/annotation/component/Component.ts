@@ -11,16 +11,19 @@ import {Beans} from "../../core/Beans";
  * @author yanshaowen
  * @date 2019/1/14 11:49
  */
-export function Component<T extends {new(...args: any[]): {}}>(target: T): any {
+export function Component<T extends new(...args: any[]) => {}>(target: T): any {
     return new Proxy(target, {
-        construct<T1 extends {new(...args: any[]): {}}>(constructor: T1, args: IArguments) {
+        construct<T1 extends new(...args: any[]) => {}>(constructor: T1, args: IArguments) {
             const o = new constructor(...args);
             // 注入Autowired
             const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, constructor.prototype) || new Set<string>();
             keys.forEach((key) => {
                 const typeName = Reflect.getOwnMetadata(MetaConstant.DESIGN_TYPE, constructor.prototype, key);
                 if (JSHelperUtil.isNotNull(typeName) && JSHelperUtil.isClassObject(typeName)) {
-                    o[key] = Reflect.construct(typeName, []);
+                    const targetObject = Reflect.construct(typeName, []);
+                    // 注入触发的trigger
+                    targetObject[MetaConstant.TRIGGER] = o;
+                    o[key] = targetObject;
                 }
             });
             // 注入resource

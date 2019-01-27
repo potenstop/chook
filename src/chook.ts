@@ -41,6 +41,8 @@ import {Service as _Service} from "./annotation/component/Service";
 import {Configuration as _Configuration} from "./annotation/component/Configuration";
 import {Resource as _Resource} from "./annotation/initialize/Resource";
 import {MapperScan as _MapperScan} from "./annotation/component/MapperScan";
+import {Primary as _Primary} from "./annotation/dao/Primary";
+import {Transaction as _Transaction} from "./annotation/dao/Transaction";
 
 export namespace annotation {
     export const JsonProperty = _JsonProperty;
@@ -66,6 +68,8 @@ export namespace annotation {
     export const Configuration = _Configuration;
     export const Resource = _Resource;
     export const MapperScan = _MapperScan;
+    export const Transaction = _Transaction;
+    export const Primary = _Primary;
 }
 
 import {Api as _Api} from "./annotation/swagger/Api";
