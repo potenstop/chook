@@ -3,7 +3,7 @@
  * 功能描述:
  *
  * @className ApplicationLog
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/21 10:20
  */

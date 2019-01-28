@@ -3,7 +3,7 @@
  * 功能描述:
  *
  * @className TypeConnection
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/18 12:50
  */

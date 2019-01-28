@@ -3,7 +3,7 @@
  * 功能描述: 对应number类型判断最小值 对应字符串判断长度最短值 闭区间
  *
  * @className Min
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/27 9:52
  */
@@ -11,7 +11,7 @@ import "reflect-metadata";
 import {MetaConstant} from "../../constants/MetaConstant";
 import {ValidOptions} from "./ValidOptions";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
-import {util} from "../../chook";
+import {util} from "../../papio";
 import {ValidMeta} from "../../model/ValidMeta";
 import {StringUtil} from "../../util/StringUtil";
 

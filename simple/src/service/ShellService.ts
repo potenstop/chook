@@ -3,11 +3,11 @@
  * 功能描述:
  *
  * @className ShellService
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/22 11:48
  */
-import {annotation, ApplicationLog} from "../../../src/chook";
+import {annotation, ApplicationLog} from "../../../src/papio";
 import Service = annotation.Service;
 import Autowired = annotation.Autowired;
 import {ShellTask} from "../model/dto/common-util/ShellTask";

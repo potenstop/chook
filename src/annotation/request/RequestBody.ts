@@ -3,7 +3,7 @@
  * 功能描述: 从body中取出的对象
  *
  * @className RequestBody
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/26 14:23
  */

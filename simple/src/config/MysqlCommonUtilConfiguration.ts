@@ -3,11 +3,11 @@
  * 功能描述: 数据配置
  *
  * @className DataSourceConfiguration
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/22 9:39
  */
-import {annotation, data} from "../../../src/chook";
+import {annotation, data} from "../../../src/papio";
 import Configuration = annotation.Configuration;
 import Bean = annotation.Bean;
 import IDataSource = data.IDataSource;

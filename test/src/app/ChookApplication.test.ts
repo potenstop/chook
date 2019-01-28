@@ -2,8 +2,8 @@
  *
  * 功能描述:
  *
- * @className ChookApplication.test.ts
- * @projectName chook
+ * @className PapioApplication.test.ts
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/22 16:02
  */
@@ -18,7 +18,7 @@ import {Min} from "../../../src/annotation/validation/Min";
 import {NotBank} from "../../../src/annotation/validation/NotBank";
 import {NotNull} from "../../../src/annotation/validation/NotNull";
 import {Valid} from "../../../src/annotation/validation/Valid";
-import {ChookApplication} from "../../../src/app/ChookApplication";
+import {PapioApplication} from "../../../src/app/PapioApplication";
 import {ApplicationLog} from "../../../src/log/ApplicationLog";
 import {RestController} from "../../../src/annotation/controller/RestController";
 import {JsonProperty} from "../../../src/annotation/bean/JsonProperty";
@@ -28,7 +28,7 @@ import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
 import {HookLog} from "../../../src/core/Hook";
 import {Service} from "../../../src/annotation/component/Service";
 import {Autowired} from "../../../src/annotation/component/Autowired";
-import {annotation} from "../../../src/chook";
+import {annotation} from "../../../src/papio";
 import Resource = annotation.Resource;
 import {TypeConnection} from "../../../src/data/typeorm/TypeConnection";
 
@@ -106,7 +106,7 @@ class MyController {
 @EnableAutoConfiguration
 class TestApp {
     public static main(): void {
-        ChookApplication.run(TestApp, process.env);
+        PapioApplication.run(TestApp, process.env);
     }
     @Bean
     public logStatic(): LogBean {
@@ -126,7 +126,7 @@ class TestApp {
 }
 // import "../../../src/core/Hook";
 import {createPool} from "generic-pool";
-describe("test ChookApplication", () => {
+describe("test PapioApplication", () => {
     it("main", () => {
         TestApp.main();
         ApplicationLog.info("----------------");

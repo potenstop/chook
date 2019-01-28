@@ -3,7 +3,7 @@
  * 功能描述: 开启自动配置  加载
  *
  * @className EnableAutoConfiguration
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/24 10:36
  */
@@ -31,6 +31,7 @@ import "../../core/Hook";
 import {HttpContent} from "../../context/HttpContent";
 import {HookLog} from "../../core/Hook";
 import {GenerateUtil} from "../../util/GenerateUtil";
+import {BaseLog} from "../../log/BaseLog";
 
 // @EnableAutoConfiguration 无参数类装饰器
 export function EnableAutoConfiguration(target: (new () => object)): void;
@@ -155,7 +156,6 @@ function exec(target: (new () => object), options: Options) {
                               ctx.body = {message: e.message};
                               ctx.status  = RequestHeaderError.STATUS;
                          } else {
-                              console.log(e)
                               ctx.body = {message: "unknown error, message=" + e.message };
                               ctx.status  = HttpStatusConstant.SERVER_ERROR;
                          }
@@ -174,7 +174,7 @@ function exec(target: (new () => object), options: Options) {
                if (key === "logStatic") {
                     // 加载静态日志
                     Object.keys(obj).map((objKey) => {
-                         ApplicationLog.setExtStaticField(objKey, String(obj[objKey]));
+                         BaseLog.setExtStaticField(objKey, String(obj[objKey]));
                     });
                }
           }

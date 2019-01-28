@@ -3,7 +3,7 @@
  * 功能描述: 定义返回值为bean对象
  *
  * @className ResponseBody
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/22 14:33
  */

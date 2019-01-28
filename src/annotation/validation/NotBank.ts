@@ -3,7 +3,7 @@
  * 功能描述: 不为null 并且不为空的字符串
  *
  * @className NotBank
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/1 22:05
  */

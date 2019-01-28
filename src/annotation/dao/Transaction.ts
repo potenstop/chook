@@ -5,7 +5,7 @@ import {MetaConstant} from "../../constants/MetaConstant";
  * 功能描述: 开启事务
  *
  * @className Transaction
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/27 10:47
  */

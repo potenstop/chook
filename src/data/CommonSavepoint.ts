@@ -5,7 +5,7 @@ import {ISavepoint} from "./ISavepoint";
  * 功能描述:
  *
  * @className CommonSavepoint
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/18 13:39
  */

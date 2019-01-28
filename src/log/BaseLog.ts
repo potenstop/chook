@@ -9,7 +9,7 @@ const { combine, timestamp, printf, splat } = format;
  * 功能描述: 日志基础类
  *
  * @className BaseLog
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/27 14:33
  */

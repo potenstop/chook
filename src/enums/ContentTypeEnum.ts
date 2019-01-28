@@ -3,7 +3,7 @@
  * 功能描述: 请求或相应的数据类型枚举类
  *
  * @className ContentTypeEnum
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/4 11:25
  */

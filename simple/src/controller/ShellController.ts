@@ -3,11 +3,11 @@
  * 功能描述:
  *
  * @className ShellController
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/21 22:00
  */
-import { annotation, ApplicationLog, enums, context } from "../../../src/chook";
+import { annotation, ApplicationLog, enums, context } from "../../../src/papio";
 import {ShellService} from "../service/ShellService";
 const { RestController, RequestMapping, RequestParam, NotNull, Valid, Autowired} = annotation;
 const { RequestMethod } = enums;

@@ -3,7 +3,7 @@
  * 功能描述:
  *
  * @className GenerateUtil.test
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/11 12:52
  */

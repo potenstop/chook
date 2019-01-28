@@ -3,7 +3,7 @@
  * 功能描述: 获取js相关的帮助类
  *
  * @className JSHelperUtil
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/30 10:41
  */

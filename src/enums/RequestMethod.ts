@@ -3,7 +3,7 @@
  * 功能描述: http 请求类型枚举
  *
  * @className RequestMethod
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/25 15:53
  */

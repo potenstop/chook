@@ -3,7 +3,7 @@
  * 功能描述:
  *
  * @className ITransactionObject
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/27 20:41
  */

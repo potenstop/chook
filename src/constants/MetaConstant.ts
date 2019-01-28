@@ -3,7 +3,7 @@
  * 功能描述: 元数据key值
  *
  * @className MetaConstant
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/27 14:50
  */

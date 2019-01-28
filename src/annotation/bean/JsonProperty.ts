@@ -3,7 +3,7 @@
  * 功能描述: json的名称
  *
  * @className JsonProperty
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/30 17:29
  */

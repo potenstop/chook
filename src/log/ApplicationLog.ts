@@ -3,7 +3,7 @@
  * 功能描述: 应用程序日志
  *
  * @className ApplicationLog
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/20 15:01
  */

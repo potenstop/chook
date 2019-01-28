@@ -31,7 +31,7 @@ interface IConnectionPool {
  * 功能描述: 注入连接数据源
  *
  * @className TypeDataBeansRepository
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/22 16:58
  */

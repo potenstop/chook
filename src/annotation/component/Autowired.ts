@@ -5,7 +5,7 @@ import {MetaConstant} from "../../constants/MetaConstant";
  * 功能描述:
  *
  * @className Autowired
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/21 22:19
  */

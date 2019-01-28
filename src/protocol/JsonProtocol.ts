@@ -3,7 +3,7 @@
  * 功能描述: Json 转换协议 识别JsonProperty装饰器
  *
  * @className JsonProtocol
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/30 17:48
  */

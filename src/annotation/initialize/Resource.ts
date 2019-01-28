@@ -5,7 +5,7 @@ import {MetaConstant} from "../../constants/MetaConstant";
  * 功能描述:
  *
  * @className Resource
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/22 16:15
  */

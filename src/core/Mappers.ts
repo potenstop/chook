@@ -3,7 +3,7 @@
  * 功能描述: MapperScan的配置
  *
  * @className Mappers
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/22 17:48
  */

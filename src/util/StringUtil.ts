@@ -3,7 +3,7 @@
  * 功能描述: 字符串工具类
  *
  * @className StringUtil
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/24 12:51
  */

@@ -3,7 +3,7 @@
  * 功能描述: http status
  *
  * @className HttpStatusConstant
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/27 20:45
  */

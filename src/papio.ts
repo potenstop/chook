@@ -3,16 +3,16 @@
  * 功能描述: 导包
  *
  * @className chook
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/2 15:07
  */
-import {ChookApplication as _ChookApplication} from "./app/ChookApplication";
+import {PapioApplication as _PapioApplication} from "./app/PapioApplication";
 import {IApplication  as _IApplication} from "./app/IApplication";
 import {KoaApplication as _KoaApplication} from "./app/KoaApplication";
 
 export namespace app {
-    export const ChookApplication = _ChookApplication;
+    export const PapioApplication = _PapioApplication;
     export type IApplication = _IApplication;
     export const KoaApplication = _KoaApplication;
 }

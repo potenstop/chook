@@ -3,7 +3,7 @@
  * 功能描述:
  *
  * @className StackTypePathTypeEnum
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/20 21:26
  */

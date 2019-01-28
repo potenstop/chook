@@ -113,7 +113,7 @@ import StackType from "../model/StackType";
  *
  * 功能描述: 堆栈信息解析工具类
  * @className StackAnalysisUtil
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/20 20:24
  */

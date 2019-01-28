@@ -3,7 +3,7 @@
  * 功能描述: 生成工具类
  *
  * @className GenerateUtil
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/11 12:45
  */

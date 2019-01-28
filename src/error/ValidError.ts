@@ -3,7 +3,7 @@
  * 功能描述: 类型错误
  *
  * @className ValidError
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/1 21:18
  */

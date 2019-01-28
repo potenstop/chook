@@ -3,12 +3,12 @@
  * 功能描述:
  *
  * @className App
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/21 14:29
  */
-import {app, ApplicationLog} from "../../src/chook";
-import { annotation } from "../../src/chook";
+import {app, ApplicationLog} from "../../src/papio";
+import { annotation } from "../../src/papio";
 const {EnableAutoConfiguration, ComponentScan} = annotation;
 
 @EnableAutoConfiguration
@@ -18,7 +18,7 @@ const {EnableAutoConfiguration, ComponentScan} = annotation;
 @ComponentScan("@model")
 class SimpleApp {
     public static main(): void {
-        app.ChookApplication.run(SimpleApp, process.env);
+        app.PapioApplication.run(SimpleApp, process.env);
         ApplicationLog.info("start suc");
     }
 }

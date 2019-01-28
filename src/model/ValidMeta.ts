@@ -3,7 +3,7 @@
  * 功能描述: 验证器meta
  *
  * @className ValidMeta
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/28 13:00
  */

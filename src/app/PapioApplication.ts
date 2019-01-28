@@ -2,8 +2,8 @@
  *
  * 功能描述:
  *
- * @className ChookApplication
- * @projectName chook
+ * @className PapioApplication
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/21 14:32
  */
@@ -12,12 +12,12 @@ import ProcessEnv = NodeJS.ProcessEnv;
 import {Beans} from "../core/Beans";
 import { IGlobalConfigBean } from "../core/GlobalConfigBean";
 
-export class ChookApplication {
+export class PapioApplication {
     public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {
-        const chookApplication = new ChookApplication();
-        chookApplication.startClass = startClass;
-        chookApplication.processEnv = processEnv;
-        chookApplication.run();
+        const papioApplication = new PapioApplication();
+        papioApplication.startClass = startClass;
+        papioApplication.processEnv = processEnv;
+        papioApplication.run();
     }
     private startClass: object;
     private processEnv: ProcessEnv;

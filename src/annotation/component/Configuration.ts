@@ -5,7 +5,7 @@ import {Component} from "./Component";
  * 功能描述:
  *
  * @className Configuration
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2019/1/22 9:47
  */

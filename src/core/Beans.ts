@@ -3,7 +3,7 @@
  * 功能描述: 所有注册的bean对象
  *
  * @className Beans
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/25 9:46
  */

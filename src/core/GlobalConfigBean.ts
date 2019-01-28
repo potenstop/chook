@@ -3,7 +3,7 @@
  * 功能描述: 全局配置接口
  *
  * @className GlobalBean
- * @projectName chook
+ * @projectName papio
  * @author yanshaowen
  * @date 2018/12/26 11:31
  */
