@@ -1,5 +1,5 @@
 {
-  "name": "chook",
+  "name": "papio",
   "version": "0.0.1",
   "description": "nodejs dependency injection Framework",
   "main": "lib/chook.js",
