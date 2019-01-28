@@ -1,9 +1,9 @@
 {
   "name": "papio",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "nodejs dependency injection Framework",
-  "main": "dist/papio.js",
-  "types": "dist/papio.d.ts",
+  "main": "lib/papio.js",
+  "types": "lib/papio.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/potenstop/papio"
