@@ -1,6 +1,6 @@
- chook 是基于typescript开发的后端框架。参考了sprint-boot实现。
+ papio 是基于typescript开发的后端框架。参考了sprint-boot实现。
  
- chook支持的特性:
+ papio支持的特性:
  - 组件开发
  - 自动注入
  - 日志集成
@@ -10,13 +10,14 @@
 
  # 入门
  ## 安装
- 1 安装chook:
+ 1 安装papio:
     
- `npm install chook --save`
+ `npm install papio --save`
  
  2 安装typeorm:
 
  `npm install typeorm --save`
+ 
  3 安装数据驱动
   
    - **MySQL** 或者 **MariaDB**

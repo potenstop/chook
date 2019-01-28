@@ -113,6 +113,7 @@ import {IPooledConnection as _IPooledConnection} from "./data/IPooledConnection"
 import {ISavepoint as _ISavepoint} from "./data/ISavepoint";
 import {TypeConnection as _TypeConnection} from "./data/typeorm/TypeConnection";
 import {TypeDataBeansRepository as _TypeDataBeansRepository} from "./data/typeorm/TypeDataBeansRepository";
+import {TypeDataSource as _TypeDataSource} from "./data/typeorm/TypeDataSource";
 export namespace data {
     export type IConnection = _IConnection;
     export type IDataSource = _IDataSource;
@@ -121,4 +122,5 @@ export namespace data {
     export type ISavepoint = _ISavepoint;
     export type TypeConnection = _TypeConnection;
     export const TypeDataBeansRepository = _TypeDataBeansRepository;
+    export const TypeDataSource = _TypeDataSource;
 }
