@@ -1,9 +1,9 @@
 {
   "name": "chook",
   "version": "1.0.0",
-  "description": "",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "description": "nodejs dependency injection Framework",
+  "main": "lib/chook.js",
+  "types": "src/chook.ts",
   "files": [
     "index.js",
     "src",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc"
   },
-  "author": "",
+  "author": "potenstop@163.com",
   "license": "ISC",
   "dependencies": {
     "@types/koa": "^2.0.47",
@@ -21,7 +21,6 @@
     "@types/koa-views": "^2.0.3",
     "generic-pool": "^3.5.0",
     "reflect-metadata": "^0.1.12",
-    "typeorm": "^0.2.12",
     "winston": "^3.1.0",
     "winston-daily-rotate-file": "^3.5.1"
   },
@@ -29,6 +28,7 @@
     "node": ">= 9.0.0"
   },
   "devDependencies": {
+    "typeorm": "^0.2.12",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "@types/should": "^13.0.0",

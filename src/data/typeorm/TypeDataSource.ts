@@ -35,7 +35,7 @@ export class TypeDataSource implements IDataSource {
             max: 10,
             min: 1,
             idleTimeoutMillis: 100000,
-            acquireTimeoutMillis: 50000,
+            acquireTimeoutMillis: 2000,
         };
     }
 

@@ -76,8 +76,8 @@ function exec(target: object, propertyKey: string, descriptor: PropertyDescripto
                 map.get(propertyKey).releases.forEach((func) => {
                     func();
                 });
+                map.delete(propertyKey);
             }
-            this[MetaConstant.TRANSACTION_OBJECT] = null;
         }
     };
     Reflect.defineMetadata(MetaConstant.TRANSACTION, option, target, propertyKey);
