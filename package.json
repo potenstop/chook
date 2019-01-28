@@ -1,6 +1,6 @@
 {
   "name": "chook",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "nodejs dependency injection Framework",
   "main": "lib/chook.js",
   "types": "src/chook.ts",
