@@ -23,8 +23,8 @@ export class DatabaseLog extends BaseLog implements Logger {
             query,
             parameters,
         } ;
-        this.dataBaseLogger.info("", sqlLogMeta);
-        this.consoleLogger.info("11", sqlLogMeta);
+        this.dataBaseLogger.debug("", [sqlLogMeta]);
+        this.consoleLogger.debug("", [sqlLogMeta]);
     }
 
     public logQueryError(error: string, query: string, parameters?: any[], queryRunner?: QueryRunner): any {
@@ -33,8 +33,8 @@ export class DatabaseLog extends BaseLog implements Logger {
             query,
             parameters,
         };
-        this.dataBaseLogger.error("", sqlLogMeta);
-        this.consoleLogger.error("", sqlLogMeta);
+        this.dataBaseLogger.error("", [sqlLogMeta]);
+        this.consoleLogger.error("", [sqlLogMeta]);
 
     }
 
@@ -46,8 +46,8 @@ export class DatabaseLog extends BaseLog implements Logger {
             parameters,
             time,
         } ;
-        this.dataBaseLogger.error("", sqlLogMeta);
-        this.consoleLogger.error("", sqlLogMeta);
+        this.dataBaseLogger.error("", [sqlLogMeta]);
+        this.consoleLogger.error("", [sqlLogMeta]);
     }
 
     public logSchemaBuild(message: string, queryRunner?: QueryRunner): any {

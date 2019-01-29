@@ -2,7 +2,7 @@ import {createLogger, format, transports} from "winston";
 import {StackAnalysisUtil} from "../util/StackAnalysisUtil";
 import {HttpContent} from "../context/HttpContent";
 import * as DailyRotateFile from "winston-daily-rotate-file";
-const { combine, timestamp, printf, splat } = format;
+const { combine, timestamp, printf, splat, label } = format;
 
 /**
  *
@@ -19,20 +19,21 @@ const consoleLogger = createLogger({
         timestamp({
             format: "YYYY-MM-DD HH:mm:dd.SSS",
         }),
+        // label(),
         splat(),
         printf((nfo) => {
             let codeInfo = "";
             let classInfo = "";
             let errorStack = "";
             const base = `[${nfo.timestamp}] [${nfo.level}] `;
-            if (nfo.meta && nfo.meta.kind === "IConsoleLogMeta") {
-                const meta = nfo.meta as IConsoleLogMeta;
+            if (nfo[0] && nfo[0].kind === "IConsoleLogMeta") {
+                const meta = nfo[0] as IConsoleLogMeta;
                 const stackType = StackAnalysisUtil.parseStackAll(meta.stack)[2];
                 classInfo = `[${stackType.className} ${stackType.methodName}]`;
                 codeInfo = `[${stackType.line} ${stackType.row} ${stackType.file}]`;
                 if (meta.error) { errorStack = meta.error.stack; }
-            } else if (nfo.meta && nfo.meta.kind === "ISqlLogMeta") {
-                const meta = nfo.meta as ISqlLogMeta;
+            } else if (nfo[0] && nfo[0].kind === "ISqlLogMeta") {
+                const meta = nfo[0] as ISqlLogMeta;
                 nfo.message = `query=${meta.query}, params=${JSON.stringify(meta.parameters)}`;
                 if (meta.time) {
                     nfo.message += "time=" + meta.time + "," + nfo.message;
@@ -78,8 +79,8 @@ const dataBaseLogger = createLogger({
             const logJson = {} as any;
             logJson.timestamp = nfo.timestamp;
             logJson.level = nfo.level;
-            if (nfo.meta && nfo.meta.kind === "ISqlLogMeta") {
-                const meta = nfo.meta as ISqlLogMeta;
+            if (nfo[0] && nfo[0].kind === "ISqlLogMeta") {
+                const meta = nfo[0] as ISqlLogMeta;
                 logJson.time = meta.time;
                 logJson.query = meta.query;
                 logJson.parameters = meta.parameters;
@@ -119,9 +120,9 @@ const applicationLogger = createLogger({
             applicationLogJson.timestamp = nfo.timestamp;
             applicationLogJson.level = nfo.level;
             applicationLogJson.message = nfo.message;
-            if (nfo.meta && nfo.meta.kind === "IConsoleLogMeta") {
-                const meta = nfo.meta as IConsoleLogMeta;
-                const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[2];
+            if (nfo[0] && nfo[0].kind === "IConsoleLogMeta") {
+                const meta = nfo[0] as IConsoleLogMeta;
+                const stackType = StackAnalysisUtil.parseStackAll(meta.stack)[2];
                 applicationLogJson.className = stackType.className;
                 applicationLogJson.methodName = stackType.methodName;
                 applicationLogJson.line = stackType.line;

@@ -33,7 +33,7 @@ export class ApplicationLog {
             stack : new Error().stack,
         };
         const baseLog = new BaseLog();
-        baseLog.applicationLogger.log(level, msg, meta);
-        baseLog.consoleLogger.log(level, msg, meta);
+        baseLog.applicationLogger.log(level, msg, [meta]);
+        baseLog.consoleLogger.log(level, msg, [meta]);
     }
 }
