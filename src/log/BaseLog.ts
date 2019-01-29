@@ -25,13 +25,13 @@ const consoleLogger = createLogger({
             let classInfo = "";
             let errorStack = "";
             const base = `[${nfo.timestamp}] [${nfo.level}] `;
-            if (nfo.meta !== null && nfo.meta.kind === "IConsoleLogMeta") {
+            if (nfo.meta && nfo.meta.kind === "IConsoleLogMeta") {
                 const meta = nfo.meta as IConsoleLogMeta;
                 const stackType = StackAnalysisUtil.parseStackAll(meta.stack)[2];
                 classInfo = `[${stackType.className} ${stackType.methodName}]`;
                 codeInfo = `[${stackType.line} ${stackType.row} ${stackType.file}]`;
                 if (meta.error) { errorStack = meta.error.stack; }
-            } else if (nfo.meta !== null && nfo.meta.kind === "ISqlLogMeta") {
+            } else if (nfo.meta && nfo.meta.kind === "ISqlLogMeta") {
                 const meta = nfo.meta as ISqlLogMeta;
                 nfo.message = `query=${meta.query}, params=${JSON.stringify(meta.parameters)}`;
                 if (meta.time) {
@@ -78,7 +78,7 @@ const dataBaseLogger = createLogger({
             const logJson = {} as any;
             logJson.timestamp = nfo.timestamp;
             logJson.level = nfo.level;
-            if (nfo.meta !== null && nfo.meta.kind === "ISqlLogMeta") {
+            if (nfo.meta && nfo.meta.kind === "ISqlLogMeta") {
                 const meta = nfo.meta as ISqlLogMeta;
                 logJson.time = meta.time;
                 logJson.query = meta.query;
@@ -119,7 +119,7 @@ const applicationLogger = createLogger({
             applicationLogJson.timestamp = nfo.timestamp;
             applicationLogJson.level = nfo.level;
             applicationLogJson.message = nfo.message;
-            if (nfo.meta !== null && nfo.meta.kind === "IConsoleLogMeta") {
+            if (nfo.meta && nfo.meta.kind === "IConsoleLogMeta") {
                 const meta = nfo.meta as IConsoleLogMeta;
                 const stackType = StackAnalysisUtil.parseStackAll(nfo.meta.stack)[2];
                 applicationLogJson.className = stackType.className;
