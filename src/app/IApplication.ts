@@ -13,4 +13,5 @@ export interface IApplication {
     start(port: number): Promise<void>;
     start(): Promise<void>;
     use(middleware: Function): void;
+    on(event: string | symbol, listener: (...args: any[]) => void): void;
 }

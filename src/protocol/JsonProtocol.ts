@@ -165,7 +165,7 @@ export class JsonProtocol {
             return result;
         }
         if (JSHelperUtil.isNullOrUndefined(parentKey)) {
-            parentKey = Bean.constructor.name;
+            parentKey = Bean.name;
         }
         // 遍历bean所有的属性
         const keysMap = Reflect.getOwnMetadata(MetaConstant.KEYS, Bean.prototype) || new Map<string, Array<new () => object>>();

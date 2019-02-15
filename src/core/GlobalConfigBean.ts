@@ -14,10 +14,12 @@ import {KoaApplication} from "../app/KoaApplication";
 export interface IGlobalConfigBean {
     application: IApplication;
     middleware: any[];
+    port: number;
 }
 
 // default
 export class DefaultGlobalConfigBean implements IGlobalConfigBean {
     public application: KoaApplication;
     public middleware: Middleware[];
+    public port: number;
 }

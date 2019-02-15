@@ -28,8 +28,6 @@ import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
 import {HookLog} from "../../../src/core/Hook";
 import {Service} from "../../../src/annotation/component/Service";
 import {Autowired} from "../../../src/annotation/component/Autowired";
-import {annotation} from "../../../src/papio";
-import Resource = annotation.Resource;
 import {TypeConnection} from "../../../src/data/typeorm/TypeConnection";
 
 class LogBean {
@@ -78,13 +76,33 @@ class MyService {
 class MyController {
     @Autowired
     private myService: MyService;
-    @Resource("logStatic")
-    private logStatic: LogBean;
 
     @RequestMapping("/bonuses")
     @Valid
     @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses(@RequestParam @NotNull @Min(1) @Max(3) id: number,
+                      @RequestParam("nickname") name: string,
+                      @RequestParam @NotBank head: string,
+                      @RequestHeader("host") host: string,
+                      @RequestParam userRequest: UserRequest): Standard<User[]> {
+        ApplicationLog.info(userRequest.userHead + name + this.myService.test());
+        const head1 = HookLog.getHead();
+        const hookLink = HookLog.findByAsyncId(24);
+
+        const standard = new Standard<User[]>();
+        const user = new User();
+        user.userId = 1;
+        user.userName = "app";
+        standard.data = [user, user];
+        standard.code = 0;
+        standard.message = "suc";
+        return standard;
+    }
+
+    @RequestMapping("/bonuses1")
+    @Valid
+    @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
+    public getBonuses1(@RequestParam @NotNull @Min(1) @Max(3) id: number,
                       @RequestParam("nickname") name: string,
                       @RequestParam @NotBank head: string,
                       @RequestHeader("host") host: string,
@@ -124,8 +142,8 @@ class TestApp {
         return logBean;
     }
 }
-// import "../../../src/core/Hook";
 import {createPool} from "generic-pool";
+import {Resource} from "../../../src/annotation/initialize/Resource";
 describe("test PapioApplication", () => {
     it("main", () => {
         TestApp.main();
@@ -145,7 +163,8 @@ describe("test PapioApplication", () => {
             max: 10,
             min: 2,
             idleTimeoutMillis: 10000,
-            acquireTimeoutMillis: 5000,});
+            acquireTimeoutMillis: 5000,
+        });
         await connectionPool.acquire();
         await connectionPool.acquire();
         await connectionPool.acquire();

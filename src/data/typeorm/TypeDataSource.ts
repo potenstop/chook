@@ -105,15 +105,15 @@ export class TypeDataSource implements IDataSource {
             op.host = url.hostname;
             op.port = url.port;
             op.database = url.pathname.substring(1, url.pathname.length);
-            op.username = this.username;
-            op.password = this.password;
-            op.name = this.name;
             op.entities = this.entities;
             op.logger = new DatabaseLog();
             url.searchParams.forEach((value, key) => {
                 op[key] = value;
             });
         }
+        op.username = this.username;
+        op.password = this.password;
+        op.name = this.name;
         const readOnly = this.isReadOnly();
         this.connectionPool = createPool({
             create() {

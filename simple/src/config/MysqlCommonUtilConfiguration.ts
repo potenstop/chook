@@ -7,14 +7,10 @@
  * @author yanshaowen
  * @date 2019/1/22 9:39
  */
-import {annotation, data} from "../../../src/papio";
-import Configuration = annotation.Configuration;
-import Bean = annotation.Bean;
-import IDataSource = data.IDataSource;
-import {TypeDataSource} from "../../../src/data/typeorm/TypeDataSource";
-import MapperScan = annotation.MapperScan;
+import {Bean, Configuration, IDataSource, MapperScan, TypeDataSource} from "../../../src/papio";
 
 @Configuration
+// @MapperScan("@../simple/src/dao/common-util")
 @MapperScan("@dao/common-util")
 export class MysqlCommonUtilConfiguration {
     @Bean

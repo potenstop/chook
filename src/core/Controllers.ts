@@ -12,6 +12,7 @@ import {ControllerArgumentSourceEnum} from "../enums/ControllerArgumentSourceEnu
 import {RequestMethod} from "../enums/RequestMethod";
 import {ControllerArgument} from "../model/ControllerArgument";
 import {JSHelperUtil} from "../util/JSHelperUtil";
+import {RequestFrequency} from "../enums/RequestFrequency";
 
 export class Controllers {
     /**
@@ -22,14 +23,16 @@ export class Controllers {
      * @param functionName  对应执行函数的名称
      * @param path          uri地址
      * @param method        http方法
+     * @param frequency
      * @return void
      */
-    public static addController(clazz: (new () => object), functionName: string, path: string, method: RequestMethod): void {
+    public static addController(clazz: (new () => object), functionName: string, path: string, method: RequestMethod, frequency: RequestFrequency): void {
         const controller = new Controller();
         controller.clazz = clazz;
         controller.functionName = functionName;
         controller.path = path;
         controller.method = method;
+        controller.frequency = frequency;
         Controllers.controllers.push(controller);
     }
     /***
@@ -39,14 +42,19 @@ export class Controllers {
      * @param clazz     对应controller的类
      * @param path      前缀uri
      * @param method    未使用
+     * @param frequency
      * @return
      */
-    public static setPrefix(clazz: (new () => object), path: string, method: RequestMethod): void {
+    public static setPrefix(clazz: (new () => object), path: string, method: RequestMethod, frequency: RequestFrequency): void {
         Controllers.controllers.forEach((controller: Controller) => {
            if (clazz.prototype.constructor === controller.clazz) {
                if (!(controller.path === "/" && path === "/")) {
                    // 增加前缀
                    controller.path = path + controller.path;
+               }
+               if (!controller.frequency) {
+                   // 设置默认频率
+                   controller.frequency = frequency || RequestFrequency.NORMAL;
                }
                // 替换对象
                controller.clazz = clazz;
@@ -145,4 +153,6 @@ export class Controller {
     public requestContentType: ContentTypeEnum;
     // 设置响应的content-type
     public responseContentType: ContentTypeEnum;
+    // 访问频率
+    public frequency: RequestFrequency;
 }

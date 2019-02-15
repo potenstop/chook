@@ -1,3 +1,4 @@
+import { HttpStatusEnum } from "../enums/HttpStatusEnum";
 /**
  *
  * 功能描述:
@@ -8,5 +9,5 @@
  * @date 2019/1/23 17:59
  */
 export declare class ServerError extends Error {
-    static STATUS: number;
+    static STATUS: HttpStatusEnum;
 }

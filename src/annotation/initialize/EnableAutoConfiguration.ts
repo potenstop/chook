@@ -12,7 +12,7 @@ import * as  KoaRouter from "koa-router";
 import "reflect-metadata";
 import {KoaApplication} from "../../app/KoaApplication";
 import {CommonConstant} from "../../constants/CommonConstant";
-import {HttpStatusConstant} from "../../constants/HttpStatusConstant";
+import {HttpStatusEnum} from "../../enums/HttpStatusEnum";
 import {MetaConstant} from "../../constants/MetaConstant";
 import {Beans} from "../../core/Beans";
 import {Controller, Controllers} from "../../core/Controllers";
@@ -144,7 +144,7 @@ function exec(target: (new () => object), options: Options) {
                               const returnGenerics = Reflect.getOwnMetadata(MetaConstant.BEAN_RETURN_GENERICS, controller.clazz.prototype, controller.functionName) ||
                                   new Map<string, new () => object>();
                               ctx.body = JsonProtocol.toJson(result, returnGenerics);
-                              ctx.status  = HttpStatusConstant.OK;
+                              ctx.status  = HttpStatusEnum.OK;
                          } else {
                               throw new RequestHeaderError(`response content-type=${controller.responseContentType} error`);
                          }
@@ -157,13 +157,30 @@ function exec(target: (new () => object), options: Options) {
                               ctx.status  = RequestHeaderError.STATUS;
                          } else {
                               ctx.body = {message: "unknown error, message=" + e.message };
-                              ctx.status  = HttpStatusConstant.SERVER_ERROR;
+                              ctx.status  = HttpStatusEnum.SERVER_ERROR;
                          }
                     }
                });
           });
           defaultGlobalConfigBean.middleware.push(koaRouter.routes());
           defaultGlobalConfigBean.middleware.push(koaRouter.allowedMethods());
+          defaultGlobalConfigBean.application.on("error", (error, ctx) => {
+               if (ctx.status === HttpStatusEnum.NOT_FOUND) {
+                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} not found`);
+                    ctx.body = {message: `url=${ctx.url}, method=${ctx.method} not found`};
+               } else if (ctx.status === HttpStatusEnum.SERVER_ERROR) {
+                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} server error`);
+                    ctx.body = {message: `url=${ctx.url}, method=${ctx.method} server error`};
+               } else {
+                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} unknown`);
+                    ctx.body = {message: `url=${ctx.url}, method=${ctx.method} unknown`};
+
+               }
+          });
+          const startArgs: any = Beans.getBean(CommonConstant.START_ARGS);
+          if (startArgs && "port" in startArgs) {
+               defaultGlobalConfigBean.port = startArgs.port;
+          }
           // 设置bean
           Beans.setBean(CommonConstant.GLOBAL_CONFIG, defaultGlobalConfigBean);
      }

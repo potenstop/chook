@@ -1,6 +1,6 @@
 {
   "name": "papio",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "nodejs dependency injection Framework",
   "main": "lib/papio.js",
   "types": "lib/papio.d.ts",
@@ -27,13 +27,14 @@
     "@types/koa-bodyparser": "^4.2.1",
     "@types/koa-router": "^7.0.35",
     "@types/koa-views": "^2.0.3",
+    "agentkeepalive": "^4.0.0",
     "generic-pool": "^3.5.0",
-    "reflect-metadata": "^0.1.12",
-    "winston": "^3.2.0",
-    "winston-daily-rotate-file": "^3.5.1",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "reflect-metadata": "^0.1.12",
+    "winston": "^3.2.0",
+    "winston-daily-rotate-file": "^3.5.1"
   },
   "engines": {
     "node": ">= 9.0.0"

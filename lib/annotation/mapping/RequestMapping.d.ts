@@ -9,13 +9,15 @@
  */
 import "reflect-metadata";
 import { RequestMethod } from "../../enums/RequestMethod";
+import { RequestFrequency } from "../../enums/RequestFrequency";
 export declare function RequestMapping(target: string): CallableFunction;
-export declare function RequestMapping(target: Options): CallableFunction;
-export declare function RequestMapping(target: Options): CallableFunction;
+export declare function RequestMapping(target: IOptions): CallableFunction;
+export declare function RequestMapping(target: IOptions): CallableFunction;
 export declare function RequestMapping(target: (new () => object)): void;
 export declare function RequestMapping(target: object, propertyKey: string, descriptor: PropertyDescriptor): void;
-declare class Options {
-    path: string;
-    method: RequestMethod;
+interface IOptions {
+    path?: string;
+    method?: RequestMethod;
+    frequency?: RequestFrequency;
 }
 export {};

@@ -31,4 +31,8 @@ export class KoaApplication implements IApplication {
         this.app.use(middleware1);
     }
 
+    public on(event: string | symbol, listener: (...args: any[]) => void): void {
+        this.app.on(event, listener);
+    }
+
 }

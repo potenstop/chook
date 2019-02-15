@@ -7,6 +7,7 @@
  * @author yanshaowen
  * @date 2018/12/24 10:39
  */
+import "reflect-metadata";
 import * as path from "path";
 import {FileUtil} from "../../util/FileUtil";
 import {StringUtil} from "../../util/StringUtil";

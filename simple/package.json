@@ -5,6 +5,7 @@
   },
   "scripts": {
     "simple-watch": "nodemon",
-    "sql-gen": "ts-node test/sql-gen.ts"
+    "sql-gen": "ts-node test/sql-gen.ts",
+    "build": "tsc"
   }
 }

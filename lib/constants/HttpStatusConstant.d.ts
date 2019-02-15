@@ -12,4 +12,5 @@ export declare class HttpStatusConstant {
     static PARAMS_ERROR: number;
     static UNSUPPORTED_MEDIA_TYPE: number;
     static SERVER_ERROR: number;
+    static NOT_FOUND: number;
 }

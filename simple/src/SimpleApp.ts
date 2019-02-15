@@ -7,23 +7,30 @@
  * @author yanshaowen
  * @date 2018/12/21 14:29
  */
-import {app, ApplicationLog} from "../../src/papio";
-import { annotation } from "../../src/papio";
-const {EnableAutoConfiguration, ComponentScan} = annotation;
+import {ApplicationLog, Bean, ComponentScan, EnableAutoConfiguration, PapioApplication} from "../../src/papio";
+import {CommonConstant} from "../../src/constants/CommonConstant";
 
 @EnableAutoConfiguration
-@ComponentScan("@service")
+/*@ComponentScan("@../simple/src/controller")
+@ComponentScan("@../simple/src/service")
+@ComponentScan("@../simple/src/dao")
+@ComponentScan("@../simple/src/model")
+@ComponentScan("@../simple/src/config")*/
 @ComponentScan("@controller")
-@ComponentScan("@config")
+@ComponentScan("@service")
+@ComponentScan("@dao")
 @ComponentScan("@model")
-class SimpleApp {
+@ComponentScan("@config")
+export class SimpleApp {
     public static main(): void {
-        app.PapioApplication.run(SimpleApp, process.env);
+        PapioApplication.run(SimpleApp, process.env);
         ApplicationLog.info("start suc");
     }
+    @Bean(CommonConstant.START_ARGS)
+    public startArgs(): object {
+        return {port: 3002};
+    }
 }
-ApplicationLog.debug("starting");
-SimpleApp.main();
 
 /*
 import * as fs from "fs";

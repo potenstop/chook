@@ -14,10 +14,20 @@ import {MetaConstant} from "../../constants/MetaConstant";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
 export function Controller(option: ControllerOptions): CallableFunction {
     return <T extends {new(...args: any[]): {}}>(target: T | object, propertyKey?: string, descriptor?: PropertyDescriptor): any => {
+        const dataValueMap = Reflect.getOwnMetadata(MetaConstant.REQUEST_MAPPING, target) || new Map<string, object>();
+        let newTarget;
         if (target instanceof Function) {
-            Controllers.setHeader(target, null, option.requestContentType, option.responseContentType);
+            newTarget = target;
         } else {
-            Controllers.setHeader(target.constructor as (new () => object), propertyKey, option.requestContentType, option.responseContentType);
+            newTarget = target.constructor as (new () => object);
+        }
+        for (const [k, v] of dataValueMap) {
+            Controllers.addController(newTarget, k, v.path, v.method, v.frequency);
+        }
+        if (target instanceof Function) {
+            Controllers.setHeader(newTarget, null, option.requestContentType, option.responseContentType);
+        } else {
+            Controllers.setHeader(newTarget, propertyKey, option.requestContentType, option.responseContentType);
         }
     };
 }

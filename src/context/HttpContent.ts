@@ -23,7 +23,7 @@ export class HttpContent {
     }
     public static getHeaders(): Map<string, string> {
         const hookLink = HookLog.findParent(executionAsyncId(), "HTTPPARSER");
-        if (hookLink && hookLink.data.has("httpContext")) {
+        if (hookLink && hookLink.data && hookLink.data.has("httpContext")) {
             const httpContext = hookLink.data.get("httpContext") as HttpContent;
             return httpContext.headers;
         }

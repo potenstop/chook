@@ -69,6 +69,7 @@ function exec(target: object, propertyKey: string, descriptor: PropertyDescripto
             } catch (e) {
                 ApplicationLog.error("transaction rollback error", e);
             }
+            throw e;
         } finally {
             // 执行释放连接
             const map = this[MetaConstant.TRANSACTION_OBJECT] as Map<string, ITransactionObject>;

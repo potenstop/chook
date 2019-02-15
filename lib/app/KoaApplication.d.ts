@@ -7,4 +7,5 @@ export declare class KoaApplication implements IApplication {
     start(port: number): Promise<void>;
     start(): Promise<void>;
     use(middleware: object): void;
+    on(event: string | symbol, listener: (...args: any[]) => void): void;
 }

@@ -28,7 +28,7 @@ export class PapioApplication {
             globalConfig.middleware.forEach((o: (() => void)) => {
                 globalConfig.application.use(o);
             });
-            await globalConfig.application.start(3001);
+            await globalConfig.application.start(globalConfig.port);
         }
     }
 

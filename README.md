@@ -7,18 +7,20 @@
  - (typeorm)支持 MySQL / MariaDB / Postgres / SQLite / Microsoft SQL Server / Oracle / sql.js
  - 数据库datasource配置及连接池
  - 事务
+ - http datasource的配置
 
  # 入门
  ## 安装
+ 
  1 安装papio:
     
  `npm install papio --save`
  
- 2 安装typeorm:
+ 2 (可选)用数据库(mysql、MariaDB、PostgreSQL、sqlserver、SQLite、Oracle、MongoDB)安装typeorm和对应的驱动:
 
  `npm install typeorm --save`
  
- 3 安装数据驱动
+ 安装数据驱动
   
    - **MySQL** 或者 **MariaDB**
 
@@ -55,9 +57,10 @@
 
      查看 [支持的平台](/supported-platforms.md)
  
-此外，请确保你使用的是 TypeScript 编译器版本**2.3**或更高版本，并且已经在`tsconfig.json`中启用了以下设置:
+    此外，请确保你使用的是 TypeScript 编译器版本**2.3**或更高版本，并且已经在`tsconfig.json`中启用了以下设置:
+    
+    ```json
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    ```
 
-```json
-"emitDecoratorMetadata": true,
-"experimentalDecorators": true,
-```

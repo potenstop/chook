@@ -7,120 +7,65 @@
  * @author yanshaowen
  * @date 2019/1/2 15:07
  */
-import {PapioApplication as _PapioApplication} from "./app/PapioApplication";
-import {IApplication  as _IApplication} from "./app/IApplication";
-import {KoaApplication as _KoaApplication} from "./app/KoaApplication";
+export { PapioApplication } from "./app/PapioApplication";
+export { IApplication } from "./app/IApplication";
+export { KoaApplication } from "./app/KoaApplication";
 
-export namespace app {
-    export const PapioApplication = _PapioApplication;
-    export type IApplication = _IApplication;
-    export const KoaApplication = _KoaApplication;
-}
+export { JsonProperty } from "./annotation/bean/JsonProperty";
+export { Property } from "./annotation/bean/Property";
+export { ReturnGenericsProperty } from "./annotation/bean/ReturnGenericsProperty";
+export { Controller } from "./annotation/controller/Controller";
+export { RestController } from "./annotation/controller/RestController";
+export { Bean } from "./annotation/initialize/Bean";
+export { ComponentScan } from "./annotation/component/ComponentScan";
+export { EnableAutoConfiguration } from "./annotation/initialize/EnableAutoConfiguration";
+export { RequestMapping } from "./annotation/mapping/RequestMapping";
+export { RequestBody } from "./annotation/request/RequestBody";
+export { RequestHeader } from "./annotation/request/RequestHeader";
+export { RequestParam } from "./annotation/request/RequestParam";
+export { ResponseBody } from "./annotation/response/ResponseBody";
 
-import {JsonProperty as _JsonProperty} from "./annotation/bean/JsonProperty";
-import {Property as _Property} from "./annotation/bean/Property";
-import {Controller as _Controller} from "./annotation/controller/Controller";
-import {RestController as _RestController} from "./annotation/controller/RestController";
-import {Bean as _Bean} from "./annotation/initialize/Bean";
-import {ComponentScan as _ComponentScan} from "./annotation/component/ComponentScan";
-import {EnableAutoConfiguration as _EnableAutoConfiguration} from "./annotation/initialize/EnableAutoConfiguration";
-import {RequestMapping as _RequestMapping} from "./annotation/mapping/RequestMapping";
-import {RequestBody as _RequestBody} from "./annotation/request/RequestBody";
-import {RequestHeader as _RequestHeader} from "./annotation/request/RequestHeader";
-import {RequestParam as _RequestParam} from "./annotation/request/RequestParam";
-import {ResponseBody as _ResponseBody} from "./annotation/response/ResponseBody";
+export { Max } from "./annotation/validation/Max";
+export { Min } from "./annotation/validation/Min";
+export { NotBank } from "./annotation/validation/NotBank";
+export { NotNull } from "./annotation/validation/NotNull";
+export { Valid } from  "./annotation/validation/Valid";
+export { ValidOptions } from "./annotation/validation/ValidOptions";
+export { Autowired } from "./annotation/component/Autowired";
+export { Service } from "./annotation/component/Service";
+export { Configuration } from "./annotation/component/Configuration";
+export { Resource } from "./annotation/initialize/Resource";
+export { MapperScan } from "./annotation/component/MapperScan";
+export { Primary } from "./annotation/dao/Primary";
+export { Transaction } from "./annotation/dao/Transaction";
+export { RestRemote } from "./annotation/remote/RestRemote";
 
-import {Max as _Max} from "./annotation/validation/Max";
-import {Min as _Min} from "./annotation/validation/Min";
-import {NotBank as _NotBank} from "./annotation/validation/NotBank";
-import {NotNull as _NotNull} from "./annotation/validation/NotNull";
-import {Valid as _Valid} from "./annotation/validation/Valid";
-import {ValidOptions as _ValidOptions} from "./annotation/validation/ValidOptions";
-import {Autowired as _Autowired} from "./annotation/component/Autowired";
-import {Service as _Service} from "./annotation/component/Service";
-import {Configuration as _Configuration} from "./annotation/component/Configuration";
-import {Resource as _Resource} from "./annotation/initialize/Resource";
-import {MapperScan as _MapperScan} from "./annotation/component/MapperScan";
-import {Primary as _Primary} from "./annotation/dao/Primary";
-import {Transaction as _Transaction} from "./annotation/dao/Transaction";
+export { Api } from "./annotation/swagger/Api";
 
-export namespace annotation {
-    export const JsonProperty = _JsonProperty;
-    export const Property = _Property;
-    export const Controller = _Controller;
-    export const RestController = _RestController;
-    export const Bean = _Bean;
-    export const ComponentScan = _ComponentScan;
-    export const EnableAutoConfiguration = _EnableAutoConfiguration;
-    export const RequestMapping = _RequestMapping;
-    export const RequestBody = _RequestBody;
-    export const RequestHeader = _RequestHeader;
-    export const RequestParam = _RequestParam;
-    export const ResponseBody = _ResponseBody;
-    export const Max = _Max;
-    export const Min = _Min;
-    export const NotNull = _NotNull;
-    export const NotBank = _NotBank;
-    export const Valid = _Valid;
-    export const ValidOptions = _ValidOptions;
-    export const Autowired = _Autowired;
-    export const Service = _Service;
-    export const Configuration = _Configuration;
-    export const Resource = _Resource;
-    export const MapperScan = _MapperScan;
-    export const Transaction = _Transaction;
-    export const Primary = _Primary;
-}
-
-import {Api as _Api} from "./annotation/swagger/Api";
-
-export namespace swagger {
-    export const Api = _Api;
-}
 export { ApplicationLog } from "./log/ApplicationLog";
 
-import { JsonProtocol as _JsonProtocol } from "./protocol/JsonProtocol";
+export { JsonProtocol }  from "./protocol/JsonProtocol";
 
-export namespace protocol {
-    export const JsonProtocol = _JsonProtocol;
-}
+export { ConvertUtil } from "./util/ConvertUtil";
+export { JSHelperUtil } from "./util/JSHelperUtil";
+export { StackAnalysisUtil } from "./util/StackAnalysisUtil";
+export { StringUtil } from "./util/StringUtil";
 
-import {ConvertUtil as _ConvertUtil} from "./util/ConvertUtil";
-import {JSHelperUtil as _JSHelperUtil} from "./util/JSHelperUtil";
-import {StackAnalysisUtil as _StackAnalysisUtil} from "./util/StackAnalysisUtil";
-import {StringUtil as _StringUtil} from "./util/StringUtil";
-export namespace util {
-    export const ConvertUtil = _ConvertUtil;
-    export const JSHelperUtil = _JSHelperUtil;
-    export const StackAnalysisUtil = _StackAnalysisUtil;
-    export const StringUtil = _StringUtil;
-}
+export { RequestMethod } from "./enums/RequestMethod";
+export { RequestFrequency } from "./enums/RequestFrequency";
 
-import {RequestMethod as _RequestMethod} from "./enums/RequestMethod";
-export namespace enums {
-    export const RequestMethod = _RequestMethod;
-}
+export { HttpContent } from "./context/HttpContent";
 
-import {HttpContent as _HttpContent} from "./context/HttpContent";
-export namespace context {
-    export const HttpContent = _HttpContent;
-}
+export { IConnection } from "./data/IConnection";
+export { IDataSource } from "./data/IDataSource";
+export { IConnectionPoolDataSource } from "./data/IConnectionPoolDataSource";
+export { IPooledConnection } from "./data/IPooledConnection";
+export { ISavepoint } from "./data/ISavepoint";
+export { TypeConnection } from "./data/typeorm/TypeConnection";
+export { TypeDataBeansRepository } from "./data/typeorm/TypeDataBeansRepository";
+export { TypeDataSource } from "./data/typeorm/TypeDataSource";
+export { RestDataSource } from "./data/rest/RestDataSource";
+export { RestConnection } from "./data/rest/RestConnection";
 
-import {IConnection as _IConnection} from "./data/IConnection";
-import {IDataSource as _IDataSource} from "./data/IDataSource";
-import {IConnectionPoolDataSource as _IConnectionPoolDataSource} from "./data/IConnectionPoolDataSource";
-import {IPooledConnection as _IPooledConnection} from "./data/IPooledConnection";
-import {ISavepoint as _ISavepoint} from "./data/ISavepoint";
-import {TypeConnection as _TypeConnection} from "./data/typeorm/TypeConnection";
-import {TypeDataBeansRepository as _TypeDataBeansRepository} from "./data/typeorm/TypeDataBeansRepository";
-import {TypeDataSource as _TypeDataSource} from "./data/typeorm/TypeDataSource";
-export namespace data {
-    export type IConnection = _IConnection;
-    export type IDataSource = _IDataSource;
-    export type IConnectionPoolDataSource = _IConnectionPoolDataSource;
-    export type IPooledConnection = _IPooledConnection;
-    export type ISavepoint = _ISavepoint;
-    export type TypeConnection = _TypeConnection;
-    export const TypeDataBeansRepository = _TypeDataBeansRepository;
-    export const TypeDataSource = _TypeDataSource;
-}
+export { Standard } from "./model/Standard";
+// import {Standard} from "./model/Standard";

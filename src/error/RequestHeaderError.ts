@@ -7,8 +7,8 @@
  * @author yanshaowen
  * @date 2019/1/5 10:39
  */
-import {HttpStatusConstant} from "../constants/HttpStatusConstant";
+import {HttpStatusEnum} from "../enums/HttpStatusEnum";
 
 export class RequestHeaderError extends Error {
-    public static STATUS =  HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE;
+    public static STATUS =  HttpStatusEnum.UNSUPPORTED_MEDIA_TYPE;
 }

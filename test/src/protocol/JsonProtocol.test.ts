@@ -105,7 +105,7 @@ standard1.message = "222";*/
 describe("测试 JsonProtocol.test", () => {
     it("toJson()", async () => {
         const json = JsonProtocol.toJson(myBean, myBeanMap, "MyBean") as any;
-        expect(json.input_name).to.equal(myBean.inputName);
+        expect(json.user_info.nick_name).to.equal(myBean.userInfo.nickName);
     });
     it("toJSONString()", async () => {
         const json = JsonProtocol.toJSONString(myBean, myBeanMap, "MyBean");

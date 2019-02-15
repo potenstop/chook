@@ -1,5 +1,5 @@
 import {MetaConstant} from "../../constants/MetaConstant";
-
+import "reflect-metadata";
 /**
  *
  * 功能描述:

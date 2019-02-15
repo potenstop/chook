@@ -11,21 +11,23 @@ import "reflect-metadata";
 import {Controllers} from "../../core/Controllers";
 import {RequestMethod} from "../../enums/RequestMethod";
 import {StringUtil} from "../../util/StringUtil";
+import {RequestFrequency} from "../../enums/RequestFrequency";
+import {MetaConstant} from "../../constants/MetaConstant";
 
 // @RequestMapping('/my') 指定路由 方法为all
 export function RequestMapping(target: string): CallableFunction;
 // @RequestMapping({path: '/my',method: RequestMethod.GET}) 指定路由 方法为get
-export function RequestMapping(target: Options): CallableFunction;
-export function RequestMapping(target: Options): CallableFunction;
+export function RequestMapping(target: IOptions): CallableFunction;
+export function RequestMapping(target: IOptions): CallableFunction;
 
 // class的装饰器 无参数
 export function RequestMapping(target: (new () => object)): void;
 // method的装饰器 无参数
 export function RequestMapping(target: object, propertyKey: string, descriptor: PropertyDescriptor): void;
 
-export function RequestMapping(target: string | Options | (new () => object) | object, propertyKey?: string, descriptor?: PropertyDescriptor): void | CallableFunction {
+export function RequestMapping(target: string | IOptions | (new () => object) | object, propertyKey?: string, descriptor?: PropertyDescriptor): void | CallableFunction {
     // 默认
-    let options = new Options();
+    let options: IOptions = {};
     options.path = "/";
     if (target instanceof Function) {
         // 无参数类装饰器
@@ -40,7 +42,7 @@ export function RequestMapping(target: string | Options | (new () => object) | o
             if (typeof target === "string") {
                 options.path = target;
             } else if (typeof target === "object") {
-                options = target as Options;
+                options = target as IOptions;
             }
             // 类
             if (target1 instanceof Function) {
@@ -54,17 +56,22 @@ export function RequestMapping(target: string | Options | (new () => object) | o
     }
 }
 
-class Options {
+interface IOptions {
     // 路由 /
-    public path: string;
+    path?: string;
     // 方法 所有方法
-    public method: RequestMethod;
+    method?: RequestMethod;
+    // 访问频率
+    frequency?: RequestFrequency;
 }
 
-function exec(target: (new () => object), propertyKey: string, options: Options) {
+function exec(target: (new () => object), propertyKey: string, options: IOptions) {
     if (StringUtil.isNotBank(propertyKey)) {
-        Controllers.addController(target, propertyKey, options.path, options.method);
+        const dataValueMap = Reflect.getOwnMetadata(MetaConstant.REQUEST_MAPPING, target) || new Map<string, IOptions>();
+        dataValueMap.set(propertyKey, options);
+        Reflect.defineMetadata(MetaConstant.REQUEST_MAPPING, dataValueMap, target);
     } else {
-        Controllers.setPrefix(target, options.path, options.method);
+        Reflect.defineMetadata(MetaConstant.REQUEST_MAPPING_HEAD, options, target);
+        Controllers.setPrefix(target, options.path, options.method, options.frequency);
     }
 }

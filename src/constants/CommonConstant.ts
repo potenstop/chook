@@ -9,4 +9,5 @@
  */
 export class CommonConstant {
     public static GLOBAL_CONFIG: string = "_global";
+    public static START_ARGS: string = "_start_args";
 }

@@ -11,7 +11,6 @@ import "reflect-metadata";
 import {MetaConstant} from "../../constants/MetaConstant";
 import {ValidOptions} from "./ValidOptions";
 import {JSHelperUtil} from "../../util/JSHelperUtil";
-import {util} from "../../papio";
 import {ValidMeta} from "../../model/ValidMeta";
 import {StringUtil} from "../../util/StringUtil";
 

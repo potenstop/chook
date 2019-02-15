@@ -1,3 +1,4 @@
+import "reflect-metadata";
 /**
  *
  * 功能描述:

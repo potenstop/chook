@@ -10,6 +10,7 @@
 import { ContentTypeEnum } from "../enums/ContentTypeEnum";
 import { RequestMethod } from "../enums/RequestMethod";
 import { ControllerArgument } from "../model/ControllerArgument";
+import { RequestFrequency } from "../enums/RequestFrequency";
 export declare class Controllers {
     /**
      * 方法功能描述: 增加controller
@@ -19,9 +20,10 @@ export declare class Controllers {
      * @param functionName  对应执行函数的名称
      * @param path          uri地址
      * @param method        http方法
+     * @param frequency
      * @return void
      */
-    static addController(clazz: (new () => object), functionName: string, path: string, method: RequestMethod): void;
+    static addController(clazz: (new () => object), functionName: string, path: string, method: RequestMethod, frequency: RequestFrequency): void;
     /***
      * 方法功能描述: 设置路由前缀
      * @author yanshaowen
@@ -29,9 +31,10 @@ export declare class Controllers {
      * @param clazz     对应controller的类
      * @param path      前缀uri
      * @param method    未使用
+     * @param frequency
      * @return
      */
-    static setPrefix(clazz: (new () => object), path: string, method: RequestMethod): void;
+    static setPrefix(clazz: (new () => object), path: string, method: RequestMethod, frequency: RequestFrequency): void;
     /**
      * 方法功能描述: 设置params中的入参名称及返回值
      * @author yanshaowen
@@ -77,4 +80,5 @@ export declare class Controller {
     controllerArguments: ControllerArgument[];
     requestContentType: ContentTypeEnum;
     responseContentType: ContentTypeEnum;
+    frequency: RequestFrequency;
 }

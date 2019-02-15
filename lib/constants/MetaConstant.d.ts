@@ -24,4 +24,6 @@ export declare class MetaConstant {
     static PRIMARY: symbol;
     static TRIGGER: symbol;
     static TRANSACTION_OBJECT: symbol;
+    static REQUEST_MAPPING: symbol;
+    static REQUEST_MAPPING_HEAD: symbol;
 }
