@@ -149,6 +149,7 @@ function exec(target: (new () => object), options: Options) {
                               throw new RequestHeaderError(`response content-type=${controller.responseContentType} error`);
                          }
                     } catch (e) {
+                         ApplicationLog.error("aop error", e);
                          if (e instanceof ValidError) {
                               ctx.body = {message: e.getValidMessage()};
                               ctx.status  = ValidError.STATUS;

@@ -1,12 +1,12 @@
 import { expect } from "chai";
-import Autowired from "../../../src/annotation/component/Autowired";
 import {ApplicationLog} from "../../../src/log/ApplicationLog";
+import {Autowired} from "../../../src/annotation/component/Autowired";
 class BeanTest {
     public name: string;
 }
 
 class Test {
-    @Autowired(1)
+    @Autowired
     private beanTest: BeanTest;
     constructor() {
         this.beanTest = new BeanTest();

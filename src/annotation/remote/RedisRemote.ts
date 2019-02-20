@@ -1,23 +1,24 @@
-/**
- *
- * 功能描述:
- *
- * @className RestRemote
- * @projectName papio
- * @author yanshaowen
- * @date 2019/2/14 12:54
- */
 import "reflect-metadata";
 import {MetaConstant} from "../../constants/MetaConstant";
-import {RestConnection} from "../../data/rest/RestConnection";
 import {FileUtil} from "../../util/FileUtil";
 import {Mappers} from "../../core/Mappers";
 import * as path from "path";
 import {Beans} from "../../core/Beans";
-import {RestDataSource} from "../../data/rest/RestDataSource";
-export function RestRemote(target: string): CallableFunction;
-export function RestRemote(target: Options): CallableFunction;
-export function RestRemote(target: Options | string): CallableFunction {
+import {RedisDataSource} from "../../data/redis/RedisDataSource";
+import {RedisConnection} from "../../data/redis/RedisConnection";
+
+/**
+ *
+ * 功能描述:
+ *
+ * @className RedisRemote
+ * @projectName papio
+ * @author yanshaowen
+ * @date 2019/2/18 10:38
+ */
+export function RedisRemote(target: string): CallableFunction;
+export function RedisRemote(target: Options): CallableFunction;
+export function RedisRemote(target: Options | string): CallableFunction {
     let options = new Options();
     return (target1: (new () => object)) => {
         if (typeof target !== "string") {
@@ -33,7 +34,7 @@ class Options {
     public filepath: string;
 }
 function exec(target: (new () => object), options: Options) {
-    const ownMetadata = Reflect.getOwnMetadata(MetaConstant.REQUEST_MAPPING, target) || new Map<string, object>();
+    const ownMetadata = Reflect.getOwnMetadata(MetaConstant.REQUEST_REDIS_MAPPING, target.prototype) || new Map<string, object>();
     const strings = FileUtil.findParents(options.filepath);
     let mapperTarget = null;
     for (const str of strings) {
@@ -51,7 +52,7 @@ function exec(target: (new () => object), options: Options) {
             if (bean.kind) {
                 if (bean.kind.split(" ").indexOf("IDataSource") !== -1) {
                     let isReadOnly = false;
-                    if (bean instanceof RestDataSource) {
+                    if (bean instanceof RedisDataSource) {
                         isReadOnly = bean.isReadOnly();
                     }
                     if (isReadOnly) {readDataSources.push(bean); } else {writeDataSources.push(bean); }
@@ -59,7 +60,7 @@ function exec(target: (new () => object), options: Options) {
             }
         });
         if (writeDataSources.length === 0) {
-            throw new Error("RestRemote write dataSource is empty");
+            throw new Error("RedisRemote write dataSource is empty");
         }
         for (const [k, v] of ownMetadata) {
             const returnGenericsProperty = Reflect.getOwnMetadata(MetaConstant.BEAN_RETURN_GENERICS,  target.prototype, k);
@@ -78,27 +79,23 @@ function exec(target: (new () => object), options: Options) {
             }
             let url = "";
             if (options.name) {
-                if (options.name[0] !== "/") {
-                    url += "/" + options.name;
-                } else {
-                    url += options.name;
-                }
+                url += options.name;
             }
             if (v.path) {
-                if (v.path[0] !== "/") {
-                    url += "/" + v.path;
-                } else {
-                    url += v.path;
-                }
+                url += v.path;
             }
+
             target.prototype[k] = async function() {
                 const i = Math.floor((Math.random() * writeDataSources.length));
-                const dataSource = writeDataSources[i];
-                const connection = await dataSource.getConnection() as RestConnection;
-                return await connection.request(returnGenericsProperty[returnType], returnGenericsProperty,  url, v.method, 0, v.frequency);
+                const dataSource: RedisDataSource = writeDataSources[i];
+                const connection = await dataSource.getConnection() as RedisConnection;
+                const commands = Object.keys(arguments).map((key) => arguments[key]);
+                commands.unshift(url);
+                return connection.execCommandSerialize(v.command, commands, returnGenericsProperty);
+
             };
         }
     } else {
-        throw new Error(`RestRemote: not found filepath(${options.filepath}) for dataSource`);
+        throw new Error(`RedisRemote: not found filepath(${options.filepath}) for dataSource`);
     }
 }

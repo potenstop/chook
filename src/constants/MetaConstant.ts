@@ -25,5 +25,6 @@ export class MetaConstant {
     public static TRIGGER = Symbol("chook.trigger");
     public static TRANSACTION_OBJECT = Symbol("chook.dao.transaction.object");
     public static REQUEST_MAPPING = Symbol("chook.request.mapping");
+    public static REQUEST_REDIS_MAPPING = Symbol("chook.request.redis.mapping");
     public static REQUEST_MAPPING_HEAD = Symbol("chook.request.mapping.head");
 }

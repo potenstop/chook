@@ -20,6 +20,7 @@ export { Bean } from "./annotation/initialize/Bean";
 export { ComponentScan } from "./annotation/component/ComponentScan";
 export { EnableAutoConfiguration } from "./annotation/initialize/EnableAutoConfiguration";
 export { RequestMapping } from "./annotation/mapping/RequestMapping";
+export { RequestRedisMapping } from "./annotation/mapping/RequestRedisMapping";
 export { RequestBody } from "./annotation/request/RequestBody";
 export { RequestHeader } from "./annotation/request/RequestHeader";
 export { RequestParam } from "./annotation/request/RequestParam";
@@ -39,6 +40,7 @@ export { MapperScan } from "./annotation/component/MapperScan";
 export { Primary } from "./annotation/dao/Primary";
 export { Transaction } from "./annotation/dao/Transaction";
 export { RestRemote } from "./annotation/remote/RestRemote";
+export { RedisRemote } from "./annotation/remote/RedisRemote";
 
 export { Api } from "./annotation/swagger/Api";
 
@@ -50,6 +52,7 @@ export { ConvertUtil } from "./util/ConvertUtil";
 export { JSHelperUtil } from "./util/JSHelperUtil";
 export { StackAnalysisUtil } from "./util/StackAnalysisUtil";
 export { StringUtil } from "./util/StringUtil";
+export { ProcessUtil } from "./util/ProcessUtil";
 
 export { RequestMethod } from "./enums/RequestMethod";
 export { RequestFrequency } from "./enums/RequestFrequency";
@@ -68,4 +71,7 @@ export { RestDataSource } from "./data/rest/RestDataSource";
 export { RestConnection } from "./data/rest/RestConnection";
 
 export { Standard } from "./model/Standard";
+
+export { CommonConstant } from "./constants/CommonConstant";
+
 // import {Standard} from "./model/Standard";

@@ -12,6 +12,7 @@ import {ApplicationLog, Autowired, Primary, Service, Transaction} from "../../..
 import {ShellTaskRepository1} from "../dao/common-util/ShellTaskRepository1";
 import {ShellTask} from "../model/dto/common-util/ShellTask";
 import {MyRest} from "../dao/rest-test/MyRest";
+import {RedisCache} from "../dao/redis/RedisCache";
 
 @Service
 export class ShellService {
@@ -21,6 +22,8 @@ export class ShellService {
     private shellTaskRepository1: ShellTaskRepository1;
     @Autowired
     private myRest: MyRest;
+    @Autowired
+    private redisCache: RedisCache;
     @Primary
     @Transaction
     public async test() {
@@ -36,8 +39,18 @@ export class ShellService {
         const result = await this.shellTaskRepository.insert(shellTask);
         let memberInfo;
         memberInfo = await this.myRest.getMemberInfo(1);
+        const cacheTests = await this.redisCache.getTest();
+        const cacheList = await this.redisCache.getList(0, -1);
+        const cacheLock = await this.redisCache.lock(5000);
+        await new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 10000);
+        })
+        const cacheUnLock = await this.redisCache.unlock();
+        ApplicationLog.info("cache test " + JSON.stringify(cacheTests) + ",list=" + JSON.stringify(cacheList) + ",cacheLock=" + cacheLock + ",cacheUnLock=" + cacheUnLock);
         const result1 = await this.shellTaskRepository1.insert(shellTask1);
-        ApplicationLog.info(memberInfo.message);
+        ApplicationLog.info(memberInfo);
         ApplicationLog.info("===========end");
     }
 }

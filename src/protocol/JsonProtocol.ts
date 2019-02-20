@@ -12,6 +12,7 @@ import {MetaConstant} from "../constants/MetaConstant";
 import {ApplicationLog} from "../log/ApplicationLog";
 import {JSHelperUtil} from "../util/JSHelperUtil";
 import {StringUtil} from "../util/StringUtil";
+import {CommonConstant} from "../constants/CommonConstant";
 
 export class JsonProtocol {
     /**
@@ -36,7 +37,15 @@ export class JsonProtocol {
             let newBean;
             if (JSHelperUtil.isBaseType(beanGenericsMap.get(parentKey))) {
                 // 基础类型的泛型 则直接赋值
-                newBean = bean;
+                if (beanGenericsMap.get(parentKey) === Number) {
+                    newBean = Number(bean);
+                } else if (beanGenericsMap.get(parentKey) === String) {
+                    newBean = String(bean);
+                } else if (beanGenericsMap.get(parentKey) === Boolean) {
+                    newBean = Boolean(bean);
+                } else {
+                    newBean = null;
+                }
             } else {
                 newBean = JsonProtocol.toJson(bean, beanGenericsMap, parentKey + "." + beanGenericsMap.get(parentKey).name);
             }
@@ -134,7 +143,15 @@ export class JsonProtocol {
             let newBean;
             if (JSHelperUtil.isBaseType(beanGenericsMap.get(parentKey))) {
                 // 基础类型的泛型 则直接赋值
-                newBean = bean;
+                if (beanGenericsMap.get(parentKey) === Number) {
+                    newBean = Number(bean);
+                } else if (beanGenericsMap.get(parentKey) === String) {
+                    newBean = String(bean);
+                } else if (beanGenericsMap.get(parentKey) === Boolean) {
+                    newBean = Boolean(bean);
+                } else {
+                    newBean = null;
+                }
             } else {
                 newBean = JsonProtocol.jsonToBean(bean, beanGenericsMap.get(parentKey), beanGenericsMap, parentKey + "." + beanGenericsMap.get(parentKey).name);
             }
@@ -199,5 +216,48 @@ export class JsonProtocol {
             }
         }
         return result;
+    }
+    /**
+     * 方法功能描述: 根据返回值转换成bean对象
+     * @author yanshaowen
+     * @date 2019/2/19 10:18
+     * @param value             转换的值
+     * @param genericsProperty
+     * @return
+     */
+    public static routerToBean(value: any, genericsProperty: Map<string, new () => object>): any {
+        const genRoot = genericsProperty.get(CommonConstant.GENERICS_ROOT);
+        if (JSHelperUtil.isNullOrUndefined(value)) {
+            return null;
+        } else if (JSHelperUtil.isBaseObject(value) && JSHelperUtil.isBaseType(genRoot)) {
+            // 基础类型的泛型 则直接赋值
+            if (genRoot === Number) {
+                return Number(value);
+            } else if (genRoot === String) {
+                return String(value);
+            } else if (genRoot === Boolean) {
+                return Boolean(value);
+            } else {
+                return null;
+            }
+        } else if ((typeof value === "object" || typeof value === "string" ) && (JSHelperUtil.isClassType(genRoot) || Array === genRoot)) {
+            let jsonParse;
+            if (typeof value === "string") {
+                try {
+                    jsonParse = JSON.parse(value);
+                } catch (e) {
+                    throw new Error(`json parse error(${e.message},result(${value})`);
+                }
+            } else {
+                jsonParse = value;
+            }
+            if (genRoot === Array) {
+                return JsonProtocol.arrayToBeans(jsonParse, Array, genericsProperty, "Array");
+            } else {
+                return JsonProtocol.jsonToBean(jsonParse, genRoot, genericsProperty);
+            }
+        } else {
+            throw new Error(`args ${value} error or genericsProperty error`);
+        }
     }
 }
