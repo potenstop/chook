@@ -10,4 +10,5 @@
 export declare class CommonConstant {
     static GLOBAL_CONFIG: string;
     static START_ARGS: string;
+    static GENERICS_ROOT: string;
 }

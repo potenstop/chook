@@ -61,4 +61,13 @@ export declare class JsonProtocol {
      * @return Bean
      */
     static jsonToBean<T>(json: object, Bean: new () => T, beanGenericsMap: Map<string, new () => object>, parentKey?: string): T;
+    /**
+     * 方法功能描述: 根据返回值转换成bean对象
+     * @author yanshaowen
+     * @date 2019/2/19 10:18
+     * @param value             转换的值
+     * @param genericsProperty
+     * @return
+     */
+    static routerToBean(value: any, genericsProperty: Map<string, new () => object>): any;
 }
