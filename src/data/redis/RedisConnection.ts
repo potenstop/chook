@@ -10,7 +10,6 @@
 import {IConnection} from "../IConnection";
 import {ISavepoint} from "../ISavepoint";
 import {RequestOptions} from "http";
-import * as Redis from "ioredis";
 import {CommonConstant} from "../../constants/CommonConstant";
 import {JsonProtocol} from "../../protocol/JsonProtocol";
 import {RequestRedisCommand} from "../../enums/RequestRedisCommand";
@@ -36,6 +35,8 @@ export class RedisConnection implements IConnection {
     }
 
     public connect(): Promise<void> {
+        // import * as Redis from "ioredis";
+        const Redis = require("ioredis")
         this.sourceConnection = new Redis(this.options);
         this.sourceConnection.defineCommand("unlock", {
             numberOfKeys: 1,

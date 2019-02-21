@@ -19,6 +19,12 @@ import {RedisConnection} from "../../data/redis/RedisConnection";
 export function RedisRemote(target: string): CallableFunction;
 export function RedisRemote(target: Options): CallableFunction;
 export function RedisRemote(target: Options | string): CallableFunction {
+    // 检查有没有安装ioredis
+    try {
+        require("ioredis");
+    } catch (e) {
+        throw new Error(`If you want to use it, you must install ioredis to you project`);
+    }
     let options = new Options();
     return (target1: (new () => object)) => {
         if (typeof target !== "string") {
