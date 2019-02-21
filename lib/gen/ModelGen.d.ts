@@ -1,6 +1,6 @@
 import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
-import GenConfig from "../model/GenConfig";
-export default class ModelGen {
+import { GenConfig } from "../model/GenConfig";
+export declare class ModelGen {
     private static endLine;
     private typeormConfig;
     private genConfig;
