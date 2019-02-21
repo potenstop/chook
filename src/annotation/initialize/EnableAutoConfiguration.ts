@@ -76,6 +76,7 @@ function exec(target: (new () => object), options: Options) {
                     routerMethod = controller.method.toLowerCase();
                }
                const defaultMap = new Map<string, new () => object>();
+               ApplicationLog.debug(`use url(${controller.path}), method(${routerMethod})`);
                koaRouter[routerMethod](controller.path, async (ctx) => {
                     try {
                          // 检验请求头content-type

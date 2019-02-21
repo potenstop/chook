@@ -53,6 +53,7 @@ export { JSHelperUtil } from "./util/JSHelperUtil";
 export { StackAnalysisUtil } from "./util/StackAnalysisUtil";
 export { StringUtil } from "./util/StringUtil";
 export { ProcessUtil } from "./util/ProcessUtil";
+export { ModelGen } from "./gen/ModelGen";
 
 export { RequestMethod } from "./enums/RequestMethod";
 export { RequestFrequency } from "./enums/RequestFrequency";
@@ -71,6 +72,7 @@ export { RestDataSource } from "./data/rest/RestDataSource";
 export { RestConnection } from "./data/rest/RestConnection";
 
 export { Standard } from "./model/Standard";
+export { GenConfig } from "./model/GenConfig";
 
 export { CommonConstant } from "./constants/CommonConstant";
 

@@ -17,7 +17,7 @@ export class PapioApplication {
         const papioApplication = new PapioApplication();
         papioApplication.startClass = startClass;
         papioApplication.processEnv = processEnv;
-        papioApplication.run();
+        await papioApplication.run();
     }
     private startClass: object;
     private processEnv: ProcessEnv;

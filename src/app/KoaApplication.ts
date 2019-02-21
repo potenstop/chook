@@ -9,6 +9,7 @@
  */
 import * as Koa from "koa";
 import {IApplication} from "./IApplication";
+import {ApplicationLog} from "../log/ApplicationLog";
 
 export class KoaApplication implements IApplication {
     private app: Koa;
@@ -21,7 +22,23 @@ export class KoaApplication implements IApplication {
     public start(): Promise<void>;
     public start(hostname?: string | number, port?: number): Promise<void> {
         return new Promise((resolve, reject) => {
-            this.app.listen(hostname, port, function() {
+            let listenHostname: string;
+            let listenPort: number;
+            if (hostname) {
+                if (typeof hostname === "number") {
+                    listenPort = hostname;
+                    listenHostname = undefined;
+                } else {
+                    listenHostname = hostname;
+                }
+            } else {
+                listenHostname = undefined;
+            }
+            if (!listenPort) {
+                listenPort = 3000;
+            }
+            this.app.listen(listenPort, listenHostname, function() {
+                ApplicationLog.debug(`start suc, http://${listenHostname || "127.0.0.1"}:${listenPort}`);
                 resolve();
             });
         });

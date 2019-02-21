@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import ModelGen from "../../../src/gen/ModelGen";
-import GenConfig from "../../../src/model/GenConfig";
+import {ModelGen} from "../../../src/gen/ModelGen";
+import { GenConfig } from "../../../src/model/GenConfig";
 
 const genConfig = new GenConfig();
 genConfig.spaceLength = 4;

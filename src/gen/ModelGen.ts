@@ -6,10 +6,11 @@ import * as os from "os";
 import { join } from "path";
 import { createConnection } from "typeorm";
 import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
-import GenConfig from "../model/GenConfig";
+import { GenConfig } from "../model/GenConfig";
 import {ConvertUtil} from "../util/ConvertUtil";
+import {ApplicationLog} from "../log/ApplicationLog";
 
-export default class ModelGen {
+export class ModelGen {
     private static endLine = os.EOL;
     private typeormConfig: ConnectionOptions;
     private genConfig: GenConfig;
@@ -85,7 +86,7 @@ export default class ModelGen {
                 }
             }
             if (type.length === 0) {
-                console.error(`没有找到对应的映射类型,fieldName=${col.Field}, fieldType=${col.Type}`);
+                ApplicationLog.error(`没有找到对应的映射类型,fieldName=${col.Field}, fieldType=${col.Type}`);
             } else {
                 model += `${tab}@${columnName}({name: "${col.Field}"})${ModelGen.endLine}`;
                 model += `${tab}public ${ConvertUtil.toHump(col.Field)}: ${type};${ModelGen.endLine}${ModelGen.endLine}`;
@@ -94,7 +95,7 @@ export default class ModelGen {
         model += `}${ModelGen.endLine}`;
         if (this.typeormConfig.cli.entitiesDir) {
             writeFile(join(this.typeormConfig.cli.entitiesDir, this.genConfig.modelName + ".ts"), model, "utf8", (e) => {
-                console.error(e);
+                ApplicationLog.error(`write dao error, path=${join(this.typeormConfig.cli.entitiesDir, this.genConfig.modelName + ".ts")}`, e);
             });
         }
         connection.close();

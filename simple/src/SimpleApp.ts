@@ -24,7 +24,6 @@ import {CommonConstant} from "../../src/constants/CommonConstant";
 export class SimpleApp {
     public static main(): void {
         PapioApplication.run(SimpleApp, process.env);
-        ApplicationLog.info("start suc");
     }
     @Bean(CommonConstant.START_ARGS)
     public startArgs(): object {
