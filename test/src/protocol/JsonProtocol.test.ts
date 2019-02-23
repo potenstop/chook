@@ -4,6 +4,7 @@ import "reflect-metadata";
 import {JsonProperty} from "../../../src/annotation/bean/JsonProperty";
 import {Property} from "../../../src/annotation/bean/Property";
 import {JsonProtocol} from "../../../src/protocol/JsonProtocol";
+import {DateTimeConverter} from "../../../src/converter/DateTimeConverter";
 
 class UserInfo {
     @JsonProperty("nick_name")
@@ -129,5 +130,28 @@ describe("测试 JsonProtocol.test", () => {
         // let standard2 = standard1 as Standard<User<number>>;
         // const json1 = JsonProtocol.toJson(standard1, [Array]);
         // console.info(json, standard1);
+    });
+    it("copy", () => {
+        class Source {
+            @Property
+            public id: number;
+            @Property
+            public createTime: Date;
+        }
+        class Target {
+            @Property
+            public id: number;
+            @Property
+            public createTime: string;
+        }
+        const source = new Source();
+        const target = new Target();
+        source.id = 1;
+        source.createTime = new Date("2019-02-23 11:11:11");
+        const s1 = [source];
+        const iConv = [new DateTimeConverter(["createTime"], Date)];
+        JsonProtocol.copyProperties(source , target, iConv);
+        expect(target.id).to.equal(1);
+        expect(target.createTime).to.equal("2019-02-23 11:11:11");
     });
 });

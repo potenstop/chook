@@ -13,6 +13,7 @@ import {ApplicationLog} from "../log/ApplicationLog";
 import {JSHelperUtil} from "../util/JSHelperUtil";
 import {StringUtil} from "../util/StringUtil";
 import {CommonConstant} from "../constants/CommonConstant";
+import {IConverter} from "../converter/IConverter";
 
 export class JsonProtocol {
     /**
@@ -71,7 +72,7 @@ export class JsonProtocol {
         if (JSHelperUtil.isNullOrUndefined(parentKey)) {
             parentKey = bean.constructor.name;
         }
-        const keysMap = Reflect.getOwnMetadata(MetaConstant.KEYS, bean.constructor.prototype) || new Map<string, Array<new () => object>>();
+        const keysMap = Reflect.getOwnMetadata(MetaConstant.KEYS, bean.constructor.prototype) || new Set<string>();
         for (const key of keysMap) {
             let jsonKeyName = Reflect.getMetadata(MetaConstant.JSON_PROPERTY, bean, key);
             let typeName = Reflect.getMetadata(MetaConstant.DESIGN_TYPE, bean, key);
@@ -185,7 +186,7 @@ export class JsonProtocol {
             parentKey = Bean.name;
         }
         // 遍历bean所有的属性
-        const keysMap = Reflect.getOwnMetadata(MetaConstant.KEYS, Bean.prototype) || new Map<string, Array<new () => object>>();
+        const keysMap = Reflect.getOwnMetadata(MetaConstant.KEYS, Bean.prototype) || new Set<string>();
         for (const key of keysMap) {
             let jsonKeyName = Reflect.getMetadata(MetaConstant.JSON_PROPERTY, Bean.prototype, key);
             let typeName = Reflect.getMetadata(MetaConstant.DESIGN_TYPE, Bean.prototype, key);
@@ -258,6 +259,62 @@ export class JsonProtocol {
             }
         } else {
             throw new Error(`args ${value} error or genericsProperty error`);
+        }
+    }
+    /**
+     * 方法功能描述: 深拷贝bean对象
+     * @author yanshaowen
+     * @date 2019/2/22 9:25
+     * @param sourceBean    源
+     * @param targetBean    目标
+     * @param converters    转换器
+     * @return
+     */
+    public static copyProperties(sourceBean: object, targetBean: object, converters?: IConverter[]): void {
+        if (!JSHelperUtil.isClassObject(sourceBean) || !JSHelperUtil.isClassObject(targetBean)) {
+            throw new Error(`copy error,only support class to class.`);
+        }
+        // 加载converters
+        const convertersMap = new Map<string, number>();
+        if (converters) {
+            converters.forEach((v, i) => {
+                if (v.clazz && v.keys) {
+                    v.keys.forEach((key) => {
+                        convertersMap.set(key, i);
+                    });
+                }
+            });
+        }
+        // source bean所有的属性
+        const sourceKeys = Reflect.getOwnMetadata(MetaConstant.KEYS, sourceBean.constructor.prototype) || new Set<string>();
+        // target bean所有的属性
+        const targetKeys = Reflect.getOwnMetadata(MetaConstant.KEYS, targetBean.constructor.prototype) || new Set<string>();
+        for (const key of sourceKeys) {
+            if (targetKeys.has(key) ) {
+                const sTypeName = Reflect.getMetadata(MetaConstant.DESIGN_TYPE, sourceBean.constructor.prototype, key);
+                const tTypeName = Reflect.getMetadata(MetaConstant.DESIGN_TYPE, targetBean.constructor.prototype, key);
+                // 先检查converter
+                if (convertersMap.has(key)) {
+                    const iConverter = converters[convertersMap.get(key)];
+                    const clazz = iConverter.clazz;
+                    if (clazz && clazz === sTypeName) {
+                        targetBean[key] = iConverter.convert(key, sourceBean[key]);
+                        continue;
+                    }
+                }
+                if (JSHelperUtil.isBaseType(sTypeName)) {
+                    if (sTypeName === tTypeName) {
+                        targetBean[key] = sourceBean[key];
+                    } else {
+                        // 强制
+                        try {
+                            targetBean[key] = tTypeName(sourceBean[key]);
+                        } catch (e) {
+
+                        }
+                    }
+                }
+            }
         }
     }
 }
