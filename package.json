@@ -1,6 +1,6 @@
 {
   "name": "papio",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "nodejs dependency injection Framework",
   "main": "lib/papio.js",
   "types": "lib/papio.d.ts",

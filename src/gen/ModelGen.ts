@@ -35,12 +35,13 @@ export class ModelGen {
         const tsBool = ["bool, boolean"];
         const desc = await connection.query("DESC " + this.genConfig.tableName);
         let model = "import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from \"typeorm\";" ;
+        model += "import {Property} from \"papio\";";
         if (this.genConfig.isEndSemicolon)  {
             model += ";";
         }
         model += ModelGen.endLine;
         model += `@Entity("${this.genConfig.tableName}")${ModelGen.endLine}`;
-        model += "export default class " +  this.genConfig.modelName + " {" + ModelGen.endLine;
+        model += "export class " +  this.genConfig.modelName + " {" + ModelGen.endLine;
         desc.forEach( (col) => {
             let columnName = "";
             if (col.Key === "PRI") {
@@ -89,6 +90,7 @@ export class ModelGen {
                 ApplicationLog.error(`没有找到对应的映射类型,fieldName=${col.Field}, fieldType=${col.Type}`);
             } else {
                 model += `${tab}@${columnName}({name: "${col.Field}"})${ModelGen.endLine}`;
+                model += `${tab}@Property`;
                 model += `${tab}public ${ConvertUtil.toHump(col.Field)}: ${type};${ModelGen.endLine}${ModelGen.endLine}`;
             }
         });

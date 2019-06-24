@@ -7,6 +7,7 @@
  * @author yanshaowen
  * @date 2018/12/30 17:29
  */
+import "reflect-metadata";
 import {MetaConstant} from "../../constants/MetaConstant";
 import {Property} from "./Property";
 
