@@ -1,5 +1,3 @@
-import {MetaConstant} from "../../constants/MetaConstant";
-
 /**
  *
  * 功能描述: 开启事务
@@ -10,10 +8,10 @@ import {MetaConstant} from "../../constants/MetaConstant";
  * @date 2019/1/27 10:47
  */
 import "reflect-metadata";
-import {GenerateUtil} from "../../util/GenerateUtil";
 import {ITransactionObject} from "../../model/ITransactionObject";
-import {JSHelperUtil} from "../../util/JSHelperUtil";
 import {ApplicationLog} from "../../log/ApplicationLog";
+import {JSHelperUtil, MetaConstant} from "papio-common";
+import {GenerateUtil} from "../../util/GenerateUtil";
 type level = "READ UNCOMMITTED" | "READ COMMITTED" | "REPEATABLE READ" | "SERIALIZABLE";
 interface IOptions {
     level: level;

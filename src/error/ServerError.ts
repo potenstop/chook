@@ -1,4 +1,4 @@
-import {HttpStatusEnum} from "../enums/HttpStatusEnum";
+import {HttpStatusEnum} from "papio-common";
 
 /**
  *

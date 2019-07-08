@@ -1,7 +1,7 @@
 import {createLogger, format, transports} from "winston";
-import {StackAnalysisUtil} from "../util/StackAnalysisUtil";
 import {HttpContent} from "../context/HttpContent";
 import * as DailyRotateFile from "winston-daily-rotate-file";
+import {StackAnalysisUtil} from "papio-common";
 const { combine, timestamp, printf, splat, label } = format;
 
 /**

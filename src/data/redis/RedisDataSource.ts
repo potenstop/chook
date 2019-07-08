@@ -1,6 +1,5 @@
-import {IDataSource} from "../IDataSource";
-import {IConnection} from "../IConnection";
-import {RedisConnection} from "./RedisConnection";
+import { IDataSource, IConnection } from "type-interface";
+import { RedisConnection } from "./RedisConnection";
 
 /**
  *

@@ -1,4 +1,4 @@
-import {Property} from "../annotation/bean/Property";
+import {JsonProperty} from "papio-common";
 
 /**
  *
@@ -10,11 +10,11 @@ import {Property} from "../annotation/bean/Property";
  * @date 2019/2/14 10:09
  */
 export class Standard<T> {
-    @Property
+    @JsonProperty
     public code: number;
-    @Property
+    @JsonProperty
     public message: string;
-    @Property
+    @JsonProperty
     public data: T;
     constructor() {
         this.code = 0;

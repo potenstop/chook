@@ -8,10 +8,10 @@
  * @date 2019/1/10 12:52
  */
 
-import {JSHelperUtil} from "../util/JSHelperUtil";
 import {AsyncResource, createHook, executionAsyncId} from "async_hooks";
 import * as fs from "fs";
 import {HttpContent} from "../context/HttpContent";
+import {JSHelperUtil} from "papio-common";
 
 // let indent = 0;
 createHook({

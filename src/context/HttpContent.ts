@@ -7,11 +7,11 @@
  * @author yanshaowen
  * @date 2019/1/11 9:48
  */
-import {executionAsyncId} from "async_hooks";
-import {HookLog} from "../core/Hook";
-import {Property} from "../annotation/bean/Property";
+import { executionAsyncId } from "async_hooks";
+import { HookLog } from "../core/Hook";
+import { JsonProperty } from "papio-common";
 export class HttpContent {
-    @Property
+    @JsonProperty
     public headers: Map<string, string>;
 
     public static getHeader(key: string): string {

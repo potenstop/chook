@@ -7,9 +7,8 @@
  * @author yanshaowen
  * @date 2019/1/18 12:50
  */
-import {IConnection} from "../IConnection";
+import {IConnection, ISavepoint} from "type-interface";
 import {createConnection, Connection as _Connection, EntityManager, ConnectionOptions, QueryRunner} from "typeorm";
-import {ISavepoint} from "../ISavepoint";
 import {CommonSavepoint} from "../CommonSavepoint";
 import {IsolationLevel} from "typeorm/driver/types/IsolationLevel";
 import {GenerateUtil} from "../../util/GenerateUtil";

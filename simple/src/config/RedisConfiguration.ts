@@ -1,4 +1,5 @@
-import {Bean, Configuration, RestDataSource, IDataSource, MapperScan} from "../../../src/papio";
+import {Bean, Configuration, RestDataSource, MapperScan} from "papio-common";
+import { IDataSource } from "type-interface";
 import {RedisDataSource} from "../../../src/data/redis/RedisDataSource";
 
 /**

@@ -7,19 +7,21 @@ import {
     SaveOptions, UpdateResult,
 } from "typeorm";
 import {TypeConnection} from "./TypeConnection";
-import {Mappers} from "../../core/Mappers";
+import {
+    Mappers,
+    MetaConstant,
+    Beans,
+    FileUtil,
+    StackAnalysisUtil,
+} from "papio-common";
 import "reflect-metadata";
-import {MetaConstant} from "../../constants/MetaConstant";
-import {Beans} from "../../core/Beans";
 import * as path from "path";
-import {FileUtil} from "../../util/FileUtil";
-import {IDataSource} from "../IDataSource";
+import { IDataSource } from "type-interface";
 import {TypeDataSource} from "./TypeDataSource";
 import {QueryPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
 import {ServerError} from "../../error/ServerError";
 import {ApplicationLog} from "../../log/ApplicationLog";
 import "reflect-metadata";
-import {StackAnalysisUtil} from "../../util/StackAnalysisUtil";
 import {ITransactionObject} from "../../model/ITransactionObject";
 
 interface IConnectionPool {
@@ -416,4 +418,3 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
     }
 
 }
-

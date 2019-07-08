@@ -1,4 +1,4 @@
-import {ISavepoint} from "./ISavepoint";
+import {ISavepoint} from "type-interface";
 
 /**
  *
@@ -10,6 +10,7 @@ import {ISavepoint} from "./ISavepoint";
  * @date 2019/1/18 13:39
  */
 export class CommonSavepoint implements ISavepoint {
+    public kind: "ISavepoint";
     private readonly pointId: number;
     private readonly pointName: string;
     public static uuid(len, radix): string {

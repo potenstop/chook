@@ -1,4 +1,4 @@
-import {MetaConstant} from "../../constants/MetaConstant";
+import {MetaConstant} from "papio-common";
 import "reflect-metadata";
 
 /**

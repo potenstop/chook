@@ -9,15 +9,18 @@
  */
 import {
     ApplicationLog,
-    Autowired,
     HttpContent,
+    RestController, Standard,
+} from "../../../src/papio";
+import {
+    Autowired,
     NotNull,
     RequestMapping,
     RequestMethod,
     RequestParam,
     Valid,
-    RestController, Standard, ReturnGenericsProperty,
-} from "../../../src/papio";
+    ReturnGenericsProperty,
+} from "papio-common";
 import {ShellService} from "../service/ShellService";
 
 @RequestMapping("/my")

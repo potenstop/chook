@@ -7,8 +7,8 @@
  * @author yanshaowen
  * @date 2018/12/21 14:29
  */
-import {ApplicationLog, Bean, ComponentScan, EnableAutoConfiguration, PapioApplication} from "../../src/papio";
-import {CommonConstant} from "../../src/constants/CommonConstant";
+import {ApplicationLog, EnableAutoConfiguration, PapioApplication} from "../../src/papio";
+import {CommonConstant, Bean, ComponentScan } from "papio-common";
 
 @EnableAutoConfiguration
 /*@ComponentScan("@../simple/src/controller")

@@ -7,8 +7,7 @@
  * @author yanshaowen
  * @date 2019/1/22 10:39
  */
-import {IDataSource} from "../IDataSource";
-import {IConnection} from "../IConnection";
+import { IDataSource, IConnection } from "type-interface";
 import {createPool, Options, Pool} from "generic-pool";
 import {TypeConnection} from "./TypeConnection";
 import {ApplicationLog} from "../../log/ApplicationLog";

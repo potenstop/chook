@@ -7,8 +7,8 @@ import { join } from "path";
 import { createConnection } from "typeorm";
 import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
 import { GenConfig } from "../model/GenConfig";
-import {ConvertUtil} from "../util/ConvertUtil";
 import {ApplicationLog} from "../log/ApplicationLog";
+import {ConvertUtil} from "papio-common";
 
 export class ModelGen {
     private static endLine = os.EOL;

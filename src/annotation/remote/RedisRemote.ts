@@ -1,11 +1,8 @@
 import "reflect-metadata";
-import {MetaConstant} from "../../constants/MetaConstant";
-import {FileUtil} from "../../util/FileUtil";
-import {Mappers} from "../../core/Mappers";
 import * as path from "path";
-import {Beans} from "../../core/Beans";
-import {RedisDataSource} from "../../data/redis/RedisDataSource";
-import {RedisConnection} from "../../data/redis/RedisConnection";
+import { RedisDataSource } from "../../data/redis/RedisDataSource";
+import { RedisConnection } from "../../data/redis/RedisConnection";
+import { Mappers, MetaConstant, FileUtil, Beans} from "papio-common";
 
 /**
  *

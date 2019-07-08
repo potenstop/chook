@@ -7,7 +7,8 @@
  * @author yanshaowen
  * @date 2019/2/14 10:19
  */
-import {Bean, Configuration, RestDataSource, IDataSource, MapperScan} from "../../../src/papio";
+import {Bean, Configuration, RestDataSource, MapperScan} from "papio-common";
+import { IDataSource } from "type-interface";
 
 @Configuration
 // @MapperScan("@../simple/src/dao/rest-test")

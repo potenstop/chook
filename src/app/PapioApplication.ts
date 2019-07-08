@@ -7,10 +7,9 @@
  * @author yanshaowen
  * @date 2018/12/21 14:32
  */
-import {CommonConstant} from "../constants/CommonConstant";
 import ProcessEnv = NodeJS.ProcessEnv;
-import {Beans} from "../core/Beans";
 import { IGlobalConfigBean } from "../core/GlobalConfigBean";
+import { Beans, CommonConstant } from "papio-common";
 
 export class PapioApplication {
     public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {

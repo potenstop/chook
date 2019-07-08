@@ -11,27 +11,30 @@ import * as  KoaBodyParser from "koa-bodyparser";
 import * as  KoaRouter from "koa-router";
 import "reflect-metadata";
 import {KoaApplication} from "../../app/KoaApplication";
-import {CommonConstant} from "../../constants/CommonConstant";
-import {HttpStatusEnum} from "../../enums/HttpStatusEnum";
-import {MetaConstant} from "../../constants/MetaConstant";
-import {Beans} from "../../core/Beans";
-import {Controller, Controllers} from "../../core/Controllers";
 import {DefaultGlobalConfigBean} from "../../core/GlobalConfigBean";
-import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
-import {ValidError} from "../../error/ValidError";
-import {ControllerArgument} from "../../model/ControllerArgument";
-import {JSHelperUtil} from "../../util/JSHelperUtil";
-import {StringUtil} from "../../util/StringUtil";
 import {RequestHeaderError} from "../../error/RequestHeaderError";
-import {RequestMethod} from "../../enums/RequestMethod";
-import {ContentTypeEnum} from "../../enums/ContentTypeEnum";
-import {JsonProtocol} from "../../protocol/JsonProtocol";
 import {ApplicationLog} from "../../log/ApplicationLog";
 import "../../core/Hook";
 import {HttpContent} from "../../context/HttpContent";
 import {HookLog} from "../../core/Hook";
 import {GenerateUtil} from "../../util/GenerateUtil";
 import {BaseLog} from "../../log/BaseLog";
+import {
+     CommonConstant,
+     JSHelperUtil,
+     JsonProtocol,
+     RequestMethod,
+     StringUtil,
+     ControllerArgument,
+     Beans,
+     ControllerArgumentSourceEnum,
+     MetaConstant,
+     Controllers,
+     ContentTypeEnum,
+     HttpStatusEnum,
+     ValidError,
+     Controller,
+} from "papio-common";
 
 // @EnableAutoConfiguration 无参数类装饰器
 export function EnableAutoConfiguration(target: (new () => object)): void;
