@@ -1,6 +1,12 @@
 /**
  * Created by yanshaowen on 2018/12/13.
  */
+try {
+    require("typeorm");
+} catch (e) {
+    // @ts-ignore
+    return;
+}
 import { writeFile } from "fs";
 import * as os from "os";
 import { join } from "path";

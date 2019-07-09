@@ -7,6 +7,12 @@
  * @author yanshaowen
  * @date 2019/1/18 12:50
  */
+try {
+    require("typeorm");
+} catch (e) {
+    // @ts-ignore
+    return;
+}
 import {IConnection, ISavepoint} from "type-interface";
 import {createConnection, Connection as _Connection, EntityManager, ConnectionOptions, QueryRunner} from "typeorm";
 import {CommonSavepoint} from "../CommonSavepoint";
