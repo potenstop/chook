@@ -8,7 +8,6 @@
  * @date 2018/12/21 22:00
  */
 import {
-    ApplicationLog,
     HttpContent,
     RestController, Standard,
 } from "../../../src/papio";
@@ -22,7 +21,9 @@ import {
     ReturnGenericsProperty,
 } from "papio-common";
 import {ShellService} from "../service/ShellService";
+import {LoggerFactory} from "type-slf4";
 
+const logger = LoggerFactory.getLogger("papio.simple.controller.ShellController");
 @RequestMapping("/my")
 @RestController
 class ShellController {
@@ -32,7 +33,7 @@ class ShellController {
     @Valid
     @ReturnGenericsProperty(new Map<string, new () => object>().set("Standard", Standard).set("Standard.data", Number))
     public async getBonuses(@RequestParam("number_id") @NotNull numberId: string): Promise<Standard<number>> {
-        ApplicationLog.info("numberId = " + numberId + HttpContent.getHeader("host"));
+        logger.info("numberId = " + numberId + HttpContent.getHeader("host"));
         await this.shellService.test();
         const standard = new Standard<number>();
         standard.data = 1;

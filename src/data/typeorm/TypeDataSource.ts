@@ -10,8 +10,8 @@
 import { IDataSource, IConnection } from "type-interface";
 import {createPool, Options, Pool} from "generic-pool";
 import {TypeConnection} from "./TypeConnection";
-import {ApplicationLog} from "../../log/ApplicationLog";
-import {DatabaseLog} from "../../log/DatabaseLog";
+import {LoggerFactory} from "type-slf4";
+const logger = LoggerFactory.getLogger("papio.data.typeorm.TypeDataSource");
 export class TypeDataSource implements IDataSource {
     public kind: "IDataSource" = "IDataSource";
     protected logWriter: () => {};
@@ -105,7 +105,6 @@ export class TypeDataSource implements IDataSource {
             op.port = url.port;
             op.database = url.pathname.substring(1, url.pathname.length);
             op.entities = this.entities;
-            op.logger = new DatabaseLog();
             url.searchParams.forEach((value, key) => {
                 op[key] = value;
             });
@@ -129,7 +128,7 @@ export class TypeDataSource implements IDataSource {
         try {
             return await this.connectionPool.acquire();
         } catch (e) {
-            ApplicationLog.error("pool acquire error", e);
+            logger.error("pool acquire error", e);
             throw e;
         }
     }

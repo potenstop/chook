@@ -13,12 +13,10 @@ import "reflect-metadata";
 import {KoaApplication} from "../../app/KoaApplication";
 import {DefaultGlobalConfigBean} from "../../core/GlobalConfigBean";
 import {RequestHeaderError} from "../../error/RequestHeaderError";
-import {ApplicationLog} from "../../log/ApplicationLog";
 import "../../core/Hook";
 import {HttpContent} from "../../context/HttpContent";
 import {HookLog} from "../../core/Hook";
 import {GenerateUtil} from "../../util/GenerateUtil";
-import {BaseLog} from "../../log/BaseLog";
 import {
      CommonConstant,
      JSHelperUtil,
@@ -35,7 +33,8 @@ import {
      ValidError,
      Controller,
 } from "papio-common";
-
+import { Logger, LoggerFactory } from "type-slf4";
+const logger = LoggerFactory.getLogger("papio.annotation.initialize.EnableAutoConfiguration");
 // @EnableAutoConfiguration 无参数类装饰器
 export function EnableAutoConfiguration(target: (new () => object)): void;
 // @EnableAutoConfiguration('name') 参数为name的类装饰器
@@ -79,7 +78,7 @@ function exec(target: (new () => object), options: Options) {
                     routerMethod = controller.method.toLowerCase();
                }
                const defaultMap = new Map<string, new () => object>();
-               ApplicationLog.debug(`use url(${controller.path}), method(${routerMethod})`);
+               logger.debug(`use url(${controller.path}), method(${routerMethod})`);
                koaRouter[routerMethod](controller.path, async (ctx) => {
                     try {
                          // 检验请求头content-type
@@ -153,7 +152,7 @@ function exec(target: (new () => object), options: Options) {
                               throw new RequestHeaderError(`response content-type=${controller.responseContentType} error`);
                          }
                     } catch (e) {
-                         ApplicationLog.error("aop error", e);
+                         logger.error("aop error", e);
                          if (e instanceof ValidError) {
                               ctx.body = {message: e.getValidMessage()};
                               ctx.status  = ValidError.STATUS;
@@ -171,13 +170,13 @@ function exec(target: (new () => object), options: Options) {
           defaultGlobalConfigBean.middleware.push(koaRouter.allowedMethods());
           defaultGlobalConfigBean.application.on("error", (error, ctx) => {
                if (ctx.status === HttpStatusEnum.NOT_FOUND) {
-                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} not found`);
+                    logger.debug(`url=${ctx.url}, method=${ctx.method} not found`);
                     ctx.body = {message: `url=${ctx.url}, method=${ctx.method} not found`};
                } else if (ctx.status === HttpStatusEnum.SERVER_ERROR) {
-                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} server error`);
+                    logger.debug(`url=${ctx.url}, method=${ctx.method} server error`);
                     ctx.body = {message: `url=${ctx.url}, method=${ctx.method} server error`};
                } else {
-                    ApplicationLog.debug(`url=${ctx.url}, method=${ctx.method} unknown`);
+                    logger.debug(`url=${ctx.url}, method=${ctx.method} unknown`);
                     ctx.body = {message: `url=${ctx.url}, method=${ctx.method} unknown`};
 
                }
@@ -190,7 +189,7 @@ function exec(target: (new () => object), options: Options) {
           Beans.setBean(CommonConstant.GLOBAL_CONFIG, defaultGlobalConfigBean);
      }
      // 加载bean
-     const beans = Beans.getBeans();
+     /*const beans = Beans.getBeans();
      beans.forEach((obj, key) => {
           if (JSHelperUtil.isClassObject(obj)) {
                if (key === "logStatic") {
@@ -200,5 +199,5 @@ function exec(target: (new () => object), options: Options) {
                     });
                }
           }
-     });
+     });*/
 }

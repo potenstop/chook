@@ -1,3 +1,9 @@
+try {
+    require("typeorm");
+} catch (e) {
+    // @ts-ignore
+    return;
+}
 import {
     AbstractRepository,
     DeepPartial, DeleteResult, EntityManager,
@@ -20,10 +26,11 @@ import { IDataSource } from "type-interface";
 import {TypeDataSource} from "./TypeDataSource";
 import {QueryPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
 import {ServerError} from "../../error/ServerError";
-import {ApplicationLog} from "../../log/ApplicationLog";
 import "reflect-metadata";
 import {ITransactionObject} from "../../model/ITransactionObject";
+import {LoggerFactory} from "type-slf4";
 
+const logger = LoggerFactory.getLogger("papio.data.typeorm.TypeDataBeansRepository");
 interface IConnectionPool {
     connection: TypeConnection;
     release: Function;
@@ -158,7 +165,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
         const typeConnection = await dataSource.getConnection() as TypeConnection;
         return {connection: typeConnection, release: () => {
                 (dataSource as TypeDataSource).releaseConnection(typeConnection).catch((e) => {
-                    ApplicationLog.error("pool release error", e);
+                    logger.error("pool release error", e);
                 });
             }};
     }

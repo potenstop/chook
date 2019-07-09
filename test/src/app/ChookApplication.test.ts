@@ -9,26 +9,28 @@
  */
 import { expect } from "chai";
 // import {RestController} from "../../../lib/annotation/controller/RestController";
-import {Bean} from "../../../src/annotation/initialize/Bean";
 import {EnableAutoConfiguration} from "../../../src/annotation/initialize/EnableAutoConfiguration";
-import {RequestMapping} from "../../../src/annotation/mapping/RequestMapping";
-import {RequestParam} from "../../../src/annotation/request/RequestParam";
-import {Max} from "../../../src/annotation/validation/Max";
-import {Min} from "../../../src/annotation/validation/Min";
-import {NotBank} from "../../../src/annotation/validation/NotBank";
-import {NotNull} from "../../../src/annotation/validation/NotNull";
-import {Valid} from "../../../src/annotation/validation/Valid";
 import {PapioApplication} from "../../../src/app/PapioApplication";
-import {ApplicationLog} from "../../../src/log/ApplicationLog";
 import {RestController} from "../../../src/annotation/controller/RestController";
-import {JsonProperty} from "../../../src/annotation/bean/JsonProperty";
-import {Property} from "../../../src/annotation/bean/Property";
-import {ReturnGenericsProperty} from "../../../src/annotation/bean/ReturnGenericsProperty";
-import {RequestHeader} from "../../../src/annotation/request/RequestHeader";
 import {HookLog} from "../../../src/core/Hook";
-import {Service} from "../../../src/annotation/component/Service";
-import {Autowired} from "../../../src/annotation/component/Autowired";
 import {TypeConnection} from "../../../src/data/typeorm/TypeConnection";
+import {
+    Autowired,
+    Service,
+    RequestHeader,
+    ReturnGenericsProperty,
+    Property,
+    JsonProperty,
+    Valid,
+    NotNull,
+    NotBank,
+    Min,
+    Max,
+    RequestParam,
+    RequestMapping,
+    Bean,
+    Resource,
+} from "papio-common";
 
 class LogBean {
     public appName: string;
@@ -71,6 +73,7 @@ class MyService {
         return "===";
     }
 }
+const logger = LoggerFactory.getLogger("papio.test.app.MyController");
 @RequestMapping("/my")
 @RestController
 class MyController {
@@ -85,7 +88,7 @@ class MyController {
                       @RequestParam @NotBank head: string,
                       @RequestHeader("host") host: string,
                       @RequestParam userRequest: UserRequest): Standard<User[]> {
-        ApplicationLog.info(userRequest.userHead + name + this.myService.test());
+        logger.info(userRequest.userHead + name + this.myService.test());
         const head1 = HookLog.getHead();
         const hookLink = HookLog.findByAsyncId(24);
 
@@ -103,11 +106,11 @@ class MyController {
     @Valid
     @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses1(@RequestParam @NotNull @Min(1) @Max(3) id: number,
-                      @RequestParam("nickname") name: string,
-                      @RequestParam @NotBank head: string,
-                      @RequestHeader("host") host: string,
-                      @RequestParam userRequest: UserRequest): Standard<User[]> {
-        ApplicationLog.info(userRequest.userHead + name + this.myService.test());
+                       @RequestParam("nickname") name: string,
+                       @RequestParam @NotBank head: string,
+                       @RequestHeader("host") host: string,
+                       @RequestParam userRequest: UserRequest): Standard<User[]> {
+        logger.info(userRequest.userHead + name + this.myService.test());
         const head1 = HookLog.getHead();
         const hookLink = HookLog.findByAsyncId(24);
 
@@ -143,11 +146,11 @@ class TestApp {
     }
 }
 import {createPool} from "generic-pool";
-import {Resource} from "../../../src/annotation/initialize/Resource";
+import {LoggerFactory} from "type-slf4";
 describe("test PapioApplication", () => {
     it("main", () => {
         TestApp.main();
-        ApplicationLog.info("----------------");
+        logger.info("----------------");
     });
     it("test pool", async () => {
         const connectionPool = createPool({

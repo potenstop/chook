@@ -9,8 +9,8 @@
  */
 import * as Koa from "koa";
 import {IApplication} from "./IApplication";
-import {ApplicationLog} from "../log/ApplicationLog";
-
+import {LoggerFactory} from "type-slf4";
+const logger = LoggerFactory.getLogger("papio.app.KoaApplication");
 export class KoaApplication implements IApplication {
     private app: Koa;
     constructor() {
@@ -38,7 +38,7 @@ export class KoaApplication implements IApplication {
                 listenPort = 3000;
             }
             this.app.listen(listenPort, listenHostname, function() {
-                ApplicationLog.debug(`start suc, http://${listenHostname || "127.0.0.1"}:${listenPort}`);
+                logger.debug(`start suc, http://${listenHostname || "127.0.0.1"}:${listenPort}`);
                 resolve();
             });
         });

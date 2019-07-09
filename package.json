@@ -32,11 +32,8 @@
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "papio-common": "0.0.11",
     "reflect-metadata": "^0.1.12",
-    "type-interface": "0.0.2",
-    "winston": "^3.2.0",
-    "winston-daily-rotate-file": "^3.5.1"
+    "type-interface": "0.0.3"
   },
   "engines": {
     "node": ">= 9.0.0"
@@ -54,6 +51,8 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typeorm": "^0.2.12",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "papio-common": "0.0.11",
+    "type-slf4": "0.0.4"
   }
 }

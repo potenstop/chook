@@ -17,7 +17,9 @@
     "ordered-imports": false,
     "member-ordering": false,
     "no-bitwise": false,
-    "ban-types":false
+    "ban-types":false,
+    "no-var-requires": false,
+    "no-console": false
 
   }
 }

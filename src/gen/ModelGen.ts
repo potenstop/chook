@@ -7,7 +7,6 @@ import { join } from "path";
 import { createConnection } from "typeorm";
 import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
 import { GenConfig } from "../model/GenConfig";
-import {ApplicationLog} from "../log/ApplicationLog";
 import {ConvertUtil} from "papio-common";
 
 export class ModelGen {
@@ -87,7 +86,7 @@ export class ModelGen {
                 }
             }
             if (type.length === 0) {
-                ApplicationLog.error(`没有找到对应的映射类型,fieldName=${col.Field}, fieldType=${col.Type}`);
+                console.error(`没有找到对应的映射类型,fieldName=${col.Field}, fieldType=${col.Type}`);
             } else {
                 model += `${tab}@${columnName}({name: "${col.Field}"})${ModelGen.endLine}`;
                 model += `${tab}@Property`;
@@ -97,7 +96,7 @@ export class ModelGen {
         model += `}${ModelGen.endLine}`;
         if (this.typeormConfig.cli.entitiesDir) {
             writeFile(join(this.typeormConfig.cli.entitiesDir, this.genConfig.modelName + ".ts"), model, "utf8", (e) => {
-                ApplicationLog.error(`write dao error, path=${join(this.typeormConfig.cli.entitiesDir, this.genConfig.modelName + ".ts")}`, e);
+                console.error(`write dao error, path=${join(this.typeormConfig.cli.entitiesDir, this.genConfig.modelName + ".ts")}`, e);
             });
         }
         connection.close();

@@ -9,9 +9,11 @@
  */
 import "reflect-metadata";
 import {ITransactionObject} from "../../model/ITransactionObject";
-import {ApplicationLog} from "../../log/ApplicationLog";
 import {JSHelperUtil, MetaConstant} from "papio-common";
 import {GenerateUtil} from "../../util/GenerateUtil";
+import { Logger, LoggerFactory } from "type-slf4";
+const logger = LoggerFactory.getLogger("papio.annotation.dao.Transaction");
+
 type level = "READ UNCOMMITTED" | "READ COMMITTED" | "REPEATABLE READ" | "SERIALIZABLE";
 interface IOptions {
     level: level;
@@ -65,7 +67,7 @@ function exec(target: object, propertyKey: string, descriptor: PropertyDescripto
                     }
                 }
             } catch (e) {
-                ApplicationLog.error("transaction rollback error", e);
+                logger.error("transaction rollback error", e);
             }
             throw e;
         } finally {

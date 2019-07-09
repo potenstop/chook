@@ -1,7 +1,6 @@
 import {RedisRemote} from "../../../../src/annotation/remote/RedisRemote";
 import {RequestRedisMapping} from "../../../../src/annotation/mapping/RequestRedisMapping";
 
-import {ApplicationLog} from "../../../../src/log/ApplicationLog";
 import {RequestRedisCommand} from "papio-common/lib/enums/RequestRedisCommand";
 import {CommonConstant, ReturnGenericsProperty} from "papio-common";
 
@@ -26,6 +25,6 @@ describe("RedisCache", () => {
     it("RedisCache", async () => {
         const test1 = new RedisCache();
         await test1.getTest();
-        ApplicationLog.info("===========");
+        console.info("===========");
     });
 });

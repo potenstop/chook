@@ -12,8 +12,8 @@ import {createConnection, Connection as _Connection, EntityManager, ConnectionOp
 import {CommonSavepoint} from "../CommonSavepoint";
 import {IsolationLevel} from "typeorm/driver/types/IsolationLevel";
 import {GenerateUtil} from "../../util/GenerateUtil";
-import {ApplicationLog} from "../../log/ApplicationLog";
-
+import {LoggerFactory} from "type-slf4";
+const logger = LoggerFactory.getLogger("papio.data.typeorm.TypeConnection")
 let isFirst = true;
 
 export class TypeConnection implements IConnection {
@@ -31,7 +31,7 @@ export class TypeConnection implements IConnection {
         try {
             this.connection = await createConnection(this.options);
         } catch (e) {
-            ApplicationLog.error("connect error", e);
+            logger.error("connect error", e);
             this.connection = null;
         }
     }

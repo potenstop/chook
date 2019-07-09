@@ -22,8 +22,6 @@ export { RedisRemote } from "./annotation/remote/RedisRemote";
 
 export { Api } from "./annotation/swagger/Api";
 
-export { ApplicationLog } from "./log/ApplicationLog";
-
 export { ModelGen } from "./gen/ModelGen";
 
 export { HttpContent } from "./context/HttpContent";

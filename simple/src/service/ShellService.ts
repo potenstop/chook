@@ -8,13 +8,15 @@
  * @date 2018/12/22 11:48
  */
 import {ShellTaskRepository} from "../dao/common-util/ShellTaskRepository";
-import {ApplicationLog, Primary, Transaction} from "../../../src/papio";
-import { Service, Autowired } from "papio-common"
+import {Primary, Transaction} from "../../../src/papio";
+import { Service, Autowired } from "papio-common";
 import {ShellTaskRepository1} from "../dao/common-util/ShellTaskRepository1";
 import {ShellTask} from "../model/dto/common-util/ShellTask";
 import {MyRest} from "../dao/rest-test/MyRest";
 import {RedisCache} from "../dao/redis/RedisCache";
+import {LoggerFactory} from "type-slf4";
 
+const logger = LoggerFactory.getLogger("papio.simple.service.ShellService");
 @Service
 export class ShellService {
     @Autowired
@@ -36,7 +38,7 @@ export class ShellService {
         shellTask1.createTime = new Date();
         shellTask1.updateTime = new Date();
         shellTask1.shellTemplateId = 1;
-        ApplicationLog.info("===========start");
+        logger.info("===========start");
         const result = await this.shellTaskRepository.insert(shellTask);
         let memberInfo;
         // memberInfo = await this.myRest.getMemberInfo(1);
@@ -49,9 +51,9 @@ export class ShellService {
             }, 10000);
         });
         const cacheUnLock = await this.redisCache.unlock();
-        ApplicationLog.info("cache test " + JSON.stringify(cacheTests) + ",list=" + JSON.stringify(cacheList) + ",cacheLock=" + cacheLock + ",cacheUnLock=" + cacheUnLock);
+        logger.info("cache test " + JSON.stringify(cacheTests) + ",list=" + JSON.stringify(cacheList) + ",cacheLock=" + cacheLock + ",cacheUnLock=" + cacheUnLock);
         const result1 = await this.shellTaskRepository1.insert(shellTask1);
-        ApplicationLog.info(memberInfo);
-        ApplicationLog.info("===========end");
+        logger.info(memberInfo);
+        logger.info("===========end");
     }
 }
