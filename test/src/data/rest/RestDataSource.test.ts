@@ -1,13 +1,11 @@
 import { expect } from "chai";
-import {RestConnection} from "../../../../src/data/rest/RestConnection";
-import {RestDataSource} from "../../../../src/data/rest/RestDataSource";
-import {Property} from "../../../../src/annotation/bean/Property";
 import {Standard} from "../../../../src/model/Standard";
+import {JsonProperty, RestConnection, RestDataSource} from "papio-common";
 
 class Member {
-    @Property
+    @JsonProperty
     public id: number;
-    @Property
+    @JsonProperty
     public name: string;
 }
 describe("http request", () => {

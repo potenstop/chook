@@ -36,7 +36,7 @@ class ShellController {
         logger.info("numberId = " + numberId + HttpContent.getHeader("host"));
         await this.shellService.test();
         const standard = new Standard<number>();
-        standard.data = 1;
+        standard.setData(1);
         return standard;
     }
 

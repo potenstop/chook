@@ -1,6 +1,6 @@
 {
   "name": "papio",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "nodejs dependency injection Framework",
   "main": "lib/papio.js",
   "types": "lib/papio.d.ts",
@@ -52,7 +52,7 @@
     "tslint": "^5.11.0",
     "typeorm": "^0.2.12",
     "typescript": "^3.5.2",
-    "papio-common": "0.0.11",
+    "papio-common": "0.0.12",
     "type-slf4": "0.0.4"
   }
 }

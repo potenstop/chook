@@ -11,13 +11,37 @@ import {JsonProperty} from "papio-common";
  */
 export class Standard<T> {
     @JsonProperty
-    public code: number;
+    private code: string;
     @JsonProperty
-    public message: string;
+    private message: string;
     @JsonProperty
-    public data: T;
+    private data: T;
     constructor() {
-        this.code = 0;
+        this.code = "0";
         this.message = "suc";
+        this.data = null;
+    }
+    public getCode(): string {
+        return this.code;
+    }
+
+    public setCode(code: string): void {
+        this.code = code;
+    }
+
+    public getMessage(): string {
+        return this.message;
+    }
+
+    public setMessage(message: string): void {
+        this.message = message;
+    }
+
+    public getData(): T {
+        return this.data;
+    }
+
+    public setData(data: T): void {
+        this.data = data;
     }
 }
