@@ -21,6 +21,11 @@ export class PapioApplication {
     private startClass: object;
     private processEnv: ProcessEnv;
     private async run(): Promise<void> {
+        // 加载启动前的任务
+        const papioApollo = Beans.getBean("papioApollo");
+        if (papioApollo instanceof Function) {
+            await papioApollo();
+        }
         const globalConfig = Beans.getBean(CommonConstant.GLOBAL_CONFIG) as IGlobalConfigBean;
         if (globalConfig) {
             // 加载中间件
