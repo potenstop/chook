@@ -10,6 +10,7 @@
 import ProcessEnv = NodeJS.ProcessEnv;
 import { IGlobalConfigBean } from "../core/GlobalConfigBean";
 import { Beans, CommonConstant } from "papio-common";
+import {GlobalEnum} from "../model/GlobalEnum";
 
 export class PapioApplication {
     public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {
@@ -26,13 +27,15 @@ export class PapioApplication {
         if (papioApollo instanceof Function) {
             await papioApollo();
         }
+        // @ts-ignore
+        const papioApplication = global[GlobalEnum.PAPIO_APPLICATION] as Map<string, string>;
         const globalConfig = Beans.getBean(CommonConstant.GLOBAL_CONFIG) as IGlobalConfigBean;
         if (globalConfig) {
             // 加载中间件
             globalConfig.middleware.forEach((o: (() => void)) => {
                 globalConfig.application.use(o);
             });
-            await globalConfig.application.start(globalConfig.port);
+            await globalConfig.application.start(papioApplication.has(GlobalEnum.SERVER_PORT) ? papioApplication.get(GlobalEnum.SERVER_PORT): null);
         }
     }
 
