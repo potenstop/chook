@@ -8,6 +8,9 @@
  - 数据库datasource配置及连接池
  - 事务
  - http datasource的配置
+ - 支持application.json 配置
+ - 支持type-slf4统一日志输出
+ - 支持apollo配置
 
  # 入门
  ## 安装
@@ -73,5 +76,7 @@
 - 0.0.9  支持redis的dataSource配置 并扩展支持锁机制
 - 0.0.10 加入启动日志和加载路由的日志
 - 0.0.12 1 DateUtil时间工具类 2 bean对象的深拷贝 3 类型转换 
+- 0.0.18 通过papio-apollo支持apollo
+  
 
 

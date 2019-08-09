@@ -84,6 +84,13 @@ function loadApplication() {
     // 注入到全局变量中
     // @ts-ignore
     global.papioApplication = applicationMap;
+    const keys = new Set<string>();
+    applicationMap.forEach((value, key) => {
+        keys.add(key);
+    });
+    // @ts-ignore
+    global.papioApplicationSourceKeys = keys;
+
 }
 
 /***
