@@ -37,7 +37,8 @@ export class PapioApplication {
             globalConfig.middleware.forEach((o: (() => void)) => {
                 globalConfig.application.use(o);
             });
-            await globalConfig.application.start(papioApplication.has(GlobalEnum.SERVER_PORT) ? papioApplication.get(GlobalEnum.SERVER_PORT): null);
+            await globalConfig.application.start(papioApplication.has(GlobalEnum.SERVER_PORT) && !isNaN(+GlobalEnum.SERVER_PORT)
+                ? +papioApplication.get(GlobalEnum.SERVER_PORT) : null);
         }
     }
 
