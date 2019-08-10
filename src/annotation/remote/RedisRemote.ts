@@ -2,7 +2,7 @@ import "reflect-metadata";
 import * as path from "path";
 import { RedisDataSource } from "../../data/redis/RedisDataSource";
 import { RedisConnection } from "../../data/redis/RedisConnection";
-import { Mappers, MetaConstant, FileUtil, Beans} from "papio-common";
+import {Mappers, MetaConstant, FileUtil, Beans, PapioEmitterDefault, EmitterEnum} from "papio-common";
 
 /**
  *
@@ -29,12 +29,18 @@ export function RedisRemote(target: Options | string): CallableFunction {
         } else {
             options.filepath = target;
         }
-        exec(target1, options);
+        execOn(target1, options);
     };
 }
 class Options {
     public name?: string;
     public filepath: string;
+}
+function execOn(target: (new () => object), options: Options) {
+    const papioEmitter = PapioEmitterDefault.getDefault();
+    papioEmitter.once(EmitterEnum.LISTEN, () => {
+        exec(target, options);
+    });
 }
 function exec(target: (new () => object), options: Options) {
     const ownMetadata = Reflect.getOwnMetadata(MetaConstant.REQUEST_REDIS_MAPPING, target.prototype) || new Map<string, object>();

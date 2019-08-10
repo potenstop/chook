@@ -12,7 +12,7 @@ import {RedisDataSource} from "../../../src/data/redis/RedisDataSource";
  * @date 2019/2/19 10:25
  */
 @Configuration
-@MapperScan("@../simple/src/dao/rest-test")
+@MapperScan("@../simple/src/dao/redis")
 // @MapperScan("@dao/redis")
 export class RedisConfiguration {
     @Bean

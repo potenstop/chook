@@ -11,8 +11,8 @@ import {Bean, Configuration, RestDataSource, MapperScan} from "papio-common";
 import { IDataSource } from "type-interface";
 
 @Configuration
-// @MapperScan("@../simple/src/dao/rest-test")
-@MapperScan("@dao/rest-test")
+@MapperScan("@../simple/src/dao/rest-test")
+// @MapperScan("@dao/rest-test")
 export class RestTestHttpConfiguration {
     @Bean
     public restTestDataSourceMaster(): IDataSource {

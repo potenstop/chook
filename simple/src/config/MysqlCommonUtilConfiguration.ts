@@ -12,8 +12,8 @@ import { Bean, Configuration, MapperScan } from "papio-common";
 import { IDataSource } from "type-interface";
 
 @Configuration
-// @MapperScan("@../simple/src/dao/common-util")
-@MapperScan("@dao/common-util")
+@MapperScan("@../simple/src/dao/common-util")
+// @MapperScan("@dao/common-util")
 export class MysqlCommonUtilConfiguration {
     @Bean
     public dataSourceMaster(): IDataSource {

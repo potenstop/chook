@@ -35,7 +35,6 @@ import {
 } from "papio-common";
 import {Logger, LoggerFactory} from "type-slf4";
 import * as path from "path";
-import {emit} from "cluster";
 
 const logger = LoggerFactory.getLogger("papio.annotation.initialize.EnableAutoConfiguration");
 
@@ -50,7 +49,7 @@ export function EnableAutoConfiguration(target: (new () => object) | Options | s
     options.name = "default";
     if (target instanceof Function) {
         // 无参数装饰器
-        exec(target, options);
+        execOn(target, options);
     } else {
         // 有参数装饰器
         return (target1: (new () => object)): void => {
@@ -59,7 +58,7 @@ export function EnableAutoConfiguration(target: (new () => object) | Options | s
             } else if (typeof target === "string") {
                 options.name = target;
             }
-            exec(target1, options);
+            execOn(target1, options);
         };
     }
 }
@@ -128,6 +127,12 @@ function eachConfig(config, parentKey: string, applicationMap: Map<string, strin
 }
 // 加载application配置
 loadApplication();
+function execOn(target: (new () => object), options: Options) {
+    const papioEmitter = PapioEmitterDefault.getDefault();
+    papioEmitter.once(EmitterEnum.LOAD_TASK_APOLLO, () => {
+        exec(target, options);
+    });
+}
 function exec(target: (new () => object), options: Options) {
     if (options.name === "default") {
         const defaultGlobalConfigBean = new DefaultGlobalConfigBean();
@@ -252,6 +257,8 @@ function exec(target: (new () => object), options: Options) {
         }
         // 设置bean
         Beans.setBean(CommonConstant.GLOBAL_CONFIG, defaultGlobalConfigBean);
+        const papioEmitter = PapioEmitterDefault.getDefault();
+        papioEmitter.emit(EmitterEnum.MIDDLEWARE);
     }
     // 加载bean
     /*const beans = Beans.getBeans();

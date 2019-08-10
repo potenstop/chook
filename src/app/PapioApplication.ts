@@ -8,7 +8,7 @@
  * @date 2018/12/21 14:32
  */
 import ProcessEnv = NodeJS.ProcessEnv;
-import { IGlobalConfigBean } from "../core/GlobalConfigBean";
+import {IGlobalConfigBean} from "../core/GlobalConfigBean";
 import {Beans, CommonConstant, EmitterEnum, PapioEmitterDefault} from "papio-common";
 import {GlobalEnum} from "../model/GlobalEnum";
 
