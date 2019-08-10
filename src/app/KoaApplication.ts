@@ -10,6 +10,7 @@
 import * as Koa from "koa";
 import {IApplication} from "./IApplication";
 import {LoggerFactory} from "type-slf4";
+import {EmitterEnum, PapioEmitterDefault} from "papio-common";
 const logger = LoggerFactory.getLogger("papio.app.KoaApplication");
 export class KoaApplication implements IApplication {
     private app: Koa;
@@ -39,6 +40,8 @@ export class KoaApplication implements IApplication {
             }
             this.app.listen(listenPort, listenHostname, function() {
                 logger.debug(`start suc, http://${listenHostname || "127.0.0.1"}:${listenPort}`);
+                const papioEmitter = PapioEmitterDefault.getDefault();
+                papioEmitter.emit(EmitterEnum.LISTEN);
                 resolve();
             });
         });

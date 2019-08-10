@@ -11,16 +11,16 @@ import { EnableAutoConfiguration, PapioApplication} from "../../src/papio";
 import {CommonConstant, Bean, ComponentScan } from "papio-common";
 
 @EnableAutoConfiguration
-/*@ComponentScan("@../simple/src/controller")
+@ComponentScan("@../simple/src/controller")
 @ComponentScan("@../simple/src/service")
 @ComponentScan("@../simple/src/dao")
 @ComponentScan("@../simple/src/model")
-@ComponentScan("@../simple/src/config")*/
-@ComponentScan("@controller")
+@ComponentScan("@../simple/src/config")
+/*@ComponentScan("@controller")
 @ComponentScan("@service")
 @ComponentScan("@dao")
 @ComponentScan("@model")
-@ComponentScan("@config")
+@ComponentScan("@config")*/
 export class SimpleApp {
     public static main(): void {
         PapioApplication.run(SimpleApp, process.env);

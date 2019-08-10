@@ -12,8 +12,8 @@ import {RedisDataSource} from "../../../src/data/redis/RedisDataSource";
  * @date 2019/2/19 10:25
  */
 @Configuration
-// @MapperScan("@../simple/src/dao/rest-test")
-@MapperScan("@dao/redis")
+@MapperScan("@../simple/src/dao/rest-test")
+// @MapperScan("@dao/redis")
 export class RedisConfiguration {
     @Bean
     public redisDataSourceMaster(): IDataSource {

@@ -7,11 +7,11 @@
  * @author yanshaowen
  * @date 2019/2/15 13:47
  */
-import {Property} from "../../../../../src/papio";
+import {JsonProperty} from "papio-common";
 
 export class Member {
-    @Property
+    @JsonProperty
     public id: number;
-    @Property
+    @JsonProperty
     public name: string;
 }

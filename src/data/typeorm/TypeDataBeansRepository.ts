@@ -181,6 +181,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async preload(entityLike: DeepPartial<Entity>): Promise<Entity|undefined> {
         const {connection, release} = await this.getManager();
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.preload(this.target, entityLike);
         release();
         return result;
@@ -209,6 +210,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
             options = {};
             options.transaction = false;
         }
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.save(this.target, entityOrEntities, options);
         release();
         return result;
@@ -233,6 +235,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
             options = {};
             options.transaction = false;
         }
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.remove(this.target, entityOrEntities as any, options);
         release();
         return result;
@@ -250,6 +253,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
             options = {};
             options.transaction = false;
         }
+        // @ts-ignore
         const result = await  connection.getSourceConnection().manager.insert(this.target, entity, options);
         release();
         return result;
@@ -267,6 +271,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
             options = {};
             options.transaction = false;
         }
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.update(this.target, criteria, partialEntity, options);
         release();
         return result;
@@ -280,6 +285,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async delete(criteria: string|string[]|number|number[]|Date|Date[]|ObjectID|ObjectID[]|FindConditions<Entity>, options?: RemoveOptions): Promise<DeleteResult> {
         const {connection, release} = await this.getManager();
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.delete(this.target, criteria, options);
         release();
         return result;
@@ -300,6 +306,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async count(optionsOrConditions?: FindManyOptions<Entity>|FindConditions<Entity>): Promise<number> {
         const {connection, release} = await this.getManager(true);
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.count(this.target, optionsOrConditions);
         release();
         return result;
@@ -320,6 +327,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async find(optionsOrConditions?: FindManyOptions<Entity>|FindConditions<Entity>): Promise<Entity[]> {
         const {connection, release} = await this.getManager(true);
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.find(this.target, optionsOrConditions);
         release();
         return result;
@@ -346,6 +354,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async findAndCount(optionsOrConditions?: FindManyOptions<Entity>|FindConditions<Entity>): Promise<[ Entity[], number ]> {
         const {connection, release} = await this.getManager(true);
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.findAndCount(this.target, optionsOrConditions);
         release();
         return result;
@@ -369,6 +378,7 @@ export class TypeDataBeansRepository<Entity extends ObjectLiteral> extends Abstr
      */
     public async findByIds(ids: any[], optionsOrConditions?: FindManyOptions<Entity>|FindConditions<Entity>): Promise<Entity[]> {
         const {connection, release} = await this.getManager(true);
+        // @ts-ignore
         const result = await connection.getSourceConnection().manager.findByIds(this.target, ids, optionsOrConditions);
         release();
         return result;

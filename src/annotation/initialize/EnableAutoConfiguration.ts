@@ -31,10 +31,11 @@ import {
     ContentTypeEnum,
     HttpStatusEnum,
     ValidError,
-    Controller,
+    Controller, PapioEmitterDefault, EmitterEnum,
 } from "papio-common";
 import {Logger, LoggerFactory} from "type-slf4";
 import * as path from "path";
+import {emit} from "cluster";
 
 const logger = LoggerFactory.getLogger("papio.annotation.initialize.EnableAutoConfiguration");
 
@@ -72,6 +73,8 @@ class Options {
  * 加载本地的application.json
  */
 function loadApplication() {
+    const papioEmitter = PapioEmitterDefault.getDefault();
+    papioEmitter.emit(EmitterEnum.LOAD_TASK_APOLLO);
     let applicationConfig = {};
     try {
         applicationConfig = require(path.join(process.cwd(), "resources/application.json"));
@@ -90,6 +93,7 @@ function loadApplication() {
     });
     // @ts-ignore
     global.papioApplicationSourceKeys = keys;
+    papioEmitter.emit(EmitterEnum.AUTO_CONFIGURATION);
 
 }
 
