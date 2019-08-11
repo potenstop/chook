@@ -12,23 +12,20 @@ import {
     QueryRunner, RemoveOptions,
     SaveOptions, UpdateResult,
 } from "typeorm";
-import {TypeConnection} from "./TypeConnection";
-import {
-    Mappers,
-    MetaConstant,
-    Beans,
-    FileUtil,
-    StackAnalysisUtil,
-} from "papio-common";
 import "reflect-metadata";
+import {TypeConnection} from "./TypeConnection";
+import {FileUtil} from "../../util/FileUtil";
 import * as path from "path";
 import { IDataSource } from "type-interface";
 import {TypeDataSource} from "./TypeDataSource";
 import {QueryPartialEntity} from "typeorm/query-builder/QueryPartialEntity";
 import {ServerError} from "../../error/ServerError";
-import "reflect-metadata";
 import {ITransactionObject} from "../../model/ITransactionObject";
 import {LoggerFactory} from "type-slf4";
+import {Mappers} from "../../core/Mappers";
+import {MetaConstant} from "../../constants/MetaConstant";
+import {Beans} from "../../core/Beans";
+import {StackAnalysisUtil} from "../../util/StackAnalysisUtil";
 
 const logger = LoggerFactory.getLogger("papio.data.typeorm.TypeDataBeansRepository");
 interface IConnectionPool {

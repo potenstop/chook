@@ -1,14 +1,10 @@
 import {
     RedisRemote,
     RequestRedisMapping,
-    Standard,
-} from "../../../../src/papio";
-import {
     CommonConstant,
-    RequestParam,
     ReturnGenericsProperty,
     RequestRedisCommand,
-} from "papio-common";
+} from "../../../../src/papio";
 
 /**
  *

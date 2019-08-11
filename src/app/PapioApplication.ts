@@ -9,8 +9,11 @@
  */
 import ProcessEnv = NodeJS.ProcessEnv;
 import {IGlobalConfigBean} from "../core/GlobalConfigBean";
-import {Beans, CommonConstant, EmitterEnum, PapioEmitterDefault} from "papio-common";
 import {GlobalEnum} from "../model/GlobalEnum";
+import {PapioEmitterDefault} from "../core/PapioEmitterDefault";
+import {Beans} from "../core/Beans";
+import {EmitterEnum} from "../enums/EmitterEnum";
+import {CommonConstant} from "../constants/CommonConstant";
 
 export class PapioApplication {
     public static async run(startClass: (new () => object) , processEnv: ProcessEnv): Promise<void> {

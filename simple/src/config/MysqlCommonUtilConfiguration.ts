@@ -7,8 +7,7 @@
  * @author yanshaowen
  * @date 2019/1/22 9:39
  */
-import { TypeDataSource } from "../../../src/papio";
-import { Bean, Configuration, MapperScan } from "papio-common";
+import {Bean, Configuration, MapperScan, TypeDataSource} from "../../../src/papio";
 import { IDataSource } from "type-interface";
 
 @Configuration

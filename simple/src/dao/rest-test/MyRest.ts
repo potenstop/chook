@@ -7,8 +7,7 @@
  * @author yanshaowen
  * @date 2019/2/14 10:27
  */
-import { Standard } from "../../../../src/papio";
-import {RequestMapping, RequestMethod, RequestParam, RestRemote, ReturnGenericsProperty} from "papio-common";
+import { Standard, RequestMapping, RequestMethod, RequestParam, RestRemote, ReturnGenericsProperty } from "../../../../src/papio";
 import {Member} from "../../model/dto/rest-test/Member";
 
 @RestRemote({filepath: __dirname, name: "/my"})

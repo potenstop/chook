@@ -9,9 +9,10 @@
  */
 import "reflect-metadata";
 import {ITransactionObject} from "../../model/ITransactionObject";
-import {JSHelperUtil, MetaConstant} from "papio-common";
 import {GenerateUtil} from "../../util/GenerateUtil";
 import { Logger, LoggerFactory } from "type-slf4";
+import {JSHelperUtil} from "../../util/JSHelperUtil";
+import {MetaConstant} from "../../constants/MetaConstant";
 const logger = LoggerFactory.getLogger("papio.annotation.dao.Transaction");
 
 type level = "READ UNCOMMITTED" | "READ COMMITTED" | "REPEATABLE READ" | "SERIALIZABLE";

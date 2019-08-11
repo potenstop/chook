@@ -1,6 +1,6 @@
 {
   "name": "papio",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "nodejs dependency injection Framework",
   "main": "lib/papio.js",
   "types": "lib/papio.d.ts",
@@ -27,7 +27,7 @@
     "@types/koa-bodyparser": "^4.2.1",
     "@types/koa-router": "^7.0.35",
     "@types/koa-views": "^2.0.3",
-    "agentkeepalive": "^4.0.0",
+    "agentkeepalive": "4.0.0",
     "generic-pool": "^3.5.0",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
@@ -52,7 +52,6 @@
     "tslint": "^5.11.0",
     "typeorm": "^0.2.12",
     "typescript": "^3.5.2",
-    "papio-common": "0.0.20",
     "type-slf4": "0.0.4"
   }
 }

@@ -8,9 +8,11 @@
  * @date 2018/12/22 14:19
  */
 import "reflect-metadata";
-import { ContentTypeEnum, Controllers, MetaConstant } from "papio-common";
+import {MetaConstant} from "../../constants/MetaConstant";
+import {Controllers} from "../../core/Controllers";
+import {ContentTypeEnum} from "../../enums/ContentTypeEnum";
 export function Controller(option: ControllerOptions): CallableFunction {
-    return <T extends {new(...args: any[]): {}}>(target: T | object, propertyKey?: string, descriptor?: PropertyDescriptor): any => {
+    return <T extends new(...args: any[]) => {}>(target: T | object, propertyKey?: string, descriptor?: PropertyDescriptor): any => {
         const dataValueMap = Reflect.getOwnMetadata(MetaConstant.REQUEST_MAPPING, target) || new Map<string, object>();
         let newTarget;
         if (target instanceof Function) {

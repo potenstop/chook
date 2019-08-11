@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import {Standard} from "../../../../src/model/Standard";
-import {JsonProperty, RestConnection, RestDataSource} from "papio-common";
+import {JsonProperty, RestConnection, RestDataSource} from "../../../../src/papio";
 
 class Member {
     @JsonProperty

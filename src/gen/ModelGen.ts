@@ -7,21 +7,23 @@ try {
     // @ts-ignore
     return;
 }
-import { writeFile } from "fs";
+import {writeFile} from "fs";
 import * as os from "os";
-import { join } from "path";
-import { createConnection } from "typeorm";
-import { ConnectionOptions } from "typeorm/connection/ConnectionOptions";
-import { GenConfig } from "../model/GenConfig";
-import {ConvertUtil} from "papio-common";
+import {join} from "path";
+import {createConnection} from "typeorm";
+import {ConnectionOptions} from "typeorm/connection/ConnectionOptions";
+import {GenConfig} from "../model/GenConfig";
+import {ConvertUtil} from "../util/ConvertUtil";
 
 export class ModelGen {
     private static endLine = os.EOL;
     private typeormConfig: ConnectionOptions;
     private genConfig: GenConfig;
+
     public constructor(typeormConfig: ConnectionOptions) {
         this.typeormConfig = typeormConfig;
     }
+
     public gen(genConfig: GenConfig): Promise<boolean> {
         this.genConfig = genConfig;
         return this.mysqlGen();
@@ -35,19 +37,19 @@ export class ModelGen {
         }
         const tsNumber = ["int", "tinyint", "smallint", "mediumint", "bigint", "float", "double", "dec", "decimal", "numeric"];
         const tsDate = ["date", "datetime", "timestamp", "time", "year"];
-        const tsString = [ "char", "varchar", "nvarchar", "text", "tinytext", "mediumtext"];
+        const tsString = ["char", "varchar", "nvarchar", "text", "tinytext", "mediumtext"];
         const tsJson = ["json"];
         const tsBool = ["bool, boolean"];
         const desc = await connection.query("DESC " + this.genConfig.tableName);
-        let model = "import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from \"typeorm\";" ;
+        let model = "import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from \"typeorm\";";
         model += "import {Property} from \"papio\";";
-        if (this.genConfig.isEndSemicolon)  {
+        if (this.genConfig.isEndSemicolon) {
             model += ";";
         }
         model += ModelGen.endLine;
         model += `@Entity("${this.genConfig.tableName}")${ModelGen.endLine}`;
-        model += "export class " +  this.genConfig.modelName + " {" + ModelGen.endLine;
-        desc.forEach( (col) => {
+        model += "export class " + this.genConfig.modelName + " {" + ModelGen.endLine;
+        desc.forEach((col) => {
             let columnName = "";
             if (col.Key === "PRI") {
                 if (col.Extra === "auto_increment") {

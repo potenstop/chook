@@ -10,7 +10,8 @@
 import * as Koa from "koa";
 import {IApplication} from "./IApplication";
 import {LoggerFactory} from "type-slf4";
-import {EmitterEnum, PapioEmitterDefault} from "papio-common";
+import {PapioEmitterDefault} from "../core/PapioEmitterDefault";
+import {EmitterEnum} from "../enums/EmitterEnum";
 const logger = LoggerFactory.getLogger("papio.app.KoaApplication");
 export class KoaApplication implements IApplication {
     private app: Koa;

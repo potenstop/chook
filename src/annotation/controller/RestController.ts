@@ -9,7 +9,8 @@
  */
 import {Controller, ControllerOptions} from "./Controller";
 import "reflect-metadata";
-import {Component, ContentTypeEnum} from "papio-common";
+import {ContentTypeEnum} from "../../enums/ContentTypeEnum";
+import {Component} from "../component/Component";
 
 export function RestController(target: (new () => object)): void;
 export function RestController(target: object, propertyKey: string, descriptor: PropertyDescriptor): void;

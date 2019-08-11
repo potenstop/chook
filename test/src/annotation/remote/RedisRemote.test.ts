@@ -1,8 +1,5 @@
-import {RedisRemote} from "../../../../src/annotation/remote/RedisRemote";
-import {RequestRedisMapping} from "../../../../src/annotation/mapping/RequestRedisMapping";
 
-import {RequestRedisCommand} from "papio-common/lib/enums/RequestRedisCommand";
-import {CommonConstant, ReturnGenericsProperty} from "papio-common";
+import {RequestRedisCommand, CommonConstant, ReturnGenericsProperty, RequestRedisMapping, RedisRemote } from "../../../../src/papio";
 
 /**
  *

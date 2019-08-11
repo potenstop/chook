@@ -1,4 +1,4 @@
-import {JsonProperty} from "papio-common";
+import {JsonProperty} from "../annotation/bean/JsonProperty";
 
 /**
  *

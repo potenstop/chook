@@ -8,9 +8,11 @@
  * @date 2019/2/17 11:11
  */
 import { IConnection, ISavepoint } from "type-interface";
-import { CommonConstant, JsonProtocol, RequestRedisCommand } from "papio-common";
 import { GenerateUtil } from "../../util/GenerateUtil";
 import {RequestOptions} from "http";
+import {RequestRedisCommand} from "../../enums/RequestRedisCommand";
+import {CommonConstant} from "../../constants/CommonConstant";
+import {JsonProtocol} from "../../protocol/JsonProtocol";
 
 export class RedisConnection implements IConnection {
     public kind: "IConnection";

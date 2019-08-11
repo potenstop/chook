@@ -9,7 +9,7 @@
  */
 import { executionAsyncId } from "async_hooks";
 import { HookLog } from "../core/Hook";
-import { JsonProperty } from "papio-common";
+import { JsonProperty } from "../annotation/bean/JsonProperty";
 export class HttpContent {
     @JsonProperty
     public headers: Map<string, string>;

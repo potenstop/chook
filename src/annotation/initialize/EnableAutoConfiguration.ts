@@ -17,24 +17,24 @@ import "../../core/Hook";
 import {HttpContent} from "../../context/HttpContent";
 import {HookLog} from "../../core/Hook";
 import {GenerateUtil} from "../../util/GenerateUtil";
-import {
-    CommonConstant,
-    JSHelperUtil,
-    JsonProtocol,
-    RequestMethod,
-    StringUtil,
-    ControllerArgument,
-    Beans,
-    ControllerArgumentSourceEnum,
-    MetaConstant,
-    Controllers,
-    ContentTypeEnum,
-    HttpStatusEnum,
-    ValidError,
-    Controller, PapioEmitterDefault, EmitterEnum,
-} from "papio-common";
+
 import {Logger, LoggerFactory} from "type-slf4";
 import * as path from "path";
+import {PapioEmitterDefault} from "../../core/PapioEmitterDefault";
+import {EmitterEnum} from "../../enums/EmitterEnum";
+import {Controller, Controllers} from "../../core/Controllers";
+import {StringUtil} from "../../util/StringUtil";
+import {JSHelperUtil} from "../../util/JSHelperUtil";
+import {RequestMethod} from "../../enums/RequestMethod";
+import {MetaConstant} from "../../constants/MetaConstant";
+import {ControllerArgumentSourceEnum} from "../../enums/ControllerArgumentSourceEnum";
+import {JsonProtocol} from "../../protocol/JsonProtocol";
+import {ValidError} from "../../error/ValidError";
+import {ContentTypeEnum} from "../../enums/ContentTypeEnum";
+import {HttpStatusEnum} from "../../enums/HttpStatusEnum";
+import {CommonConstant} from "../../constants/CommonConstant";
+import {Beans} from "../../core/Beans";
+import {ControllerArgument} from "../../model/ControllerArgument";
 
 const logger = LoggerFactory.getLogger("papio.annotation.initialize.EnableAutoConfiguration");
 

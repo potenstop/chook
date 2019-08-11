@@ -11,7 +11,7 @@
 import {AsyncResource, createHook, executionAsyncId} from "async_hooks";
 import * as fs from "fs";
 import {HttpContent} from "../context/HttpContent";
-import {JSHelperUtil} from "papio-common";
+import {JSHelperUtil} from "../util/JSHelperUtil";
 
 // let indent = 0;
 createHook({

@@ -9,17 +9,17 @@
  */
 import {
     HttpContent,
-    RestController, Standard,
-} from "../../../src/papio";
-import {
-    Autowired,
-    NotNull,
+    RestController,
+    Standard,
     RequestMapping,
+    Autowired,
     RequestMethod,
-    RequestParam,
     Valid,
     ReturnGenericsProperty,
-} from "papio-common";
+    NotNull,
+    RequestParam,
+} from "../../../src/papio";
+
 import {ShellService} from "../service/ShellService";
 import {LoggerFactory} from "type-slf4";
 

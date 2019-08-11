@@ -8,8 +8,7 @@
  * @date 2018/12/22 11:48
  */
 import {ShellTaskRepository} from "../dao/common-util/ShellTaskRepository";
-import {Primary, Transaction} from "../../../src/papio";
-import { Service, Autowired } from "papio-common";
+import {Autowired, Primary, Service, Transaction} from "../../../src/papio";
 import {ShellTaskRepository1} from "../dao/common-util/ShellTaskRepository1";
 import {ShellTask} from "../model/dto/common-util/ShellTask";
 import {MyRest} from "../dao/rest-test/MyRest";

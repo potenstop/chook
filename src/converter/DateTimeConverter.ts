@@ -8,7 +8,8 @@
  * @date 2019/2/22 13:14
  */
 import {IConverter} from "./IConverter";
-import { DateUtil, DateFormatEnum } from "papio-common";
+import {DateFormatEnum} from "../enums/DateFormatEnum";
+import {DateUtil} from "../util/DateUtil";
 
 export class DateTimeConverter implements IConverter {
     public readonly keys: Set<string>;

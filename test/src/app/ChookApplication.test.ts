@@ -30,7 +30,7 @@ import {
     RequestMapping,
     Bean,
     Resource,
-} from "papio-common";
+} from "../../../src/papio";
 
 class LogBean {
     public appName: string;
@@ -82,7 +82,7 @@ class MyController {
 
     @RequestMapping("/bonuses")
     @Valid
-    @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
+    @ReturnGenericsProperty(new Map<string, new() => object>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses(@RequestParam @NotNull @Min(1) @Max(3) id: number,
                       @RequestParam("nickname") name: string,
                       @RequestParam @NotBank head: string,
@@ -104,7 +104,7 @@ class MyController {
 
     @RequestMapping("/bonuses1")
     @Valid
-    @ReturnGenericsProperty(new Map<string, {new(): object}>().set("Standard.data", Array).set("Standard.data.Array", User))
+    @ReturnGenericsProperty(new Map<string, new() => object>().set("Standard.data", Array).set("Standard.data.Array", User))
     public getBonuses1(@RequestParam @NotNull @Min(1) @Max(3) id: number,
                        @RequestParam("nickname") name: string,
                        @RequestParam @NotBank head: string,

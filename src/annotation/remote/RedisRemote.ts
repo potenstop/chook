@@ -2,7 +2,12 @@ import "reflect-metadata";
 import * as path from "path";
 import { RedisDataSource } from "../../data/redis/RedisDataSource";
 import { RedisConnection } from "../../data/redis/RedisConnection";
-import {Mappers, MetaConstant, FileUtil, Beans, PapioEmitterDefault, EmitterEnum} from "papio-common";
+import {PapioEmitterDefault} from "../../core/PapioEmitterDefault";
+import {EmitterEnum} from "../../enums/EmitterEnum";
+import {MetaConstant} from "../../constants/MetaConstant";
+import {FileUtil} from "../../util/FileUtil";
+import {Mappers} from "../../core/Mappers";
+import {Beans} from "../../core/Beans";
 
 /**
  *

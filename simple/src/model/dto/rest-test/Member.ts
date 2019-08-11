@@ -7,7 +7,7 @@
  * @author yanshaowen
  * @date 2019/2/15 13:47
  */
-import {JsonProperty} from "papio-common";
+import {JsonProperty} from "../../../../../src/papio";
 
 export class Member {
     @JsonProperty

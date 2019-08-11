@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { RequestRedisCommand, MetaConstant } from "papio-common";
+import {RequestRedisCommand} from "../../enums/RequestRedisCommand";
+import {MetaConstant} from "../../constants/MetaConstant";
 
 /**
  *
