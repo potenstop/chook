@@ -31,7 +31,7 @@ class MyBean {
     @JsonProperty("order_ids")
     @Property
     public orders: Order[];
-    @JsonProperty("aaaaaaaaaaa")
+    @JsonProperty("bonus")
     @Property
     public bonus: Bonus<number>;
     @Property
@@ -68,7 +68,7 @@ myBeanMap.set("MyBean.numbers.Array", Number);
 myBeanMap.set("MyBean.orders", Array);
 myBeanMap.set("MyBean.orders.Array", Order);
 myBeanMap.set("MyBean.bonus", Bonus);
-myBeanMap.set("MyBean.bonus.Bonus.id", Number);
+myBeanMap.set("MyBean.bonus.id", Number);
 class Standard<T> {
     @Property
     public code: number;
@@ -133,6 +133,12 @@ describe("测试 JsonProtocol.test", () => {
         expect(myBean1.inputName).to.equals(myBean.inputName);
         // @ts-ignore
         expect(json.createTime).to.equals("2019-01-01 11:11:11.111");
+        expect(myBean.bonus.id).to.equals(myBean1.bonus.id);
+        // @ts-ignore
+        expect(myBean.bonus.id).to.equals(json.bonus.id);
+        expect(myBean.orders[0].orderId).to.equals(myBean1.orders[0].orderId);
+        // @ts-ignore
+        expect(myBean.orders[0].orderId).to.equals(json.order_ids[0].order_id);
     });
 
     it("response", () => {
@@ -178,12 +184,16 @@ describe("测试 JsonProtocol.test", () => {
         const object = JsonProtocol.toJson(response);
         const response1 = JsonProtocol.jsonToBean(object, Response);
         // @ts-ignore
-        expect(object.items[0].time).to.equal("2019-02-23 11:11:11.0");
-        expect(DateUtil.format(response1.items[0].time, DateFormatEnum.DATETIMES)).to.equal("2019-02-23 11:11:11.0");
+        expect(object.items[0].time).to.equal("2019-02-23 11:11:11.000");
+        expect(DateUtil.format(response1.items[0].time, DateFormatEnum.DATETIMES)).to.equal("2019-02-23 11:11:11.000");
     });
     it("string", function() {
-        const standard1 = JsonProtocol.jsonToBean<Standard<string>>({data: "111", code: 1, message: null}, Standard, new Map<string, new () => object>().set("Standard", Standard).set("Standard.data", String));
+        const standard1 = JsonProtocol.jsonToBean<Standard<string>>({data: "111", code: 1, message: null}, Standard, new Map<string, new () => object>().set("data", String));
         expect(standard1.data).to.equals("111");
-
     });
+    it("string", function() {
+        const standard1 = JsonProtocol.jsonToBean<Standard<string>>({data: "111", code: 1, message: null}, Standard, new Map<string, new () => object>().set("data", String));
+        expect(standard1.data).to.equals("111");
+    });
+
 });
