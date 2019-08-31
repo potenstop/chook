@@ -11,6 +11,7 @@ import {Beans} from "../../core/Beans";
  * @author yanshaowen
  * @date 2019/1/14 11:49
  */
+const autowiredMap = new Map<Object, object>();
 export function Component<T extends new(...args: any[]) => {}>(target: T): any {
     return new Proxy(target, {
         construct<T1 extends new(...args: any[]) => {}>(constructor: T1, args: IArguments) {
@@ -20,10 +21,15 @@ export function Component<T extends new(...args: any[]) => {}>(target: T): any {
             keys.forEach((key) => {
                 const typeName = Reflect.getOwnMetadata(MetaConstant.DESIGN_TYPE, constructor.prototype, key);
                 if (JSHelperUtil.isNotNull(typeName) && JSHelperUtil.isClassObject(typeName)) {
-                    const targetObject = Reflect.construct(typeName, []);
-                    // 注入触发的trigger
-                    targetObject[MetaConstant.TRIGGER] = o;
-                    o[key] = targetObject;
+                    if (!autowiredMap.has(typeName)) {
+                        const targetObject = Reflect.construct(typeName, []);
+                        // 注入触发的trigger
+                        targetObject[MetaConstant.TRIGGER] = o;
+                        o[key] = targetObject;
+                        autowiredMap.set(typeName, targetObject);
+                    } else {
+                        o[key] = autowiredMap.get(typeName);
+                    }
                 }
             });
             // 注入resource
