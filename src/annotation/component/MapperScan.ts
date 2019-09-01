@@ -1,8 +1,6 @@
 import {StringUtil} from "../../util/StringUtil";
 import {Mappers} from "../../core/Mappers";
 import * as path from "path";
-import {PapioEmitterDefault} from "../../core/PapioEmitterDefault";
-import {EmitterEnum} from "../../enums/EmitterEnum";
 
 /**
  *

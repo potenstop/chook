@@ -26,6 +26,7 @@ export class PapioApplication {
     private processEnv: ProcessEnv;
     private async run(): Promise<void> {
         const papioEmitter = PapioEmitterDefault.getDefault();
+        papioEmitter.emit(EmitterEnum.LOAD_APPLICATION);
         // 加载启动前的任务
         const papioApollo = Beans.getBean("papioApollo");
         if (papioApollo instanceof Function) {

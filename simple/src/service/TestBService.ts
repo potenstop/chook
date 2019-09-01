@@ -1,0 +1,12 @@
+/**
+ *
+ * 功能描述:
+ *
+ * @className TestAService
+ * @projectName papio
+ * @author yanshaowen
+ * @date 2019/8/31 9:03
+ */
+export abstract class TestBService {
+    public abstract getB();
+}

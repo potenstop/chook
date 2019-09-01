@@ -18,6 +18,7 @@
     "lib"
   ],
   "scripts": {
+    "simple-watch": "nodemon",
     "build": "rimraf ./lib && tsc"
   },
   "author": "potenstop@163.com",

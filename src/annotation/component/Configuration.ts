@@ -1,4 +1,4 @@
-import {Component} from "./Component";
+import {Core} from "./Core";
 
 /**
  *
@@ -9,6 +9,6 @@ import {Component} from "./Component";
  * @author yanshaowen
  * @date 2019/1/22 9:47
  */
-export function Configuration<T extends new(...args: any[]) => {}>(target: T): any {
-    return Component(target);
+export function Configuration<T extends new(...args: any[]) => {}>(target: T): void {
+    return Core.proxy(target, "Configuration");
 }
