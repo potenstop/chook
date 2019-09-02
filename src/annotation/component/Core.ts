@@ -22,54 +22,8 @@ const allSet = new Set<Object>();
 const serviceMap = new Map<Object, object>();
 const configurationMap = new Map<Object, object>();
 const componentMap = new Map<Object, object>();
-const allMap = new Map<Object, object>();
+const allTargetProxyMap = new Map<Object, object>();
 export class Core {
-    public static getMapByKey(typeName: any): object {
-        let o = null;
-        allMap.forEach((v: object, k: Object) => {
-            if (typeName.isPrototypeOf(k)) {
-                o = v;
-            }
-        });
-        if (o === null) {
-            o = new typeName();
-        }
-        if (o == null) {
-            process.stdout.write("not found object name =" + typeName.constructor.name);
-            process.exit(100);
-        }
-        return o;
-    }
-    public static singleton(target: new () => object, name: string): void {
-        const o = new target();
-        if (name === "service") {
-            serviceMap.set(target, o);
-        } else if (name === "configuration") {
-            configurationMap.set(target, o);
-        } else if (name === "component") {
-            componentMap.set(target, o);
-        }
-        allMap.set(target, o);
-        // setTimeout(() => {
-            const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, target.prototype) || new Set<string>();
-            keys.forEach((key) => {
-                const typeName = Reflect.getOwnMetadata(MetaConstant.DESIGN_TYPE, target.prototype, key);
-                if (JSHelperUtil.isNotNull(typeName) && JSHelperUtil.isClassObject(typeName)) {
-                    // const typeValue = Core.getMapByKey(typeName);
-                    const typeValue = {}
-                    // 注入触发的trigger
-                    typeValue[MetaConstant.TRIGGER] = o;
-                    o[key] = typeValue;
-                    console.log(o, key)
-                }
-            });
-            // 注入resource
-            const resourceKeys: Map<string, string> = Reflect.getOwnMetadata(MetaConstant.RESOURCE, target.prototype) || new Map<string, string>();
-            resourceKeys.forEach((value, key) => {
-                o[key] = Beans.getBean(value);
-            });
-        //}, 50);
-    }
     public static proxy<T extends new(...args: any[]) => {}>(target: T, name: string): any {
         if (name === "service") {
             serviceSet.add(target);
@@ -80,26 +34,42 @@ export class Core {
         }
         const proxy =  new Proxy(target, {
             construct<T1 extends new(...args: any[]) => {}>(constructor: T1, args: IArguments) {
-                const o = new constructor(...args);
+                // 已经存在的instance key=class value=class对应的实例
+                let existInstance = new Map<Object, object>();
+                if (args[0] && args[0] instanceof Map) {
+                    existInstance = args[0];
+                }
+                if (existInstance.has(constructor)) {
+                    return existInstance.get(constructor);
+                }
+                // existInstance.set(constructor, {});
+                const o = Reflect.construct(constructor, args);
+                existInstance.set(constructor, o);
                 // 注入Autowired
                 const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, constructor.prototype) || new Set<string>();
                 keys.forEach((key) => {
-                    let typeName = Reflect.getOwnMetadata(MetaConstant.DESIGN_TYPE, constructor.prototype, key);
-                    if (JSHelperUtil.isNotNull(typeName) && JSHelperUtil.isClassObject(typeName)) {
-                        allMap.forEach((value, k) => {
-                            console.log(k, '11111111', value)
-                            if (typeName.isPrototypeOf(value)) {
-                                typeName = value;
-                                console.log('1111111')
+                    // 注入的类型class
+                    let injectClazz = Reflect.getOwnMetadata(MetaConstant.DESIGN_TYPE, constructor.prototype, key);
+                    if (JSHelperUtil.isNotNull(injectClazz) && JSHelperUtil.isClassObject(injectClazz)) {
+                        // 可实例化的class 默认为注入的class
+                        let instantiationClazz = injectClazz;
+                        // 判断注入的类型是否为抽象类 并且有实现类 如果有则覆盖 注入的class
+                        allTargetProxyMap.forEach((proxyClazz, clazz) => {
+                            if (injectClazz.isPrototypeOf(proxyClazz)) {
+                                injectClazz = proxyClazz;
+                                instantiationClazz = clazz;
                             }
                         });
-                        const targetObject = Reflect.construct(typeName, []);
-                        console.log(targetObject, 222222222);
-                        console.log(typeName, targetObject);
+                        let targetObject = null;
+                        if (existInstance.has(instantiationClazz)) {
+                            targetObject = existInstance.get(instantiationClazz);
+                        } else {
+                            targetObject = Reflect.construct(injectClazz, [existInstance]);
+                            existInstance.set(instantiationClazz, targetObject);
+                        }
                         // 注入触发的trigger
                         targetObject[MetaConstant.TRIGGER] = o;
                         o[key] = targetObject;
-                        console.log(key, o[key], '==================');
                     }
                 });
                 // 注入resource
@@ -110,8 +80,7 @@ export class Core {
                 return o;
             },
         });
-        console.log(proxy)
-        allMap.set(target, proxy);
+        allTargetProxyMap.set(target, proxy);
         return proxy;
     }
 }

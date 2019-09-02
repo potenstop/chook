@@ -15,10 +15,10 @@ export function Autowired(target: any): CallableFunction;
 export function Autowired(target: object, propertyKey?: string): void | CallableFunction {
     if (!propertyKey) {
         return (target1: object, propertyKey1: string) => {
-            const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, target) || new Set<string>();
+            const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, target1) || new Set<string>();
             keys.add(propertyKey1);
             Reflect.defineMetadata(MetaConstant.AUTOWIRED, keys, target1);
-            Reflect.defineMetadata(MetaConstant.DESIGN_TYPE, keys, target);
+            Reflect.defineMetadata(MetaConstant.DESIGN_TYPE, target, target1, propertyKey1);
         };
     } else {
         const keys: Set<string> = Reflect.getOwnMetadata(MetaConstant.AUTOWIRED, target) || new Set<string>();

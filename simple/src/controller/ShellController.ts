@@ -31,8 +31,8 @@ const logger = LoggerFactory.getLogger("papio.simple.controller.ShellController"
 @RequestMapping("/my")
 @RestController
 class ShellController {
-    @Autowired
-    private shellService: ShellService;
+    // @Autowired
+    // private shellService: ShellService;
 
     @Autowired(TestAService)
     private testA: TestAService;
@@ -43,7 +43,7 @@ class ShellController {
     @ReturnGenericsProperty(new Map<string, new () => object>().set("Standard", Standard).set("Standard.data", Number))
     public async getBonuses(@RequestParam("number_id") @NotNull numberId: string): Promise<Standard<number>> {
         logger.info("numberId = " + numberId + HttpContent.getHeader("host"));
-        await this.shellService.test();
+        // await this.shellService.test();
         const standard = new Standard<number>();
         standard.setData(1);
         return standard;
@@ -52,7 +52,6 @@ class ShellController {
     @RequestMapping({path: "/test", method: RequestMethod.GET})
     @Valid
     public async test(): Promise<object> {
-        console.log(this.testB11, this.shellService);
         //this.testA.getA();
         this.testB11.getB();
         return new Promise((resolve) => {

@@ -18,10 +18,8 @@ class C {
 @Service
 export class TestB extends TestBService {
     @Autowired(TestAService)
-    private testA: TestAService;
+    private testAAAA: TestAService;
     public getB() {
-        console.log(this.testA, '=-=============1')
-
-        //return "b" + this.testA.getC();
+        return "b" + this.testAAAA.getC();
     }
 }

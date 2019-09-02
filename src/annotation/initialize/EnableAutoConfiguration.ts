@@ -155,7 +155,8 @@ function exec(target: (new () => object), options: Options) {
                     if (!JSHelperUtil.isNullOrUndefined(controller.requestContentType) && ctx.method !== RequestMethod.GET && !ctx.is(controller.requestContentType)) {
                         throw new RequestHeaderError(`content-type=${ctx.header["content-type"]},allow content-type is ${controller.requestContentType}`);
                     }
-                    const o = Reflect.construct(controller.clazz, []);
+                    const existInstance = new Map<Object, object>();
+                    const o = Reflect.construct(controller.clazz, [existInstance]);
                     const controllerArguments = Reflect.getOwnMetadata(MetaConstant.CONTROLLER_ARGUMENTS, controller.clazz.prototype.constructor, controller.functionName) || new Array<ControllerArgument>();
                     const args = [];
                     for (const controllerArgument of controllerArguments) {
