@@ -78,6 +78,7 @@
 - 0.0.12 1 DateUtil时间工具类 2 bean对象的深拷贝 3 类型转换 
 - 0.0.18 通过papio-apollo支持apollo
 - 0.0.25 通过抽象类实现service的相互调用
+- 0.0.26 支持环境变量设置输入到application的配置中(如:-Denv=dev)
   
 
 

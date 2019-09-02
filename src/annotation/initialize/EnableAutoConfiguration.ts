@@ -75,6 +75,7 @@ function loadApplication() {
     const papioEmitter = PapioEmitterDefault.getDefault();
     papioEmitter.emit(EmitterEnum.LOAD_TASK_APOLLO);
     let applicationConfig = {};
+    // 加载application.json
     try {
         applicationConfig = require(path.join(process.cwd(), "resources/application.json"));
     } catch (e) {
@@ -83,6 +84,19 @@ function loadApplication() {
     const applicationMap = new Map<string, string>();
     // 遍历json
     eachConfig(applicationConfig, null, applicationMap);
+    // 加载process.env
+    if (process.env) {
+        const envObject = {};
+        Object.keys(process.env).forEach((key) => {
+            if (key.indexOf("-D") === 0) {
+                const envKey = key.substring(2);
+                if (StringUtil.isNotBank(envKey)) {
+                    envObject[envKey] = process.env[key];
+                }
+            }
+        });
+        eachConfig(envObject, null, applicationMap);
+    }
     // 注入到全局变量中
     // @ts-ignore
     global.papioApplication = applicationMap;
